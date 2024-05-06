@@ -17,37 +17,30 @@
         <!-- Left Menu Column -->
         <Border Background="#f4f4f4" CornerRadius="30 0 0 30" BorderThickness="0 0 1 0" BorderBrush="#d9d9d9">
             <Grid>
-
                 <Button Style="{StaticResource menuButtonTop}">
                     <Button.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.1"/>
                     </Button.Effect>
                     <TextBlock Text="You" FontSize="18" FontWeight="SemiBold" FontFamily="Montserrat" Margin="0 0 0 2" Foreground="#355858"/>
                 </Button>
-                
-                
+
                 <!-- Menu Buttons -->
                 <StackPanel VerticalAlignment="Center">
                     <Button Style="{StaticResource menuButton}" Background="#355858">
                         <Image Source="/MenuImages/HomeCatalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-
-                    <Button Style="{StaticResource menuButton}">
+                    <Button Style="{StaticResource menuButton}" Click="Car_Click">
                         <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-
                     <Button Style="{StaticResource menuButton}">
                         <Image Source="/MenuImages/ShoppingCart.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-
                     <Button Style="{StaticResource menuButton}">
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-
                     <Button Style="{StaticResource menuButton}">
                         <Image Source="/AuthReg/Images/phone.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-
                     <Button Style="{StaticResource menuButton}">
                         <Image Source="/MenuImages/settings.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
@@ -62,54 +55,9 @@
 
         <!-- Main Content Column -->
         <Border Grid.Column="1" Background="#f4f4f4" CornerRadius="0 30 30 0" MouseDown="Border_MouseDown">
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Width="900" Margin="100">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <!-- Content will occupy remaining space -->
-                </Grid.RowDefinitions>
 
-                <!-- Title "Car Dealership" -->
-                <TextBlock Grid.Row="0" Text="Car Dealership" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
-                           HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20"/>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
 
-                <!-- Introduction Text -->
-                <TextBlock Grid.Row="1" Foreground="#474747" TextWrapping="Wrap" TextAlignment="Center" LineHeight="35"
-                           FontFamily="Montserrat" FontWeight="Medium" FontSize="18" Width="750">
-                    <Run Text="Добро пожаловать в мир автомобильной элегантности и технологического совершенства. " />
-                    <Run Text="Наш автосалон предлагает широкий выбор легковых автомобилей, внедорожников, спортивных купе и электромобилей от ведущих мировых производителей. Погрузитесь в удивительный мир автомобильных инноваций и найдите авто, которое отражает ваш стиль и мечты о безупречной езде." />
-                </TextBlock>
-
-                <!-- Button Section -->
-                <Button Grid.Row="2" Content="Начнём!" FontSize="20" FontWeight="SemiBold" FontFamily="Montserrat"
-                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Style="{StaticResource Start}" Width="210"/>
-            </Grid>
         </Border>
-
-        <Border Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="2" Width="816" Background="DarkGray"
-                Margin="0,485,0,0" Opacity="0.5"/>
-
-        <TextBlock  Grid.Column="1" Text="Наши партнёры" VerticalAlignment="Top"
-                    HorizontalAlignment="Center" Margin="0,523,0,0" FontSize="24" FontFamily="Montserrat" FontWeight="DemiBold"/>
-        <!-- Partner Images Section (Outside the Main Grid) -->
-        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,40" Orientation="Horizontal">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Image Source="/MenuImages/sillycats.png" Width="100" Height="100" Margin="0 0 10 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <TextBlock Text="Silly Cats" VerticalAlignment="Center"
-                           FontSize="20"
-                           FontWeight="SemiBold"
-                           FontFamily="Montserrat"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="30,0,0,0">
-                <Image Source="/MenuImages/CarServicer.png" Width="100" Height="100" Margin="0 0 10 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <TextBlock Text="Car AutoService" VerticalAlignment="Center"
-                           FontSize="20"
-                           FontWeight="SemiBold"
-                           FontFamily="Montserrat"/>
-            </StackPanel>
-        </StackPanel>
     </Grid>
 </Window>

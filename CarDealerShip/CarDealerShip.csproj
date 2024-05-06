@@ -93,6 +93,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="catalog.xaml.cs">
+      <DependentUpon>catalog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogPage\CatalogPage.xaml.cs">
+      <DependentUpon>CatalogPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Client.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
@@ -110,6 +116,10 @@
     </Compile>
     <Compile Include="FinancialTransaction.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FrameManger.cs" />
+    <Compile Include="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Inventory.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
@@ -131,6 +141,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AuthReg\RegWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="catalog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CatalogPage\CatalogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,9 +20,12 @@ namespace CarDealerShip
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new HomePage());
+            FrameManger.MainFrame = MainFrame;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -36,6 +39,11 @@ namespace CarDealerShip
             {
                 this.DragMove();
             }
+        }
+
+        private void Car_Click(object sender, RoutedEventArgs e)
+        {
+            FrameManger.MainFrame.Navigate(new catalog());
         }
     }
 }
