@@ -19,7 +19,7 @@
     <Grid>
 
         <!-- Main Content Column -->
-        <Border Grid.Column="1" Background="#f4f4f4" CornerRadius="0 30 30 0">
+        <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Width="900" Margin="100">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -42,7 +42,7 @@
                 <!-- Button Section -->
                 <Button Grid.Row="2" Content="Начнём!" FontSize="20" FontWeight="SemiBold" FontFamily="Montserrat"
                         HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Style="{StaticResource Start}" Width="210"/>
+                        Style="{StaticResource Start}" Width="210" Click="Button_Click"/>
             </Grid>
         </Border>
 

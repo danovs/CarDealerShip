@@ -26,7 +26,7 @@
 
                 <!-- Menu Buttons -->
                 <StackPanel VerticalAlignment="Center">
-                    <Button Style="{StaticResource menuButton}" Background="#355858">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_1">
                         <Image Source="/MenuImages/HomeCatalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <Button Style="{StaticResource menuButton}" Click="Car_Click">
@@ -41,7 +41,7 @@
                     <Button Style="{StaticResource menuButton}">
                         <Image Source="/AuthReg/Images/phone.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_2">
                         <Image Source="/MenuImages/settings.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                 </StackPanel>

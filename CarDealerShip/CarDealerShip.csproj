@@ -130,6 +130,9 @@
     <Compile Include="Role.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SettingProfile.xaml.cs">
+      <DependentUpon>SettingProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
@@ -184,6 +187,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SettingProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
