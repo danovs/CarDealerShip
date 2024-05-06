@@ -227,6 +227,9 @@
       <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
       <LastGenOutput>CarDealerShipModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="MenuImages\CarServicer.png" />
+    <Resource Include="MenuImages\CarServicer.jpg" />
+    <Resource Include="MenuImages\sillycats.png" />
     <Resource Include="MenuImages\feedback.png" />
     <Resource Include="MenuImages\ShoppingCart.png" />
     <Resource Include="MenuImages\Catalog.png" />
