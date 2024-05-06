@@ -17,6 +17,15 @@
         <!-- Left Menu Column -->
         <Border Background="#f4f4f4" CornerRadius="30 0 0 30" BorderThickness="0 0 1 0" BorderBrush="#d9d9d9">
             <Grid>
+
+                <Button Style="{StaticResource menuButtonTop}">
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.1"/>
+                    </Button.Effect>
+                    <TextBlock Text="You" FontSize="18" FontWeight="SemiBold" FontFamily="Montserrat" Margin="0 0 0 2" Foreground="#355858"/>
+                </Button>
+                
+                
                 <!-- Menu Buttons -->
                 <StackPanel VerticalAlignment="Center">
                     <Button Style="{StaticResource menuButton}" Background="#355858">
