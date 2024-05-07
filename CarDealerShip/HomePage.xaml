@@ -24,51 +24,60 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <!-- Content will occupy remaining space -->
                 </Grid.RowDefinitions>
 
                 <!-- Title "Car Dealership" -->
                 <TextBlock Grid.Row="0" Text="Car Dealership" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
-                           HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20"/>
+                       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20"/>
 
                 <!-- Introduction Text -->
                 <TextBlock Grid.Row="1" Foreground="#474747" TextWrapping="Wrap" TextAlignment="Center" LineHeight="35"
-                           FontFamily="Montserrat" FontWeight="Medium" FontSize="18" Width="750">
-                    <Run Text="Добро пожаловать в мир автомобильной элегантности и технологического совершенства. " />
-                    <Run Text="Наш автосалон предлагает широкий выбор легковых автомобилей, внедорожников, спортивных купе и электромобилей от ведущих мировых производителей. Погрузитесь в удивительный мир автомобильных инноваций и найдите авто, которое отражает ваш стиль и мечты о безупречной езде." />
+                       FontFamily="Montserrat" FontWeight="Medium" FontSize="18" Width="750">
+                <Run Text="Добро пожаловать в мир автомобильной элегантности и технологического совершенства. " />
+                <Run Text="Наш автосалон предлагает широкий выбор легковых автомобилей, внедорожников, спортивных купе и электромобилей от ведущих мировых производителей. Погрузитесь в удивительный мир автомобильных инноваций и найдите авто, которое отражает ваш стиль и мечты о безупречной езде." />
                 </TextBlock>
 
                 <!-- Button Section -->
                 <Button Grid.Row="2" Content="Начнём!" FontSize="20" FontWeight="SemiBold" FontFamily="Montserrat"
-                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Style="{StaticResource Start}" Width="210" Click="Button_Click"/>
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Style="{StaticResource Start}" Width="210" Click="Button_Click"/>
+
+                <!-- StackPanel for Phone Number and Address -->
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 10 0 10">
+                    <!-- Phone Number TextBlock -->
+                    <TextBlock Text="+7 (499) 553-12-65" FontSize="16" FontFamily="Montserrat" FontWeight="SemiBold" Margin="10" Foreground="#474747"/>
+                    <!-- Address TextBlock -->
+                    <TextBlock Text="ул. Курсовая, 1" FontSize="16" FontFamily="Montserrat" FontWeight="SemiBold" Margin="10" Foreground="#474747"/>
+                </StackPanel>
             </Grid>
         </Border>
 
         <Border Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="2" Width="816" Background="DarkGray"
-                Margin="0,485,0,0" Opacity="0.5"/>
+            Margin="0,500,0,0" Opacity="0.5"/>
 
         <TextBlock  Grid.Column="1" Text="Наши партнёры" VerticalAlignment="Top"
-                    HorizontalAlignment="Center" Margin="0,523,0,0" FontSize="24" FontFamily="Montserrat" FontWeight="DemiBold"/>
+                HorizontalAlignment="Center" Margin="0,523,0,0" FontSize="24" FontFamily="Montserrat" FontWeight="DemiBold"/>
         <!-- Partner Images Section (Outside the Main Grid) -->
         <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,40" Orientation="Horizontal">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <Image Source="/MenuImages/sillycats.png" Width="100" Height="100" Margin="0 0 10 0" RenderOptions.BitmapScalingMode="HighQuality"/>
                 <TextBlock Text="Silly Cats" VerticalAlignment="Center"
-                           FontSize="20"
-                           FontWeight="SemiBold"
-                           FontFamily="Montserrat"/>
+                       FontSize="20"
+                       FontWeight="SemiBold"
+                       FontFamily="Montserrat"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="30,0,0,0">
                 <Image Source="/MenuImages/CarServicer.png" Width="100" Height="100" Margin="0 0 10 0" RenderOptions.BitmapScalingMode="HighQuality"/>
                 <TextBlock Text="Car AutoService" VerticalAlignment="Center"
-                           FontSize="20"
-                           FontWeight="SemiBold"
-                           FontFamily="Montserrat"/>
+                       FontSize="20"
+                       FontWeight="SemiBold"
+                       FontFamily="Montserrat"/>
             </StackPanel>
         </StackPanel>
-
     </Grid>
+
 </Page>
