@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace CarDealerShip
 {
     /// <summary>
-    /// Логика взаимодействия для catalog.xaml
+    /// Логика взаимодействия для OrderPage.xaml
     /// </summary>
-    public partial class catalog : Page
+    public partial class OrderPage : Page
     {
-        public catalog()
+        public OrderPage()
         {
             InitializeComponent();
         }

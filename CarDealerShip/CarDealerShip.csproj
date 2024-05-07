@@ -93,10 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="catalog.xaml.cs">
-      <DependentUpon>catalog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CatalogPage\CatalogPage.xaml.cs">
+    <Compile Include="CatalogPage.xaml.cs">
       <DependentUpon>CatalogPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client.cs">
@@ -114,6 +111,9 @@
     <Compile Include="Employee.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FeedbackPage.xaml.cs">
+      <DependentUpon>FeedbackPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FinancialTransaction.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
@@ -123,6 +123,9 @@
     </Compile>
     <Compile Include="Inventory.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderPage.xaml.cs">
+      <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PaymentMethod.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
@@ -147,11 +150,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="catalog.xaml">
+    <Page Include="CatalogPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CatalogPage\CatalogPage.xaml">
+    <Page Include="FeedbackPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,6 +190,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SettingProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

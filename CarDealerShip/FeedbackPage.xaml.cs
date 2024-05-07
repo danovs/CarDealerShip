@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace CarDealerShip
 {
     /// <summary>
-    /// Логика взаимодействия для HomePage.xaml
+    /// Логика взаимодействия для FeedbackPage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class FeedbackPage : Page
     {
-        public HomePage()
+        public FeedbackPage()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            FrameManger.MainFrame.Navigate(new CatalogPage());
         }
     }
 }

@@ -17,7 +17,7 @@
         <!-- Left Menu Column -->
         <Border Background="#f4f4f4" CornerRadius="30 0 0 30" BorderThickness="0 0 1 0" BorderBrush="#d9d9d9">
             <Grid>
-                <Button Style="{StaticResource menuButtonTop}">
+                <Button Style="{StaticResource menuButtonTop}" Click="Button_Click_3">
                     <Button.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.1"/>
                     </Button.Effect>
@@ -32,17 +32,11 @@
                     <Button Style="{StaticResource menuButton}" Click="Car_Click">
                         <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_2">
                         <Image Source="/MenuImages/ShoppingCart.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_4">
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                    </Button>
-                    <Button Style="{StaticResource menuButton}">
-                        <Image Source="/AuthReg/Images/phone.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                    </Button>
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_2">
-                        <Image Source="/MenuImages/settings.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                 </StackPanel>
 

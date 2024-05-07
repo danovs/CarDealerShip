@@ -43,7 +43,7 @@ namespace CarDealerShip
 
         private void Car_Click(object sender, RoutedEventArgs e)
         {
-            FrameManger.MainFrame.Navigate(new catalog());
+            FrameManger.MainFrame.Navigate(new CatalogPage());
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -51,9 +51,19 @@ namespace CarDealerShip
             FrameManger.MainFrame.Navigate(new HomePage());
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             FrameManger.MainFrame.Navigate(new SettingProfile());
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            FrameManger.MainFrame.Navigate(new OrderPage());
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            FrameManger.MainFrame.Navigate(new FeedbackPage());
         }
     }
 }

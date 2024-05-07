@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CarDealerShip.CatalogPage
+namespace CarDealerShip
 {
     /// <summary>
     /// Логика взаимодействия для CatalogPage.xaml
