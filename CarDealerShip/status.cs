@@ -12,18 +12,24 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class PaymentMethod
+    public partial class status
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PaymentMethod()
+        public status()
         {
-            this.FinancialTransactions = new HashSet<FinancialTransaction>();
+            this.appointments = new HashSet<appointment>();
+            this.inventories = new HashSet<inventory>();
+            this.sales = new HashSet<sale>();
         }
     
-        public int PaymentMethodID { get; set; }
-        public string PaymentMethodName { get; set; }
+        public int status_id { get; set; }
+        public string status_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
+        public virtual ICollection<appointment> appointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<inventory> inventories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sale> sales { get; set; }
     }
 }

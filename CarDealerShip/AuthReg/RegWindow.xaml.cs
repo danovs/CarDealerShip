@@ -16,6 +16,10 @@ using System.Windows.Media.Animation;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Runtime.Remoting.Messaging;
+using System.Configuration;
+using BCrypt.Net;
+using System.Windows.Controls.Primitives;
+using System.Data.Entity;
 
 namespace CarDealerShip.AuthReg
 {
@@ -24,12 +28,13 @@ namespace CarDealerShip.AuthReg
     /// </summary>
     public partial class RegWindow : Window
     {
-        private readonly CarDealerShipEntities db;
+
+        private readonly CarDealershipEntities db;
         
         public RegWindow()
         {
             InitializeComponent();
-            db = new CarDealerShipEntities();
+            db = new CarDealershipEntities();
             
         }
 
@@ -71,84 +76,71 @@ namespace CarDealerShip.AuthReg
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка длины логина
-            if (txtLogin.Text.Length < 8)
-            {
-                MessageBox.Show("Логин должен содержать минимум 8 символов!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // Проверка длины пароля
-            if (txtPassword.Password.Length < 8)
-            {
-                MessageBox.Show("Пароль должен содержать минимум 8 символов!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // Проверка длины логина (максимальная длина)
-            if (txtLogin.Text.Length > 50)
-            {
-                MessageBox.Show("Логин не может содержать больше 50 символов!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // Проверка длины номера телефона
-            string phoneNumber = txtPhoneNumber.Text;
-            string cleanedPhoneNumber = new String(phoneNumber.Where(char.IsDigit).ToArray());
-            if (cleanedPhoneNumber.Length != 11)
-            {
-                MessageBox.Show("Номер телефона должен содержать 11 цифр", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // Если все проверки пройдены, открываем главное окно (MainWindow)
-
             try
             {
-                int userRoleID = GetUserRoleID("Пользователь");
-
-                User newUser = new User
+                if (txtLogin.Text.Length < 8 || txtPassword.Password.Length < 8)
                 {
-                    Username = txtLogin.Text,
-                    Password = txtPassword.Password,
-                    UserNumber = phoneNumber,
-                    RoleID = userRoleID
+                    MessageBox.Show("Логин и пароль должны содержать минимум 8 символов!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (txtLogin.Text.Length > 50)
+                {
+                    MessageBox.Show("Логин не может содержать больше 50 символов!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Создание нового пользователя
+                var newUser = new user
+                {
+                    username = txtLogin.Text,
+                    password_hash = PasswordHashMethod(txtPassword.Password),
+                    role_id = 3 // 3 - ID роли "client"
                 };
 
-                db.Users.Add(newUser);
-
+                db.users.Add(newUser);
                 db.SaveChanges();
 
-                MessageBox.Show("Вы успешно зарегистрированы!", "Успешно!", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Создание новой записи клиента
+                var newClient = new client
+                {
+                    user_id = newUser.user_id,
+                    full_name = "",
+                    phone = ""
+                };
+
+                db.clients.Add(newClient);
+                db.SaveChanges();
+                ((App)Application.Current).SetCurrentUserId(newUser.user_id);
+
+
+                MessageBox.Show("Регистрация успешно завершена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Закрываем текущее окно и открываем окно входа
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 this.Close();
             }
             catch (DbEntityValidationException ex)
             {
-                // Отображение подробной информации об ошибках проверки сущностей
-                foreach (var validationError in ex.EntityValidationErrors.SelectMany(eve => eve.ValidationErrors))
+                // Обработка ошибок проверки сущностей в Entity Framework
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
                 {
-                    MessageBox.Show($"Ошибка при валидации данных: {validationError.ErrorMessage}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        MessageBox.Show($"Ошибка при проверке сущности: {validationError.ErrorMessage}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             catch (DbUpdateException ex)
             {
-                // Отображение общей информации о проблеме при сохранении данных
-                MessageBox.Show($"Ошибка при сохранении данных: {ex.InnerException?.Message ?? ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Обработка ошибок обновления базы данных
+                MessageBox.Show($"Ошибка при обновлении базы данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-        }
-        private int GetUserRoleID(string roleName)
-        {
-            Role role = db.Roles.FirstOrDefault(r => r.RoleName == roleName);
-            if (role != null)
+            catch (Exception ex)
             {
-                return role.RoleID;
-            }
-            else
-            {
-                throw new Exception($"Роль '{roleName}' не найдена в таблице Roles.");
+                // Общая обработка других исключений
+                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -170,6 +162,11 @@ namespace CarDealerShip.AuthReg
             Login login = new Login();
             this.Close();
             login.Show();
+        }
+
+        private string PasswordHashMethod(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }

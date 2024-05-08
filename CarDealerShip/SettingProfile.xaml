@@ -2,7 +2,8 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:CarDealerShip"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1130"
@@ -48,28 +49,12 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="Ваша фамилия:" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="textSurname" MouseDown="textSurname_MouseDown"/>
-                            <TextBox x:Name="txtSurname" Style="{StaticResource textBox}" Grid.Column="1" TextChanged="txtSurname_TextChanged"/>
+                            <xctk:MaskedTextBox x:Name="textPhoneNumber" Mask="+7 (000) 000-00-00" Style="{StaticResource textBox}"/>
                         </Grid>
                     </Border>
                 </StackPanel>
 
-                <!-- Поле для ввода отчества -->
-                <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" Width="300">
-                        <Grid Margin="7 9">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="Ваше отчество:" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="textLastname" MouseDown="textLastname_MouseDown"/>
-                            <TextBox x:Name="txtLastName" Style="{StaticResource textBox}" Grid.Column="1" TextChanged="txtLastName_TextChanged"/>
-                        </Grid>
-                    </Border>
-                </StackPanel>
-
-                <Button Grid.Row="4" Content="Сохранить" Style="{StaticResource SaveButton}"/>
+                <Button Grid.Row="4" Content="Сохранить" Style="{StaticResource SaveButton}" x:Name="SaveButton" Click="SaveButton_Click"/>
             </Grid>
         </Border>
     </Grid>

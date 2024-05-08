@@ -12,14 +12,22 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class Inventory
+    public partial class inventory
     {
-        public int InventoryID { get; set; }
-        public Nullable<int> CarID { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public string Location { get; set; }
-        public Nullable<System.DateTime> ArrivalDate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public inventory()
+        {
+            this.sales = new HashSet<sale>();
+        }
     
-        public virtual Car Car { get; set; }
+        public int inventory_id { get; set; }
+        public int car_id { get; set; }
+        public string location { get; set; }
+        public int status_id { get; set; }
+    
+        public virtual car car { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sale> sales { get; set; }
+        public virtual status status { get; set; }
     }
 }

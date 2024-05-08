@@ -12,16 +12,20 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class Deal
+    public partial class sale
     {
-        public int DealID { get; set; }
-        public Nullable<int> CarID { get; set; }
-        public Nullable<System.DateTime> DealDate { get; set; }
-        public Nullable<int> ClientID { get; set; }
-        public Nullable<decimal> Amount { get; set; }
-        public string Status { get; set; }
+        public int sale_id { get; set; }
+        public int inventory_id { get; set; }
+        public int client_id { get; set; }
+        public int employee_id { get; set; }
+        public System.DateTime sale_date { get; set; }
+        public decimal sale_price { get; set; }
+        public string status { get; set; }
+        public int status_id { get; set; }
     
-        public virtual Car Car { get; set; }
-        public virtual Client Client { get; set; }
+        public virtual client client { get; set; }
+        public virtual employee employee { get; set; }
+        public virtual inventory inventory { get; set; }
+        public virtual status status1 { get; set; }
     }
 }

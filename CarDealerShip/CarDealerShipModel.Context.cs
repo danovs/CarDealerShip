@@ -13,10 +13,10 @@ namespace CarDealerShip
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CarDealerShipEntities : DbContext
+    public partial class CarDealershipEntities : DbContext
     {
-        public CarDealerShipEntities()
-            : base("name=CarDealerShipEntities")
+        public CarDealershipEntities()
+            : base("name=CarDealershipEntities")
         {
         }
     
@@ -25,17 +25,16 @@ namespace CarDealerShip
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Car> Cars { get; set; }
-        public virtual DbSet<Client> Clients { get; set; }
-        public virtual DbSet<Currency> Currencies { get; set; }
-        public virtual DbSet<CustomerReview> CustomerReviews { get; set; }
-        public virtual DbSet<Deal> Deals { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<FinancialTransaction> FinancialTransactions { get; set; }
-        public virtual DbSet<Inventory> Inventories { get; set; }
-        public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<appointment> appointments { get; set; }
+        public virtual DbSet<car> cars { get; set; }
+        public virtual DbSet<catalog> catalogs { get; set; }
+        public virtual DbSet<client> clients { get; set; }
+        public virtual DbSet<employee> employees { get; set; }
+        public virtual DbSet<feedback> feedbacks { get; set; }
+        public virtual DbSet<inventory> inventories { get; set; }
+        public virtual DbSet<role> roles { get; set; }
+        public virtual DbSet<sale> sales { get; set; }
+        public virtual DbSet<status> status { get; set; }
+        public virtual DbSet<user> users { get; set; }
     }
 }

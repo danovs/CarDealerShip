@@ -13,17 +13,13 @@ namespace CarDealerShip.AuthReg
     /// </summary>
     public partial class Login : Window
     {
-        private readonly CarDealerShipEntities db;
+
+        private readonly CarDealershipEntities db;
+
         public Login()
         {
             InitializeComponent();
-            db = new CarDealerShipEntities();
-        }
-
-        private bool AuthUserCheck(string login, string password)
-        {
-            User user = db.Users.FirstOrDefault(u => u.Username == login && u.Password == password);
-            return user!= null;
+            db = new CarDealershipEntities();
         }
 
         private void textLogin_MouseDown(object sender, MouseButtonEventArgs e)
@@ -64,6 +60,10 @@ namespace CarDealerShip.AuthReg
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string login = txtLogin.Text;
+            string password = txtPassword.Password;
+
+
             if (txtLogin.Text.Length < 8)
             {
                 MessageBox.Show("Логин должен содержать минимум 8 символов!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -78,23 +78,29 @@ namespace CarDealerShip.AuthReg
             {
                 MessageBox.Show("Логин не может содержать больше 50 символов!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
-
             }
 
-            string login = txtLogin.Text;
-            string password = txtPassword.Password;
+            var user = db.users.FirstOrDefault(u => u.username == login);
 
-            if (AuthUserCheck(login, password))
+            if (user == null)
             {
-                MainWindow mainWindow = new MainWindow();
-                this.Close();
-                mainWindow.Show();
+                MessageBox.Show("Пользователь с таким логином не найден!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-            }
-            else
+            if (!BCrypt.Net.BCrypt.Verify(password, user.password_hash))
             {
-                MessageBox.Show("Неверный логин или пароль. Попробуйте снова.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Неверный пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+
+            MessageBox.Show("Авторизация успешна!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            ((App)Application.Current).CurrentUserId = user.user_id;
+
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
 
         }
 

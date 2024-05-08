@@ -12,19 +12,24 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class user
     {
-        public int UserID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string UserType { get; set; }
-        public Nullable<int> ClientID { get; set; }
-        public Nullable<int> EmployeeID { get; set; }
-        public Nullable<int> RoleID { get; set; }
-        public string UserNumber { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public user()
+        {
+            this.clients = new HashSet<client>();
+            this.employees = new HashSet<employee>();
+        }
     
-        public virtual Client Client { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual Role Role { get; set; }
+        public int user_id { get; set; }
+        public string username { get; set; }
+        public string password_hash { get; set; }
+        public int role_id { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<client> clients { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<employee> employees { get; set; }
+        public virtual role role { get; set; }
     }
 }

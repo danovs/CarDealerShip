@@ -12,12 +12,19 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class appointment
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int appointment_id { get; set; }
+        public int client_id { get; set; }
+        public int employee_id { get; set; }
+        public int car_id { get; set; }
+        public System.DateTime appointment_date { get; set; }
+        public string status { get; set; }
+        public int status_id { get; set; }
+    
+        public virtual car car { get; set; }
+        public virtual client client { get; set; }
+        public virtual employee employee { get; set; }
+        public virtual status status1 { get; set; }
     }
 }

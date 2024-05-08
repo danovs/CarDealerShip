@@ -12,19 +12,13 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class Currency
+    public partial class catalog
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Currency()
-        {
-            this.FinancialTransactions = new HashSet<FinancialTransaction>();
-        }
+        public int catalog_id { get; set; }
+        public int car_id { get; set; }
+        public string description { get; set; }
+        public string image_url { get; set; }
     
-        public int CurrencyID { get; set; }
-        public string CurrencyCode { get; set; }
-        public string CurrencyName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
+        public virtual car car { get; set; }
     }
 }

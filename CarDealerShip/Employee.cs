@@ -12,26 +12,27 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee()
+        public employee()
         {
-            this.FinancialTransactions = new HashSet<FinancialTransaction>();
-            this.Users = new HashSet<User>();
+            this.appointments = new HashSet<appointment>();
+            this.sales = new HashSet<sale>();
         }
     
-        public int EmployeeID { get; set; }
-        public string FullName { get; set; }
-        public Nullable<int> RoleID { get; set; }
-        public string ContactDetails { get; set; }
-        public Nullable<decimal> Salary { get; set; }
-        public Nullable<System.DateTime> HireDate { get; set; }
+        public int employee_id { get; set; }
+        public int user_id { get; set; }
+        public string full_name { get; set; }
+        public string phone { get; set; }
+        public string email { get; set; }
+        public int role_id { get; set; }
     
-        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
+        public virtual ICollection<appointment> appointments { get; set; }
+        public virtual role role { get; set; }
+        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<sale> sales { get; set; }
     }
 }

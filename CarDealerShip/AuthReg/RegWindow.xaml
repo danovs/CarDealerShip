@@ -205,20 +205,6 @@
 
                 </Border>
 
-
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Image Source="/AuthReg/Images/phone.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <xctk:MaskedTextBox x:Name="txtPhoneNumber" Mask="+7 (000) 000-00-00" Style="{StaticResource textBox}"/>
-
-                    </Grid>
-                </Border>
-
                 <Button Content="Войти" Click="Button_Click" Style="{StaticResource AuthButton}"/>
 
             </StackPanel>

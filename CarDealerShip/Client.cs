@@ -12,30 +12,27 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class Client
+    public partial class client
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Client()
+        public client()
         {
-            this.CustomerReviews = new HashSet<CustomerReview>();
-            this.Deals = new HashSet<Deal>();
-            this.FinancialTransactions = new HashSet<FinancialTransaction>();
-            this.Users = new HashSet<User>();
+            this.appointments = new HashSet<appointment>();
+            this.feedbacks = new HashSet<feedback>();
+            this.sales = new HashSet<sale>();
         }
     
-        public int ClientID { get; set; }
-        public string ClientName { get; set; }
-        public string ClientSurname { get; set; }
-        public string ClientLastName { get; set; }
-        public string ClientPhone { get; set; }
+        public int client_id { get; set; }
+        public int user_id { get; set; }
+        public string full_name { get; set; }
+        public string phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerReview> CustomerReviews { get; set; }
+        public virtual ICollection<appointment> appointments { get; set; }
+        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Deal> Deals { get; set; }
+        public virtual ICollection<feedback> feedbacks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<sale> sales { get; set; }
     }
 }

@@ -12,30 +12,29 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class Car
+    public partial class car
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Car()
+        public car()
         {
-            this.CustomerReviews = new HashSet<CustomerReview>();
-            this.Deals = new HashSet<Deal>();
-            this.Inventories = new HashSet<Inventory>();
+            this.appointments = new HashSet<appointment>();
+            this.catalogs = new HashSet<catalog>();
+            this.inventories = new HashSet<inventory>();
         }
     
-        public int CarID { get; set; }
-        public string Brand { get; set; }
-        public string Model { get; set; }
-        public Nullable<int> Year { get; set; }
-        public string TechnicalSpecs { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public string Condition { get; set; }
-        public byte[] CarPhoto { get; set; }
+        public int car_id { get; set; }
+        public string make { get; set; }
+        public string model { get; set; }
+        public int year { get; set; }
+        public string color { get; set; }
+        public decimal price { get; set; }
+        public byte[] photo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerReview> CustomerReviews { get; set; }
+        public virtual ICollection<appointment> appointments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Deal> Deals { get; set; }
+        public virtual ICollection<catalog> catalogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inventory> Inventories { get; set; }
+        public virtual ICollection<inventory> inventories { get; set; }
     }
 }

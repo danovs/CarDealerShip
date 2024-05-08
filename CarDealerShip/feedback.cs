@@ -12,15 +12,13 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomerReview
+    public partial class feedback
     {
-        public int ReviewID { get; set; }
-        public Nullable<int> ClientID { get; set; }
-        public Nullable<int> CarID { get; set; }
-        public string ReviewText { get; set; }
-        public Nullable<System.DateTime> ReviewDate { get; set; }
+        public int feedback_id { get; set; }
+        public int client_id { get; set; }
+        public string feedback_text { get; set; }
+        public System.DateTime feedback_date { get; set; }
     
-        public virtual Car Car { get; set; }
-        public virtual Client Client { get; set; }
+        public virtual client client { get; set; }
     }
 }

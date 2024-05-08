@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net, Version=0.1.4141.31969, Culture=neutral, PublicKeyToken=f3bc8f8c31beeb49, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net.0.1.0\lib\net35\BCrypt.Net.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -85,61 +88,69 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Car.cs">
+    <Compile Include="App.cs" />
+    <Compile Include="appointment.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="car.cs">
+      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarDealerShipModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarDealerShipModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="CarDealerShipModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CarDealerShipModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="catalog.cs">
+      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CatalogPage.xaml.cs">
       <DependentUpon>CatalogPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Client.cs">
+    <Compile Include="client.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Currency.cs">
+    <Compile Include="employee.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CustomerReview.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Deal.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Employee.cs">
+    <Compile Include="feedback.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FeedbackPage.xaml.cs">
       <DependentUpon>FeedbackPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FinancialTransaction.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="FrameManger.cs" />
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Inventory.cs">
+    <Compile Include="inventory.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PaymentMethod.cs">
+    <Compile Include="role.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Role.cs">
+    <Compile Include="sale.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SettingProfile.xaml.cs">
       <DependentUpon>SettingProfile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
+    <Compile Include="status.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="User.cs">
+    <Compile Include="user.cs">
       <DependentUpon>CarDealerShipModel.tt</DependentUpon>
     </Compile>
     <Page Include="AuthReg\Login.xaml">
@@ -175,16 +186,6 @@
     </Compile>
     <Compile Include="AuthReg\RegWindow.xaml.cs">
       <DependentUpon>RegWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CarDealerShipModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CarDealerShipModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CarDealerShipModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -253,16 +254,6 @@
     <Resource Include="AuthReg\Images\phone.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CarDealerShipModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CarDealerShipModel.Context.cs</LastGenOutput>
-      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="CarDealerShipModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
-      <LastGenOutput>CarDealerShipModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="MenuImages\CarServicer.png" />
     <Resource Include="MenuImages\CarServicer.jpg" />
     <Resource Include="MenuImages\sillycats.png" />
@@ -278,6 +269,17 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="CarDealerShipModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
+      <LastGenOutput>CarDealerShipModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="CarDealerShipModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
+      <LastGenOutput>CarDealerShipModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
