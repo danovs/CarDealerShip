@@ -63,5 +63,27 @@ namespace CarDealerShip
                 MessageBox.Show("Выберите сотрудника для удаления.");
             }
         }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                employee selectedEmployee = (employee)DGridEmployees.SelectedItem;
+
+                if (selectedEmployee != null)
+                {
+                    FrameManger.AdminFrame.Navigate(new EditCurrentEmployeePage(selectedEmployee));
+                }
+
+                else
+                {
+                    MessageBox.Show("Пожалуйста, выберите сотрудника для редактирования.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: " + ex.Message);
+            }
+        }
     }
 }

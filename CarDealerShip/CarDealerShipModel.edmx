@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище CarDealershipModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище CarDealershipModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="appointments">
           <Key>
             <PropertyRef Name="appointment_id" />
@@ -61,6 +61,7 @@
           <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
           <Property Name="sales_count" Type="int" Nullable="false" />
           <Property Name="hiredate" Type="date" />
+          <Property Name="salary" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="feedback">
           <Key>
@@ -385,7 +386,8 @@
             <End Role="sales" EntitySet="sales" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CarDealershipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -456,11 +458,12 @@
           <Property Name="phone" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="sales_count" Type="Int32" Nullable="false" />
+          <Property Name="hiredate" Type="DateTime" Precision="0" />
+          <Property Name="salary" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="appointments" Relationship="Self.FK__appointme__emplo__534D60F1" FromRole="employees" ToRole="appointments" />
           <NavigationProperty Name="role" Relationship="Self.FK__employees__role___3D5E1FD2" FromRole="employees" ToRole="roles" />
           <NavigationProperty Name="user" Relationship="Self.FK__employees__user___3C69FB99" FromRole="employees" ToRole="users" />
           <NavigationProperty Name="sales" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="employees" ToRole="sales" />
-          <Property Name="hiredate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="feedback">
           <Key>
@@ -856,7 +859,6 @@
           <EntitySetMapping Name="employees">
             <EntityTypeMapping TypeName="CarDealershipModel.employee">
               <MappingFragment StoreEntitySet="employees">
-                <ScalarProperty Name="hiredate" ColumnName="hiredate" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="role_id" ColumnName="role_id" />
@@ -866,6 +868,8 @@
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="sales_count" ColumnName="sales_count" />
+                <ScalarProperty Name="hiredate" ColumnName="hiredate" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

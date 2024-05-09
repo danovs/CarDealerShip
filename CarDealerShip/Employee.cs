@@ -31,6 +31,7 @@ namespace CarDealerShip
         public string email { get; set; }
         public int sales_count { get; set; }
         public Nullable<System.DateTime> hiredate { get; set; }
+        public Nullable<decimal> salary { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<appointment> appointments { get; set; }

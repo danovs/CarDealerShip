@@ -26,11 +26,11 @@
                             <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Принят" Binding="{Binding hiredate, StringFormat={}{0:d}}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Кол-во продаж" Binding="{Binding sales_count}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Роль" Binding="{Binding role_id}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Роль" Binding="{Binding role.role_name}" Width="*"></DataGridTextColumn>
                             <DataGridTemplateColumn Width="auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Изменить" x:Name="BtnEdit"></Button>
+                                        <Button Content="Изменить" x:Name="BtnEdit" Click="BtnEdit_Click"></Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
