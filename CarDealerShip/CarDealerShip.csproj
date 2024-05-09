@@ -88,42 +88,51 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.cs" />
     <Compile Include="appointment.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="car.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CarDealerShipModel.Context.cs">
+    <Compile Include="CarDealershipModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CarDealerShipModel.Context.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="CarDealerShipModel.cs">
+    <Compile Include="CarDealershipModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CarDealerShipModel.Designer.cs">
+    <Compile Include="CarDealershipModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
+      <DependentUpon>CarDealershipModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="catalog.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CatalogPage.xaml.cs">
       <DependentUpon>CatalogPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="client.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditEmployeePage.xaml.cs">
+      <DependentUpon>EditEmployeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="employee.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeesPage.xaml.cs">
+      <DependentUpon>EmployeesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="feedback.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FeedbackPage.xaml.cs">
       <DependentUpon>FeedbackPage.xaml</DependentUpon>
@@ -133,26 +142,30 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="inventory.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="role.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sale.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SettingProfile.xaml.cs">
       <DependentUpon>SettingProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="status.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="user.cs">
-      <DependentUpon>CarDealerShipModel.tt</DependentUpon>
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
+    <Page Include="AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AuthReg\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +175,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CatalogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,12 +243,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="CarDealerShipModel.edmx">
+    <EntityDeploy Include="CarDealershipModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CarDealerShipModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>CarDealershipModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="CarDealerShipModel.edmx.diagram">
-      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
+    <None Include="CarDealershipModel.edmx.diagram">
+      <DependentUpon>CarDealershipModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -270,15 +291,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CarDealerShipModel.Context.tt">
+    <Content Include="CarDealershipModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
-      <LastGenOutput>CarDealerShipModel.Context.cs</LastGenOutput>
+      <DependentUpon>CarDealershipModel.edmx</DependentUpon>
+      <LastGenOutput>CarDealershipModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="CarDealerShipModel.tt">
+    <Content Include="CarDealershipModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CarDealerShipModel.edmx</DependentUpon>
-      <LastGenOutput>CarDealerShipModel.cs</LastGenOutput>
+      <DependentUpon>CarDealershipModel.edmx</DependentUpon>
+      <LastGenOutput>CarDealershipModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

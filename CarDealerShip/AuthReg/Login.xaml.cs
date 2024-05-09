@@ -98,8 +98,17 @@ namespace CarDealerShip.AuthReg
 
             ((App)Application.Current).CurrentUserId = user.user_id;
 
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            if (user.role_id == 1 | user.role_id == 2)
+            {
+                AdminWindow adminWindow = new AdminWindow();
+                adminWindow.Show();
+            }
+            else
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
+
             this.Close();
 
         }

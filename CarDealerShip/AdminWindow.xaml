@@ -1,0 +1,56 @@
+﻿<Window x:Class="CarDealerShip.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarDealerShip"
+        mc:Ignorable="d"
+        Title="AdminWindow" Height="720" Width="1130" WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Menu Column -->
+        <Border Background="#f4f4f4" CornerRadius="30 0 0 30" BorderThickness="0 0 1 0" BorderBrush="#d9d9d9">
+            <Grid>
+                <Button Style="{StaticResource menuButtonTop}">
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.1"/>
+                    </Button.Effect>
+                    <TextBlock Text="ADM" FontSize="13" FontWeight="SemiBold" FontFamily="Montserrat" Margin="0 0 0 2" Foreground="#355858"/>
+                </Button>
+
+                <!-- Menu Buttons -->
+                <StackPanel VerticalAlignment="Center">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_1">
+                        <Image Source="/AuthReg/Images/userupd.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                    <Button Style="{StaticResource menuButton}">
+                        <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                    <Button Style="{StaticResource menuButton}">
+                        <Image Source="/MenuImages/ShoppingCart.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                    <Button Style="{StaticResource menuButton}">
+                        <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                </StackPanel>
+
+                <!-- Quit Button at the bottom -->
+                <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click">
+                    <Image Source="/MenuImages/quit.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Column -->
+        <Border Grid.Column="1" Background="#f4f4f4" CornerRadius="0 30 30 0" MouseDown="Border_MouseDown">
+
+            <Frame x:Name="AdminFrame" NavigationUIVisibility="Hidden"/>
+
+        </Border>
+    </Grid>
+</Window>
