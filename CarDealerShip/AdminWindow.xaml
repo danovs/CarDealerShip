@@ -28,7 +28,7 @@
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_1">
                         <Image Source="/AuthReg/Images/userupd.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_2">
                         <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <Button Style="{StaticResource menuButton}">

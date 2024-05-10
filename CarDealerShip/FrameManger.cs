@@ -10,6 +10,6 @@ namespace CarDealerShip
     class FrameManger
     {
         public static Frame MainFrame { get; set; }
-        public static Frame AdminFrame { get; set; }   
+        public static Frame AdminFrame { get; set; }
     }
 }

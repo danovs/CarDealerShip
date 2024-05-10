@@ -113,6 +113,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="CarEditPage.xaml.cs">
+      <DependentUpon>CarEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CarsAddPage.xaml.cs">
+      <DependentUpon>CarsAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CarsPage.xaml.cs">
+      <DependentUpon>CarsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="car_types.cs">
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="catalog.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
@@ -174,6 +186,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AuthReg\RegWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CarEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CarsAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CarsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

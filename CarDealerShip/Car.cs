@@ -29,9 +29,13 @@ namespace CarDealerShip
         public string color { get; set; }
         public decimal price { get; set; }
         public byte[] photo { get; set; }
+        public Nullable<int> type_id { get; set; }
+        public string trim_level { get; set; }
+        public string modification { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<appointment> appointments { get; set; }
+        public virtual car_types car_types { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<catalog> catalogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

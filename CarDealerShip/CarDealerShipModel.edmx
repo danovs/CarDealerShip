@@ -17,6 +17,13 @@
           <Property Name="status" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="status_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="car_types">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="cars">
           <Key>
             <PropertyRef Name="car_id" />
@@ -27,7 +34,10 @@
           <Property Name="year" Type="int" Nullable="false" />
           <Property Name="color" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="photo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="photo" Type="varbinary(max)" />
+          <Property Name="type_id" Type="int" />
+          <Property Name="trim_level" Type="varchar" MaxLength="100" />
+          <Property Name="modification" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="catalog">
           <Key>
@@ -285,6 +295,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_cars_car_types">
+          <End Role="car_types" Type="Self.car_types" Multiplicity="0..1" />
+          <End Role="cars" Type="Self.cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="car_types">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="cars">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_inventory_status">
           <End Role="status" Type="Self.status" Multiplicity="1" />
           <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
@@ -311,6 +333,7 @@
         </Association>
         <EntityContainer Name="Хранилище CarDealershipModelContainer">
           <EntitySet Name="appointments" EntityType="Self.appointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="car_types" EntityType="Self.car_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cars" EntityType="Self.cars" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="catalog" EntityType="Self.catalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
@@ -377,6 +400,10 @@
             <End Role="status" EntitySet="status" />
             <End Role="appointments" EntitySet="appointments" />
           </AssociationSet>
+          <AssociationSet Name="FK_cars_car_types" Association="Self.FK_cars_car_types">
+            <End Role="car_types" EntitySet="car_types" />
+            <End Role="cars" EntitySet="cars" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_status" Association="Self.FK_inventory_status">
             <End Role="status" EntitySet="status" />
             <End Role="inventory" EntitySet="inventory" />
@@ -407,6 +434,14 @@
           <NavigationProperty Name="employee" Relationship="Self.FK__appointme__emplo__534D60F1" FromRole="appointments" ToRole="employees" />
           <NavigationProperty Name="status1" Relationship="Self.FK_appointments_status" FromRole="appointments" ToRole="status" />
         </EntityType>
+        <EntityType Name="car_types">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cars" Relationship="Self.FK_cars_car_types" FromRole="car_types" ToRole="cars" />
+        </EntityType>
         <EntityType Name="car">
           <Key>
             <PropertyRef Name="car_id" />
@@ -417,8 +452,12 @@
           <Property Name="year" Type="Int32" Nullable="false" />
           <Property Name="color" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="type_id" Type="Int32" />
+          <Property Name="trim_level" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="modification" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="appointments" Relationship="Self.FK__appointme__car_i__5441852A" FromRole="cars" ToRole="appointments" />
+          <NavigationProperty Name="car_types" Relationship="Self.FK_cars_car_types" FromRole="cars" ToRole="car_types" />
           <NavigationProperty Name="catalogs" Relationship="Self.FK__catalog__car_id__4F7CD00D" FromRole="cars" ToRole="catalog" />
           <NavigationProperty Name="inventories" Relationship="Self.FK__inventory__car_i__44FF419A" FromRole="cars" ToRole="inventory" />
         </EntityType>
@@ -583,6 +622,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_cars_car_types">
+          <End Role="car_types" Type="Self.car_types" Multiplicity="0..1" />
+          <End Role="cars" Type="Self.car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="car_types">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="cars">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__catalog__car_id__4F7CD00D">
           <End Role="cars" Type="Self.car" Multiplicity="1" />
           <End Role="catalog" Type="Self.catalog" Multiplicity="*" />
@@ -729,6 +780,7 @@
         </Association>
         <EntityContainer Name="CarDealershipEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="appointments" EntityType="Self.appointment" />
+          <EntitySet Name="car_types" EntityType="Self.car_types" />
           <EntitySet Name="cars" EntityType="Self.car" />
           <EntitySet Name="catalogs" EntityType="Self.catalog" />
           <EntitySet Name="clients" EntityType="Self.client" />
@@ -754,6 +806,10 @@
           <AssociationSet Name="FK_appointments_status" Association="Self.FK_appointments_status">
             <End Role="status" EntitySet="status" />
             <End Role="appointments" EntitySet="appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cars_car_types" Association="Self.FK_cars_car_types">
+            <End Role="car_types" EntitySet="car_types" />
+            <End Role="cars" EntitySet="cars" />
           </AssociationSet>
           <AssociationSet Name="FK__catalog__car_id__4F7CD00D" Association="Self.FK__catalog__car_id__4F7CD00D">
             <End Role="cars" EntitySet="cars" />
@@ -823,6 +879,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="car_types">
+            <EntityTypeMapping TypeName="CarDealershipModel.car_types">
+              <MappingFragment StoreEntitySet="car_types">
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="cars">
             <EntityTypeMapping TypeName="CarDealershipModel.car">
               <MappingFragment StoreEntitySet="cars">
@@ -833,6 +897,9 @@
                 <ScalarProperty Name="color" ColumnName="color" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="trim_level" ColumnName="trim_level" />
+                <ScalarProperty Name="modification" ColumnName="modification" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

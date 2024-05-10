@@ -1,0 +1,49 @@
+﻿<Page x:Class="CarDealerShip.CarsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CarDealerShip"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1130"
+      Title="CarsPage">
+
+    <Grid>
+        <Grid>
+            <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="377*"/>
+                        <RowDefinition Height="30*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="DGridCars" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID автомобиля" Binding="{Binding car_id}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Марка" Binding="{Binding make}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Модель" Binding="{Binding model}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Тип кузова" Binding="{Binding car_types.type_name}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Год выпуска" Binding="{Binding year}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Цвет" Binding="{Binding color}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Модификация" Binding="{Binding modification}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Комплектация" Binding="{Binding trim_level}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="*"></DataGridTextColumn>
+                            <DataGridTemplateColumn Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Изменить" x:Name="BtnEdit" Click="BtnEdit_Click"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button Content="Добавить" Grid.Row="2" Width="100" HorizontalAlignment="Left" Margin="10" Click="Button_Click"></Button>
+                    <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Right" Margin="10" Click="Button_Click_1"></Button>
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
+    </Grid>
+</Page>
