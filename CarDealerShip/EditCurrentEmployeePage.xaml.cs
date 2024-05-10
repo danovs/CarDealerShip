@@ -62,13 +62,21 @@ namespace CarDealerShip
                     currentEmployee.phone = txtPhone.Text;
                     currentEmployee.email = txtEmail.Text;
 
-                    if (decimal.TryParse(txtSalary.Text, out decimal salaryValue))
+                    if(!string.IsNullOrWhiteSpace(txtSalary.Text))
                     {
-                        currentEmployee.salary = salaryValue;
+                        if (decimal.TryParse(txtSalary.Text, out decimal salaryValue))
+                        {
+                            currentEmployee.salary = salaryValue;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Некорректный формат заработной платы");
+                            return;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Некорректный формат заработной платы");
+                        currentEmployee.salary = null;
                     }
 
                     // Get selected role and update employee's role
