@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -42,51 +43,70 @@ namespace CarDealerShip
             txtEmail.Text = currentEmployee.email;
             cmbRole.SelectedItem = currentEmployee.role.role_name;
             cmbUsername.SelectedItem = currentEmployee.user.username;
+            txtSalary.Text = currentEmployee.salary.ToString();
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите сохранить обновленные данные сотрудника?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            
+            if (result == MessageBoxResult.Yes)
             {
-                // Update employee details
-                currentEmployee.surname = txtSurname.Text;
-                currentEmployee.name = txtName.Text;
-                currentEmployee.lastname = txtLastname.Text;
-                currentEmployee.phone = txtPhone.Text;
-                currentEmployee.email = txtEmail.Text;
-
-                // Get selected role and update employee's role
-                string selectedRole = cmbRole.SelectedItem as string;
-
-                var newRole = db.roles.FirstOrDefault (r => r.role_name == selectedRole);
-
-                if (newRole != null)
+                try
                 {
-                    currentEmployee.role = newRole;
+                    // Update employee details
+                    currentEmployee.surname = txtSurname.Text;
+                    currentEmployee.name = txtName.Text;
+                    currentEmployee.lastname = txtLastname.Text;
+                    currentEmployee.phone = txtPhone.Text;
+                    currentEmployee.email = txtEmail.Text;
 
-                    var associatedUser = currentEmployee.user;
-
-                    if (associatedUser != null)
+                    if (decimal.TryParse(txtSalary.Text, out decimal salaryValue))
                     {
-                        associatedUser.role = newRole;
+                        currentEmployee.salary = salaryValue;
                     }
                     else
                     {
-                        MessageBox.Show("Associated user not found.");
+                        MessageBox.Show("Некорректный формат заработной платы");
                     }
 
-                    db.SaveChanges();
-                    MessageBox.Show("Changes saved successfully!");
+                    // Get selected role and update employee's role
+                    string selectedRole = cmbRole.SelectedItem as string;
+
+                    var newRole = db.roles.FirstOrDefault(r => r.role_name == selectedRole);
+
+                    if (newRole != null)
+                    {
+                        currentEmployee.role = newRole;
+
+                        var associatedUser = currentEmployee.user;
+
+                        if (associatedUser != null)
+                        {
+                            associatedUser.role = newRole;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Подходящий пользователь не найден.");
+                        }
+
+                        db.SaveChanges();
+                        MessageBox.Show("Изменения сохранены!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Выбранная роль не найдена");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Selected role not found.");
+                    MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}");
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error while saving data: {ex.Message}");
+                MessageBox.Show("Изменения не сохранены", "Отмена сохранения", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

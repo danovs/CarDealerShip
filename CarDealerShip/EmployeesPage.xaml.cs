@@ -29,34 +29,44 @@ namespace CarDealerShip
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show("Вы точно хотите удалить данного сотрудника?", "Удаление сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
             if (DGridEmployees.SelectedItem != null)
             {
                 employee selectedEmployee = DGridEmployees.SelectedItem as employee;
 
-                try
+                if (MessageBoxResult.Yes == result)
                 {
-                    // Подключаем выбранного сотрудника к текущему контексту данных
-                    db.employees.Attach(selectedEmployee);
-                    db.employees.Remove(selectedEmployee);
-                    db.SaveChanges();
-
-                    // Обновляем роль пользователя
-                    var selectedUser = db.users.FirstOrDefault(u => u.user_id == selectedEmployee.user_id);
-                    if (selectedUser != null)
+                    try
                     {
-                        selectedUser.role_id = 3;
+                        // Подключаем выбранного сотрудника к текущему контексту данных
+                        db.employees.Attach(selectedEmployee);
+                        db.employees.Remove(selectedEmployee);
                         db.SaveChanges();
+
+                        // Обновляем роль пользователя
+                        var selectedUser = db.users.FirstOrDefault(u => u.user_id == selectedEmployee.user_id);
+                        if (selectedUser != null)
+                        {
+                            selectedUser.role_id = 3;
+                            db.SaveChanges();
+                        }
+
+                        MessageBox.Show("Сотрудник успешно удален и его роль изменена.");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка при удалении сотрудника: " + ex.Message);
                     }
 
-                    MessageBox.Show("Сотрудник успешно удален и его роль изменена.");
+                    // Обновляем список сотрудников после удаления
+                    LoadEmployeeData();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Ошибка при удалении сотрудника: " + ex.Message);
+                    MessageBox.Show("Сотрудник не был удален", "Удаление пользователя", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-
-                // Обновляем список сотрудников после удаления
-                LoadEmployeeData();
             }
             else
             {
