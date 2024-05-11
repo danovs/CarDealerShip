@@ -109,21 +109,31 @@ namespace CarDealerShip
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Вы точно хотите внести изменения в данный автомобиль?", "Измененение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            
+            MessageBoxResult result = MessageBox.Show("Вы точно хотите внести изменения в данный автомобиль?", "Изменение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
+                    // Check if any required fields are empty
+                    if (string.IsNullOrEmpty(txtBrand.Text) ||
+                        string.IsNullOrEmpty(txtModel.Text) ||
+                        string.IsNullOrEmpty(txtYear.Text) ||
+                        string.IsNullOrEmpty(txtColor.Text) ||
+                        string.IsNullOrEmpty(txtPrice.Text) ||
+                        cmbBodyType.SelectedItem == null)
+                    {
+                        MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return; // Exit the method without saving if any field is empty
+                    }
+
                     if (!string.IsNullOrEmpty(imagePath))
                     {
                         byte[] imageData = File.ReadAllBytes(imagePath);
-
                         currentCar.photo = imageData; // Обновляем поле photo у объекта currentCar
                     }
 
-                    // Далее обновляем остальные свойства объекта currentCar и сохраняем изменения в базе данных
-
+                    // Update other properties of currentCar
                     currentCar.make = txtBrand.Text;
                     currentCar.model = txtModel.Text;
                     currentCar.year = Convert.ToInt32(txtYear.Text);
@@ -132,19 +142,15 @@ namespace CarDealerShip
                     currentCar.modification = txtModification.Text;
                     currentCar.trim_level = txtConfiguration.Text;
 
-                    if (cmbBodyType.SelectedItem != null)
+                    // Update car type (body type)
+                    string selectedBodyType = cmbBodyType.SelectedItem.ToString();
+                    car_types bodyType = db.car_types.FirstOrDefault(ct => ct.type_name == selectedBodyType);
+                    if (bodyType != null)
                     {
-                        string selectedBodyType = cmbBodyType.SelectedItem.ToString();
-
-                        car_types bodyType = db.car_types.FirstOrDefault(ct => ct.type_name == selectedBodyType);
-
-                        if (bodyType != null)
-                        {
-                            currentCar.type_id = bodyType.type_id;
-                        }
+                        currentCar.type_id = bodyType.type_id;
                     }
 
-                    db.SaveChanges(); // Сохраняем изменения в базе данных
+                    db.SaveChanges(); // Save changes to the database
                     MessageBox.Show("Данные успешно обновлены в базе данных!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)

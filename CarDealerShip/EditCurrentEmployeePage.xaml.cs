@@ -50,11 +50,25 @@ namespace CarDealerShip
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите сохранить обновленные данные сотрудника?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            
+
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
+                    // Check for empty required fields
+                    if (string.IsNullOrWhiteSpace(txtSurname.Text) ||
+                        string.IsNullOrWhiteSpace(txtName.Text) ||
+                        string.IsNullOrWhiteSpace(txtLastname.Text) ||
+                        string.IsNullOrWhiteSpace(txtPhone.Text) ||
+                        string.IsNullOrWhiteSpace(txtEmail.Text) ||
+                        cmbRole.SelectedItem == null ||
+                        cmbUsername.SelectedItem == null ||
+                        string.IsNullOrWhiteSpace(txtSalary.Text))
+                    {
+                        MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
                     // Update employee details
                     currentEmployee.surname = txtSurname.Text;
                     currentEmployee.name = txtName.Text;
@@ -62,21 +76,14 @@ namespace CarDealerShip
                     currentEmployee.phone = txtPhone.Text;
                     currentEmployee.email = txtEmail.Text;
 
-                    if(!string.IsNullOrWhiteSpace(txtSalary.Text))
+                    if (decimal.TryParse(txtSalary.Text, out decimal salaryValue))
                     {
-                        if (decimal.TryParse(txtSalary.Text, out decimal salaryValue))
-                        {
-                            currentEmployee.salary = salaryValue;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Некорректный формат заработной платы");
-                            return;
-                        }
+                        currentEmployee.salary = salaryValue;
                     }
                     else
                     {
-                        currentEmployee.salary = null;
+                        MessageBox.Show("Некорректный формат заработной платы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
 
                     // Get selected role and update employee's role
@@ -96,20 +103,21 @@ namespace CarDealerShip
                         }
                         else
                         {
-                            MessageBox.Show("Подходящий пользователь не найден.");
+                            MessageBox.Show("Подходящий пользователь не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
                         }
 
                         db.SaveChanges();
-                        MessageBox.Show("Изменения сохранены!");
+                        MessageBox.Show("Изменения сохранены!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
-                        MessageBox.Show("Выбранная роль не найдена");
+                        MessageBox.Show("Выбранная роль не найдена", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}");
+                    MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else

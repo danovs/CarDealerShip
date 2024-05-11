@@ -52,14 +52,35 @@ namespace CarDealerShip
         {
             try
             {
+                // Проверка на пустые поля
+                if (string.IsNullOrWhiteSpace(txtBrand.Text) ||
+                    string.IsNullOrWhiteSpace(txtModel.Text) ||
+                    string.IsNullOrWhiteSpace(txtYear.Text) ||
+                    string.IsNullOrWhiteSpace(txtColor.Text) ||
+                    string.IsNullOrWhiteSpace(txtPrice.Text) ||
+                    cmbBodyType.SelectedItem == null ||
+                    string.IsNullOrWhiteSpace(txtImagePath.Text))
+                {
+                    MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
                 string color = txtColor.Text;
 
-                bool carExsists = db.cars.Any(c => c.color == color);
+                bool carExists = db.cars.Any(c => c.color == color && c.make == txtBrand.Text && c.model == txtModel.Text);
 
-                if (carExsists)
+                if (carExists)
                 {
                     MessageBox.Show("Автомобиль с такой маркой и моделью уже существует в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                string imagePath = txtImagePath.Text;
+
+                // Проверка наличия файла изображения
+                if (!File.Exists(imagePath))
+                {
+                    MessageBox.Show("Выбранное изображение не найдено.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
