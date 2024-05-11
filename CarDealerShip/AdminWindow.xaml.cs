@@ -47,5 +47,10 @@ namespace CarDealerShip
         {
             FrameManger.AdminFrame.Navigate(new CarsPage());
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            FrameManger.AdminFrame.Navigate(new Inventory());
+        }
     }
 }

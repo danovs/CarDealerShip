@@ -14,7 +14,6 @@
           <Property Name="employee_id" Type="int" Nullable="false" />
           <Property Name="car_id" Type="int" Nullable="false" />
           <Property Name="appointment_date" Type="datetime" Nullable="false" />
-          <Property Name="status" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="status_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="car_types">
@@ -88,8 +87,22 @@
           </Key>
           <Property Name="inventory_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="car_id" Type="int" Nullable="false" />
-          <Property Name="location" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="status_id" Type="int" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="model" Type="varchar" MaxLength="50" />
+          <Property Name="year" Type="int" />
+          <Property Name="color" Type="varchar" MaxLength="20" />
+          <Property Name="make" Type="varchar" MaxLength="50" />
+          <Property Name="modification" Type="varchar" MaxLength="100" />
+          <Property Name="trim_level" Type="varchar" MaxLength="100" />
+          <Property Name="location_id" Type="int" />
+        </EntityType>
+        <EntityType Name="locations">
+          <Key>
+            <PropertyRef Name="location_id" />
+          </Key>
+          <Property Name="location_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="location_name" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="roles">
           <Key>
@@ -108,7 +121,6 @@
           <Property Name="employee_id" Type="int" Nullable="false" />
           <Property Name="sale_date" Type="date" Nullable="false" />
           <Property Name="sale_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="status" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="status_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="status">
@@ -307,6 +319,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_inventory_locations">
+          <End Role="locations" Type="Self.locations" Multiplicity="0..1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="locations">
+              <PropertyRef Name="location_id" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_inventory_status">
           <End Role="status" Type="Self.status" Multiplicity="1" />
           <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
@@ -340,6 +364,7 @@
           <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="feedback" EntityType="Self.feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory" EntityType="Self.inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="locations" EntityType="Self.locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
@@ -404,6 +429,10 @@
             <End Role="car_types" EntitySet="car_types" />
             <End Role="cars" EntitySet="cars" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_locations" Association="Self.FK_inventory_locations">
+            <End Role="locations" EntitySet="locations" />
+            <End Role="inventory" EntitySet="inventory" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_status" Association="Self.FK_inventory_status">
             <End Role="status" EntitySet="status" />
             <End Role="inventory" EntitySet="inventory" />
@@ -427,12 +456,11 @@
           <Property Name="employee_id" Type="Int32" Nullable="false" />
           <Property Name="car_id" Type="Int32" Nullable="false" />
           <Property Name="appointment_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="status_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="car" Relationship="Self.FK__appointme__car_i__5441852A" FromRole="appointments" ToRole="cars" />
           <NavigationProperty Name="client" Relationship="Self.FK__appointme__clien__52593CB8" FromRole="appointments" ToRole="clients" />
           <NavigationProperty Name="employee" Relationship="Self.FK__appointme__emplo__534D60F1" FromRole="appointments" ToRole="employees" />
-          <NavigationProperty Name="status1" Relationship="Self.FK_appointments_status" FromRole="appointments" ToRole="status" />
+          <NavigationProperty Name="status" Relationship="Self.FK_appointments_status" FromRole="appointments" ToRole="status" />
         </EntityType>
         <EntityType Name="car_types">
           <Key>
@@ -520,11 +548,27 @@
           </Key>
           <Property Name="inventory_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="car_id" Type="Int32" Nullable="false" />
-          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="status_id" Type="Int32" Nullable="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="color" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="make" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="modification" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="trim_level" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="location_id" Type="Int32" />
           <NavigationProperty Name="car" Relationship="Self.FK__inventory__car_i__44FF419A" FromRole="inventory" ToRole="cars" />
           <NavigationProperty Name="sales" Relationship="Self.FK__sales__inventory__47DBAE45" FromRole="inventory" ToRole="sales" />
+          <NavigationProperty Name="location" Relationship="Self.FK_inventory_locations" FromRole="inventory" ToRole="locations" />
           <NavigationProperty Name="status" Relationship="Self.FK_inventory_status" FromRole="inventory" ToRole="status" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="location_id" />
+          </Key>
+          <Property Name="location_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="location_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="inventories" Relationship="Self.FK_inventory_locations" FromRole="locations" ToRole="inventory" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -545,12 +589,11 @@
           <Property Name="employee_id" Type="Int32" Nullable="false" />
           <Property Name="sale_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="sale_price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="status_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="client" Relationship="Self.FK__sales__client_id__48CFD27E" FromRole="sales" ToRole="clients" />
           <NavigationProperty Name="employee" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="sales" ToRole="employees" />
           <NavigationProperty Name="inventory" Relationship="Self.FK__sales__inventory__47DBAE45" FromRole="sales" ToRole="inventory" />
-          <NavigationProperty Name="status1" Relationship="Self.FK_sales_status" FromRole="sales" ToRole="status" />
+          <NavigationProperty Name="status" Relationship="Self.FK_sales_status" FromRole="sales" ToRole="status" />
         </EntityType>
         <EntityType Name="status">
           <Key>
@@ -742,6 +785,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_inventory_locations">
+          <End Role="locations" Type="Self.location" Multiplicity="0..1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="locations">
+              <PropertyRef Name="location_id" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_inventory_status">
           <End Role="status" Type="Self.status" Multiplicity="1" />
           <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
@@ -787,6 +842,7 @@
           <EntitySet Name="employees" EntityType="Self.employee" />
           <EntitySet Name="feedbacks" EntityType="Self.feedback" />
           <EntitySet Name="inventories" EntityType="Self.inventory" />
+          <EntitySet Name="locations" EntityType="Self.location" />
           <EntitySet Name="roles" EntityType="Self.role" />
           <EntitySet Name="sales" EntityType="Self.sale" />
           <EntitySet Name="status" EntityType="Self.status" />
@@ -847,6 +903,10 @@
             <End Role="inventory" EntitySet="inventories" />
             <End Role="sales" EntitySet="sales" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_locations" Association="Self.FK_inventory_locations">
+            <End Role="locations" EntitySet="locations" />
+            <End Role="inventory" EntitySet="inventories" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_status" Association="Self.FK_inventory_status">
             <End Role="status" EntitySet="status" />
             <End Role="inventory" EntitySet="inventories" />
@@ -874,7 +934,6 @@
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="car_id" ColumnName="car_id" />
                 <ScalarProperty Name="appointment_date" ColumnName="appointment_date" />
-                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="status_id" ColumnName="status_id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -955,8 +1014,23 @@
               <MappingFragment StoreEntitySet="inventory">
                 <ScalarProperty Name="inventory_id" ColumnName="inventory_id" />
                 <ScalarProperty Name="car_id" ColumnName="car_id" />
-                <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="make" ColumnName="make" />
+                <ScalarProperty Name="modification" ColumnName="modification" />
+                <ScalarProperty Name="trim_level" ColumnName="trim_level" />
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="locations">
+            <EntityTypeMapping TypeName="CarDealershipModel.location">
+              <MappingFragment StoreEntitySet="locations">
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+                <ScalarProperty Name="location_name" ColumnName="location_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -977,7 +1051,6 @@
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="sale_date" ColumnName="sale_date" />
                 <ScalarProperty Name="sale_price" ColumnName="sale_price" />
-                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="status_id" ColumnName="status_id" />
               </MappingFragment>
             </EntityTypeMapping>

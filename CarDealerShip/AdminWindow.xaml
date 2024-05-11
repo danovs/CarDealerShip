@@ -31,8 +31,8 @@
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_2">
                         <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}">
-                        <Image Source="/MenuImages/ShoppingCart.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_3">
+                        <Image Source="/MenuImages/inventory.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <Button Style="{StaticResource menuButton}">
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>

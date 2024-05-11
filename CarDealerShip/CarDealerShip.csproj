@@ -159,6 +159,18 @@
     <Compile Include="inventory.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Inventory.xaml.cs">
+      <DependentUpon>Inventory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryAddPage.xaml.cs">
+      <DependentUpon>InventoryAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryEditPage.xaml.cs">
+      <DependentUpon>InventoryEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="location.cs">
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
@@ -222,6 +234,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inventory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -320,6 +344,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MenuImages\inventory.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CarDealershipModel.Context.tt">

@@ -15,9 +15,20 @@ namespace CarDealerShip
     
     public partial class CarDealershipEntities : DbContext
     {
+        private static CarDealershipEntities _context;
+
         public CarDealershipEntities()
             : base("name=CarDealershipEntities")
         {
+        }
+
+        public static CarDealershipEntities GetContext()
+        {
+            if ( _context == null )
+            {
+                _context = new CarDealershipEntities();
+            }
+            return _context;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -33,6 +44,7 @@ namespace CarDealerShip
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<feedback> feedbacks { get; set; }
         public virtual DbSet<inventory> inventories { get; set; }
+        public virtual DbSet<location> locations { get; set; }
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<sale> sales { get; set; }
         public virtual DbSet<status> status { get; set; }

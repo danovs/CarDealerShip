@@ -12,30 +12,18 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class inventory
+    public partial class location
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public inventory()
+        public location()
         {
-            this.sales = new HashSet<sale>();
+            this.inventories = new HashSet<inventory>();
         }
     
-        public int inventory_id { get; set; }
-        public int car_id { get; set; }
-        public int status_id { get; set; }
-        public int count { get; set; }
-        public string model { get; set; }
-        public Nullable<int> year { get; set; }
-        public string color { get; set; }
-        public string make { get; set; }
-        public string modification { get; set; }
-        public string trim_level { get; set; }
-        public Nullable<int> location_id { get; set; }
+        public int location_id { get; set; }
+        public string location_name { get; set; }
     
-        public virtual car car { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sale> sales { get; set; }
-        public virtual location location { get; set; }
-        public virtual status status { get; set; }
+        public virtual ICollection<inventory> inventories { get; set; }
     }
 }

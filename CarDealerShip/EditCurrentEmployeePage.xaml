@@ -48,7 +48,7 @@
                     <ComboBox x:Name="cmbUsername" Grid.Row="6" Margin="120,0,0,0"/>
 
                     <TextBlock Text="Зарплата:" Grid.Row="7" />
-                    <TextBox x:Name="txtSalary" Grid.Row="7" Margin="120,0,0,0" MaxLength="5" />
+                    <TextBox x:Name="txtSalary" Grid.Row="7" Margin="120,0,0,0" MaxLength="6" />
 
                     <Button Content="Сохранить" Grid.Row="7" Margin="0,20,0,0" Click="Button_Click"/>
 
