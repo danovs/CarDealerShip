@@ -52,5 +52,17 @@ namespace CarDealerShip
         {
             FrameManger.AdminFrame.Navigate(new Inventory());
         }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                FrameManger.AdminFrame.Navigate(new FeedbackPageEA());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

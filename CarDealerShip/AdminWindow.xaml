@@ -34,7 +34,7 @@
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_3">
                         <Image Source="/MenuImages/inventory.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_4">
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                 </StackPanel>

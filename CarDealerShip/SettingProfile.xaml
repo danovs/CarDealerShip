@@ -23,7 +23,7 @@
 
                 <!-- Заголовок -->
                 <TextBlock Grid.Row="0" Text="Ваши контактные данные" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
-                           HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20"/>
+                           HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20" Foreground="#3C3C3C"/>
 
                 <!-- Поле для ввода имени -->
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -34,13 +34,13 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock x:Name="textName" Text="Ваше имя:" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0" MouseDown="textName_MouseDown"/>
+                            <TextBlock x:Name="textName" Text="Введите ваше ФИО:" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0" MouseDown="textName_MouseDown"/>
                             <TextBox x:Name="txtName" TextChanged="txtName_TextChanged"  Style="{StaticResource textBox}" Grid.Column="1"/>
                         </Grid>
                     </Border>
                 </StackPanel>
 
-                <!-- Поле для ввода фамилии -->
+                
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" Width="300">
                         <Grid Margin="7 9">
@@ -48,7 +48,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="/AuthReg/Images/phone.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
                             <xctk:MaskedTextBox x:Name="textPhoneNumber" Mask="+7 (000) 000-00-00" Style="{StaticResource textBox}"/>
                         </Grid>
                     </Border>

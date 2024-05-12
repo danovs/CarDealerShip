@@ -65,9 +65,8 @@ namespace CarDealerShip
                     }
                     catch(Exception ex)
                     {
-                        MessageBox.Show("Ошибка при удалении сотрудника: " + ex.Message);
+                        MessageBox.Show(ex.Message);
                     }
-                    LoadCarsData();
 
                 }
                 else

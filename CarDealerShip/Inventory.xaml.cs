@@ -82,7 +82,16 @@ namespace CarDealerShip
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            FrameManger.AdminFrame.Navigate(new InventoryEditPage());
+            if (DGridInventory.SelectedItem != null)
+            {
+                var selectedInventoryItem = DGridInventory.SelectedItem as inventory;
+
+                FrameManger.AdminFrame.Navigate(new InventoryEditPage(selectedInventoryItem));
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите запись для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
