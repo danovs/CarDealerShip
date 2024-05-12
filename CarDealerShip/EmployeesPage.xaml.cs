@@ -29,12 +29,11 @@ namespace CarDealerShip
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Вы точно хотите удалить данного сотрудника?", "Удаление сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-
             if (DGridEmployees.SelectedItem != null)
             {
                 employee selectedEmployee = DGridEmployees.SelectedItem as employee;
+
+                MessageBoxResult result = MessageBox.Show("Вы точно хотите удалить данного сотрудника?", "Удаление сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (MessageBoxResult.Yes == result)
                 {

@@ -46,11 +46,11 @@ namespace CarDealerShip
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
-            MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить автомобиль с базы данных?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
             if (DGridCars.SelectedItem != null)
             {
                 car selectedCar = DGridCars.SelectedItem as car;
+
+                MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить автомобиль с базы данных?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -75,6 +75,10 @@ namespace CarDealerShip
                     MessageBox.Show("Автомобиль не был удален с базы данных");
                 }
 
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
