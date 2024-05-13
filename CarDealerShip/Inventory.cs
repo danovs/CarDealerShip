@@ -24,12 +24,6 @@ namespace CarDealerShip
         public int car_id { get; set; }
         public int status_id { get; set; }
         public int count { get; set; }
-        public string model { get; set; }
-        public Nullable<int> year { get; set; }
-        public string color { get; set; }
-        public string make { get; set; }
-        public string modification { get; set; }
-        public string trim_level { get; set; }
         public Nullable<int> location_id { get; set; }
     
         public virtual car car { get; set; }

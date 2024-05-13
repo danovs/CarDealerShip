@@ -28,7 +28,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Автомобиль:" Grid.Row="0" />
-                    <ComboBox x:Name="cmbCar" Grid.Row="0" Margin="120,0,0,0" SelectionChanged="cmbCar_SelectionChanged" IsEnabled="False"/>
+                    <ComboBox x:Name="cmbCar" Grid.Row="0" Margin="120,0,0,0" SelectionChanged="cmbCar_SelectedChanged"/>
 
                     <TextBlock Text="Марка автомобиля:" Grid.Row="1" />
                     <TextBlock x:Name="txtMake" Grid.Row="1" Margin="120,0,0,0"/>

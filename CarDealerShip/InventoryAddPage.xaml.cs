@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,14 +49,17 @@ namespace CarDealerShip
         {
             if (cmbCar.SelectedItem != null)
             {
-                car selectedCar = (car)cmbCar.SelectedItem;
+                car selectedCar = cmbCar.SelectedItem as car;
 
-                txtMake.Text = selectedCar.make;
-                txtModel.Text = selectedCar.model;
-                txtYear.Text = selectedCar.year.ToString();
-                txtColor.Text = selectedCar.color;
-                txtModification.Text = selectedCar.modification;
-                txtTrimLevel.Text = selectedCar.trim_level;
+                if (selectedCar != null)
+                {
+                    txtMake.Text = selectedCar.make;
+                    txtModel.Text = selectedCar.model;
+                    txtYear.Text = selectedCar.year.ToString() ?? "Не указан";
+                    txtColor.Text = selectedCar.color;
+                    txtModification.Text = selectedCar.modification;
+                    txtTrimLevel.Text = selectedCar.trim_level;
+                }
 
                 if (selectedCar.type_id != null)
                 {
@@ -90,63 +94,45 @@ namespace CarDealerShip
                     int count = int.Parse(txtCount.Text);
                     int statusId = (int)cmbStatus.SelectedValue;
 
-                    string modification = txtModification.Text;
-                    string trimLevel = txtTrimLevel.Text;
+                    var selectedCar = db.cars.FirstOrDefault(c => c.car_id == carId);
 
-                    // Проверяем, существует ли автомобиль с указанной модификацией и комплектацией
-                    car existingCar = db.cars.FirstOrDefault(c =>
-                        c.modification == modification &&
-                        c.trim_level == trimLevel);
-
-                    if (existingCar != null)
+                    if (selectedCar != null)
                     {
-                        // Проверяем, существует ли этот автомобиль в инвентаре по указанному расположению
-                        bool carExistsInInventory = db.inventories.Any(inv =>
-                            inv.car_id == existingCar.car_id &&
-                            inv.location_id == locationId);
+                        bool carExistsInventory = db.inventories.Any(inv => inv.car_id == carId && inv.location_id == locationId);
 
-                        if (carExistsInInventory)
+                        if (carExistsInventory)
                         {
                             MessageBox.Show("Такой автомобиль уже существует в инвентаре по указанному расположению.");
                         }
+
                         else
                         {
-                            // Если автомобиль существует, но отсутствует в инвентаре по указанному расположению, добавляем его
                             inventory newInventory = new inventory
                             {
-                                car_id = existingCar.car_id,
+                                car_id = carId,
                                 location_id = locationId,
                                 count = count,
-                                status_id = statusId,
-                                make = existingCar.make,
-                                model = existingCar.model,
-                                year = existingCar.year,
-                                color = existingCar.color,
-                                modification = existingCar.modification,
-                                trim_level = existingCar.trim_level,
+                                status_id = statusId
                             };
-
                             db.inventories.Add(newInventory);
                             db.SaveChanges();
-
-                            MessageBox.Show("Данные сохранены успешно!");
+                            MessageBox.Show("Данные успешно сохранены в инвентаре!");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Указанный автомобиль не найден.");
+                        MessageBox.Show("Выбранный автомобиль не найден.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
             {
-                MessageBox.Show("Автомобиль не добавлен в инвентарь");
+                MessageBox.Show("Автомобиль не добавлен в инвентарь.");
             }
-
         }
     }
 }

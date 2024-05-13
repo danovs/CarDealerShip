@@ -21,7 +21,7 @@ namespace CarDealerShip
     public partial class Inventory : Page
     {
         private CarDealershipEntities db;
-        
+
         public Inventory()
         {
             InitializeComponent();
@@ -34,7 +34,25 @@ namespace CarDealerShip
 
         private void LoadInventoryData()
         {
-            DGridInventory.ItemsSource = db.inventories.ToList();
+            var query = from inventory in db.inventories
+                        join
+                        car in db.cars on inventory.car_id equals car.car_id
+                        join location in db.locations on inventory.location_id equals location.location_id
+                        join status in db.status on inventory.status_id equals status.status_id
+                        select new
+                        {
+                            inventoryId = inventory.inventory_id,
+                            carMake = car.make,
+                            Model = car.model,
+                            Year = car.year,
+                            Color = car.color,
+                            TrimLevel = car.trim_level,
+                            Modification = car.modification,
+                            Count = inventory.count,
+                            LocationName = location.location_name,
+                            StatusName = status.status_name
+                        };
+            DGridInventory.ItemsSource = query.ToList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -44,54 +62,87 @@ namespace CarDealerShip
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (DGridInventory.SelectedItem != null)
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить запись с базы данных?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
             {
-                inventory selectedInventory = DGridInventory.SelectedItem as inventory;
-
-                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить эту запись?",
-                                                           "Удаление записи",
-                                                           MessageBoxButton.YesNo,
-                                                           MessageBoxImage.Question);
-
-                if (result == MessageBoxResult.Yes)
+                try
                 {
-                    try
+                    if (DGridInventory.SelectedItem != null)
                     {
-                        // Прикрепляем выбранную запись к контексту данных и удаляем ее
-                        db.inventories.Attach(selectedInventory);
-                        db.inventories.Remove(selectedInventory);
+                        // Get the selected inventory item
+                        var selectedInventory = (dynamic)DGridInventory.SelectedItem;
 
-                        db.SaveChanges();
+                        // Find the inventoryId from the selected item (using lowercase property name)
+                        int inventoryId = selectedInventory.inventoryId;
 
-                        MessageBox.Show("Данные удалены");
+                        // Find the inventory record to delete from the database
+                        var inventoryToDelete = db.inventories.Find(inventoryId);
 
-                        LoadInventoryData();
+                        if (inventoryToDelete != null)
+                        {
+                            // Remove the inventory record from the database
+                            db.inventories.Remove(inventoryToDelete);
+                            db.SaveChanges();
+
+                            // Refresh the data grid
+                            MessageBox.Show("Запись удалена");
+                            LoadInventoryData();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Выбранная запись не найдена.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-
-                        MessageBox.Show($"Ошибка при удалении данных: {ex.Message}");
+                        MessageBox.Show("Пожалуйста, выберите запись для удаления.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Произошла ошибка при удалении записи: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Выберите запись для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Запись не была удалена");
             }
         }
+
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (DGridInventory.SelectedItem != null)
             {
-                var selectedInventoryItem = DGridInventory.SelectedItem as inventory;
+                var selectedItem = DGridInventory.SelectedItem;
+                var propertyInfo = selectedItem.GetType().GetProperty("inventoryId");
+                if (propertyInfo != null)
+                {
+                    int inventoryId = (int)propertyInfo.GetValue(selectedItem);
 
-                FrameManger.AdminFrame.Navigate(new InventoryEditPage(selectedInventoryItem));
+                    var selectedInventory = db.inventories.FirstOrDefault(i => i.inventory_id == inventoryId);
+
+                    if (selectedInventory != null)
+                    {
+                        // Передаем inventory_id при создании InventoryEditPage
+                        FrameManger.AdminFrame.Navigate(new InventoryEditPage(selectedInventory.inventory_id));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Инвентарь не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось получить ID инвентаря.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите запись для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Пожалуйста, выберите запись для редактирования.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
     }
 }

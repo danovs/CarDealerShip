@@ -89,12 +89,6 @@
           <Property Name="car_id" Type="int" Nullable="false" />
           <Property Name="status_id" Type="int" Nullable="false" />
           <Property Name="count" Type="int" Nullable="false" />
-          <Property Name="model" Type="varchar" MaxLength="50" />
-          <Property Name="year" Type="int" />
-          <Property Name="color" Type="varchar" MaxLength="20" />
-          <Property Name="make" Type="varchar" MaxLength="50" />
-          <Property Name="modification" Type="varchar" MaxLength="100" />
-          <Property Name="trim_level" Type="varchar" MaxLength="100" />
           <Property Name="location_id" Type="int" />
         </EntityType>
         <EntityType Name="locations">
@@ -550,12 +544,6 @@
           <Property Name="car_id" Type="Int32" Nullable="false" />
           <Property Name="status_id" Type="Int32" Nullable="false" />
           <Property Name="count" Type="Int32" Nullable="false" />
-          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="year" Type="Int32" />
-          <Property Name="color" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="make" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="modification" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="trim_level" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="location_id" Type="Int32" />
           <NavigationProperty Name="car" Relationship="Self.FK__inventory__car_i__44FF419A" FromRole="inventory" ToRole="cars" />
           <NavigationProperty Name="sales" Relationship="Self.FK__sales__inventory__47DBAE45" FromRole="inventory" ToRole="sales" />
@@ -1016,12 +1004,6 @@
                 <ScalarProperty Name="car_id" ColumnName="car_id" />
                 <ScalarProperty Name="status_id" ColumnName="status_id" />
                 <ScalarProperty Name="count" ColumnName="count" />
-                <ScalarProperty Name="model" ColumnName="model" />
-                <ScalarProperty Name="year" ColumnName="year" />
-                <ScalarProperty Name="color" ColumnName="color" />
-                <ScalarProperty Name="make" ColumnName="make" />
-                <ScalarProperty Name="modification" ColumnName="modification" />
-                <ScalarProperty Name="trim_level" ColumnName="trim_level" />
                 <ScalarProperty Name="location_id" ColumnName="location_id" />
               </MappingFragment>
             </EntityTypeMapping>

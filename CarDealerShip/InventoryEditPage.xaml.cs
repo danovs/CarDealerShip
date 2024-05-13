@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,97 +22,86 @@ namespace CarDealerShip
     public partial class InventoryEditPage : Page
     {
         private CarDealershipEntities db;
+        private int inventoryId;
         
-        private inventory SelectedInentoryItem;
-        
-        public InventoryEditPage(inventory selectedInventoryItem)
+        public InventoryEditPage(int inventoryId)
         {
             InitializeComponent();
 
-            SelectedInentoryItem = selectedInventoryItem;
             db = new CarDealershipEntities();
 
-            LoadData();
+            this.inventoryId = inventoryId;
+
+
+            cmbCar.ItemsSource = db.cars.ToList();
+            cmbCar.DisplayMemberPath = "make";
+            cmbCar.SelectedValuePath = "car_id";
+
+            cmbStatus.ItemsSource = db.status.ToList();
+
+            cmbStatus.DisplayMemberPath = "status_name";
+            cmbStatus.SelectedValuePath = "status_id";
+
+            cmbLocation.ItemsSource = db.locations.ToList();
+            cmbLocation.DisplayMemberPath = "location_name"; // Или другое подходящее свойство
+            cmbLocation.SelectedValuePath = "location_id";
+
+            FillFields();
         }
 
-        private void LoadData()
+        private void FillFields()
         {
-            if (SelectedInentoryItem != null)
+            var selectedInventory = db.inventories.FirstOrDefault(i => i.inventory_id == inventoryId);
+
+            if (selectedInventory != null)
             {
-                // Заполняем комбобокс с автомобилями
-                cmbCar.ItemsSource = db.cars.ToList(); // Предполагается, что cars - это DbSet в вашем контексте данных
-                cmbCar.DisplayMemberPath = "make"; // Устанавливаем свойство, отображаемое в комбобоксе
-                cmbCar.SelectedValuePath = "car_id"; // Устанавливаем свойство, используемое для значения выбора
+                cmbCar.SelectedValue = selectedInventory.car_id;
+                txtCount.Text = selectedInventory.count.ToString();
+                cmbLocation.SelectedValue = selectedInventory.location_id;
+                cmbStatus.SelectedValue = selectedInventory.status_id;
 
-                // Заполняем комбобокс с местоположениями
-                cmbLocation.ItemsSource = db.locations.ToList();
-                cmbLocation.DisplayMemberPath = "location_name";
-                cmbLocation.SelectedValuePath = "location_id";
-
-                // Заполняем комбобокс со статусами
-                cmbStatus.ItemsSource = db.status.ToList();
-                cmbStatus.DisplayMemberPath = "status_name";
-                cmbStatus.SelectedValuePath = "status_id";
-
-                // Заполняем поля данными выбранной записи инвентаря
-                cmbCar.SelectedValue = SelectedInentoryItem.car_id;
-                cmbLocation.SelectedValue = SelectedInentoryItem.location_id;
-                cmbStatus.SelectedValue = SelectedInentoryItem.status_id;
-                txtCount.Text = SelectedInentoryItem.count.ToString();
             }
-        }
-
-        private void cmbCar_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cmbCar.SelectedItem != null)
+            else
             {
-                var selectedCar = cmbCar.SelectedItem as car;
-
-                txtMake.Text = selectedCar.make;
-                txtModel.Text = selectedCar.model;
-                txtBodyType.Text = selectedCar.car_types.type_name;
-                txtYear.Text = selectedCar.year.ToString();
-                txtColor.Text = selectedCar.color;
-                txtTrimLevel.Text = selectedCar.trim_level;
-                txtModification.Text = selectedCar.modification;
+                MessageBox.Show("Данные не загружены");
             }
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Вы хотите внести изменения в запись?", "Внесение изменений", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите сохранить изменения?", "Сохранение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    if (SelectedInentoryItem != null)
+                    var selectedInventory = db.inventories.FirstOrDefault(i => i.inventory_id == inventoryId);
+
+                    if (selectedInventory != null)
                     {
-                        var inventoryItem = db.inventories.FirstOrDefault(i => i.inventory_id == SelectedInentoryItem.inventory_id);
+                        int carId = (int)cmbCar.SelectedValue;
+                        int locationId = (int)cmbLocation.SelectedValue;
 
-                        if (inventoryItem != null)
+                        bool isDuplicateLocation = db.inventories.Any(inv => inv.car_id == carId && inv.location_id == locationId && inv.inventory_id != selectedInventory.inventory_id);
+
+                        if (isDuplicateLocation)
                         {
-                            if(string.IsNullOrWhiteSpace(txtCount.Text))
-                            {
-                                MessageBox.Show("Необходимо заполнить все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                                return; // Прерываем операцию сохранения
-                            }
-
-                            inventoryItem.car_id = (int)cmbCar.SelectedValue;
-                            inventoryItem.location_id = (int)cmbLocation.SelectedValue;
-                            inventoryItem.status_id = (int)cmbStatus.SelectedValue;
-                            inventoryItem.count = int.Parse(txtCount.Text);
-                            inventoryItem.make = txtMake.Text;
-                            inventoryItem.model = txtModel.Text;
-                            inventoryItem.color = txtColor.Text;
-                            inventoryItem.year = int.Parse(txtYear.Text);
-                            inventoryItem.modification = txtModification.Text;
-                            inventoryItem.trim_level = txtTrimLevel.Text;
-
-                            db.SaveChanges();
-
-                            MessageBox.Show("Данные сохранены");
+                            MessageBox.Show("Указанное расположение для выбранного автомобиля уже занято.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
                         }
+
+
+                        // Обновляем свойства объекта selectedInventory
+                        selectedInventory.car_id = (int)cmbCar.SelectedValue;
+                        selectedInventory.location_id = (int)cmbLocation.SelectedValue;
+                        selectedInventory.count = int.Parse(txtCount.Text);
+                        selectedInventory.status_id = (int)cmbStatus.SelectedValue;
+
+                        // Сохраняем изменения в базе данных
+                        db.SaveChanges();
+
+                        MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
                 catch (Exception ex)
@@ -123,7 +111,43 @@ namespace CarDealerShip
             }
             else
             {
-                MessageBox.Show("Внесения не были изменены");
+                MessageBox.Show("Изменения не сохранены.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void cmbCar_SelectedChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbCar.SelectedItem != null)
+            {
+                car selectedCar = cmbCar.SelectedItem as car;
+
+                if (selectedCar != null)
+                {
+                    txtMake.Text = selectedCar.make;
+                    txtModel.Text = selectedCar.model;
+                    txtYear.Text = selectedCar.year.ToString() ?? "Не указан";
+                    txtColor.Text = selectedCar.color;
+                    txtModification.Text = selectedCar.modification;
+                    txtTrimLevel.Text = selectedCar.trim_level;
+                }
+
+                if (selectedCar.type_id != null)
+                {
+                    var carType = db.car_types.FirstOrDefault(ct => ct.type_id == selectedCar.type_id);
+
+                    if (carType != null)
+                    {
+                        txtBodyType.Text = carType.type_name;
+                    }
+                    else
+                    {
+                        txtBodyType.Text = "Незивестно";
+                    }
+                }
+                else
+                {
+                    txtBodyType.Text = "Не указан";
+                }
             }
         }
     }
