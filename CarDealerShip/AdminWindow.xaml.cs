@@ -64,5 +64,10 @@ namespace CarDealerShip
                 MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            FrameManger.AdminFrame.Navigate(new CatalogPanel());
+        }
     }
 }

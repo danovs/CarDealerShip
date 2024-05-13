@@ -44,8 +44,7 @@
           </Key>
           <Property Name="catalog_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="car_id" Type="int" Nullable="false" />
-          <Property Name="description" Type="varchar(max)" />
-          <Property Name="image_url" Type="varchar" MaxLength="255" />
+          <Property Name="inventory_id" Type="int" />
         </EntityType>
         <EntityType Name="clients">
           <Key>
@@ -313,6 +312,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_catalog_inventory">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="catalog" Type="Self.catalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="inventory_id" />
+            </Principal>
+            <Dependent Role="catalog">
+              <PropertyRef Name="inventory_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_inventory_locations">
           <End Role="locations" Type="Self.locations" Multiplicity="0..1" />
           <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
@@ -423,6 +434,10 @@
             <End Role="car_types" EntitySet="car_types" />
             <End Role="cars" EntitySet="cars" />
           </AssociationSet>
+          <AssociationSet Name="FK_catalog_inventory" Association="Self.FK_catalog_inventory">
+            <End Role="inventory" EntitySet="inventory" />
+            <End Role="catalog" EntitySet="catalog" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_locations" Association="Self.FK_inventory_locations">
             <End Role="locations" EntitySet="locations" />
             <End Role="inventory" EntitySet="inventory" />
@@ -489,9 +504,9 @@
           </Key>
           <Property Name="catalog_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="car_id" Type="Int32" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="image_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="inventory_id" Type="Int32" />
           <NavigationProperty Name="car" Relationship="Self.FK__catalog__car_id__4F7CD00D" FromRole="catalog" ToRole="cars" />
+          <NavigationProperty Name="inventory" Relationship="Self.FK_catalog_inventory" FromRole="catalog" ToRole="inventory" />
         </EntityType>
         <EntityType Name="client">
           <Key>
@@ -546,6 +561,7 @@
           <Property Name="count" Type="Int32" Nullable="false" />
           <Property Name="location_id" Type="Int32" />
           <NavigationProperty Name="car" Relationship="Self.FK__inventory__car_i__44FF419A" FromRole="inventory" ToRole="cars" />
+          <NavigationProperty Name="catalogs" Relationship="Self.FK_catalog_inventory" FromRole="inventory" ToRole="catalog" />
           <NavigationProperty Name="sales" Relationship="Self.FK__sales__inventory__47DBAE45" FromRole="inventory" ToRole="sales" />
           <NavigationProperty Name="location" Relationship="Self.FK_inventory_locations" FromRole="inventory" ToRole="locations" />
           <NavigationProperty Name="status" Relationship="Self.FK_inventory_status" FromRole="inventory" ToRole="status" />
@@ -686,6 +702,18 @@
             </Principal>
             <Dependent Role="inventory">
               <PropertyRef Name="car_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_catalog_inventory">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="catalog" Type="Self.catalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="inventory_id" />
+            </Principal>
+            <Dependent Role="catalog">
+              <PropertyRef Name="inventory_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -863,6 +891,10 @@
             <End Role="cars" EntitySet="cars" />
             <End Role="inventory" EntitySet="inventories" />
           </AssociationSet>
+          <AssociationSet Name="FK_catalog_inventory" Association="Self.FK_catalog_inventory">
+            <End Role="inventory" EntitySet="inventories" />
+            <End Role="catalog" EntitySet="catalogs" />
+          </AssociationSet>
           <AssociationSet Name="FK__clients__user_id__403A8C7D" Association="Self.FK__clients__user_id__403A8C7D">
             <End Role="users" EntitySet="users" />
             <End Role="clients" EntitySet="clients" />
@@ -955,8 +987,7 @@
               <MappingFragment StoreEntitySet="catalog">
                 <ScalarProperty Name="catalog_id" ColumnName="catalog_id" />
                 <ScalarProperty Name="car_id" ColumnName="car_id" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="inventory_id" ColumnName="inventory_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -17,6 +17,7 @@ namespace CarDealerShip
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public inventory()
         {
+            this.catalogs = new HashSet<catalog>();
             this.sales = new HashSet<sale>();
         }
     
@@ -27,6 +28,8 @@ namespace CarDealerShip
         public Nullable<int> location_id { get; set; }
     
         public virtual car car { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<catalog> catalogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sale> sales { get; set; }
         public virtual location location { get; set; }

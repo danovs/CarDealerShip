@@ -128,8 +128,14 @@
     <Compile Include="catalog.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CatalogAddPage.xaml.cs">
+      <DependentUpon>CatalogAddPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CatalogPage.xaml.cs">
       <DependentUpon>CatalogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogPanel.xaml.cs">
+      <DependentUpon>CatalogPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="client.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
@@ -216,7 +222,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CatalogAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CatalogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CatalogPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

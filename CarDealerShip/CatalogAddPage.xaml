@@ -1,4 +1,4 @@
-﻿<Page x:Class="CarDealerShip.InventoryEditPage"
+﻿<Page x:Class="CarDealerShip.CatalogAddPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:CarDealerShip"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1130"
-      Title="InventoryEditPage">
+      Title="CatalogAddPage">
 
     <Grid>
         <Grid>
@@ -25,10 +25,11 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Автомобиль:" Grid.Row="0" />
-                    <ComboBox x:Name="cmbCar" Grid.Row="0" Margin="120,0,0,0" SelectionChanged="cmbCar_SelectedChanged" IsEnabled="False"/>
+                    <ComboBox x:Name="cmbCar" Grid.Row="0" Margin="120,0,0,0" SelectionChanged="cmbCar_SelectionChanged"/>
 
                     <TextBlock Text="Марка автомобиля:" Grid.Row="1" />
                     <TextBlock x:Name="txtMake" Grid.Row="1" Margin="120,0,0,0"/>
@@ -51,16 +52,19 @@
                     <TextBlock Text="Модификация" Grid.Row="7" />
                     <TextBlock x:Name="txtModification" Grid.Row="7" Margin="120,0,0,0"/>
 
-                    <TextBlock Text="Расположение" Grid.Row="8" />
-                    <ComboBox x:Name="cmbLocation" Grid.Row="8" Margin="120,0,0,0"/>
+                    <TextBlock Text="Цена" Grid.Row="8" />
+                    <TextBlock x:Name="txtPrice" Grid.Row="8" Margin="120,0,0,0"/>
 
-                    <TextBlock Text="Количество:" Grid.Row="9" />
-                    <TextBox x:Name="txtCount" Grid.Row="9" Margin="120,0,0,0" MaxLength="10"/>
+                    <TextBlock Text="Расположение" Grid.Row="9"/>
+                    <ComboBox x:Name="cmbLocation" Grid.Row="9" Margin="120,0,0,0" SelectionChanged="cmbLocation_SelectionChanged"/>
 
-                    <TextBlock Text="Статус:" Grid.Row="10"/>
-                    <ComboBox x:Name="cmbStatus" Grid.Row="10" Margin="120,0,0,0"/>
+                    <TextBlock Text="Количество:" Grid.Row="10" />
+                    <TextBlock x:Name="txtCount" Grid.Row="10" Margin="120,0,0,0"/>
 
-                    <Button Content="Сохранить" Grid.Row="11" Margin="0,20,0,0" Click="Button_Click"/>
+                    <TextBlock Text="Статус:" Grid.Row="11"/>
+                    <TextBlock x:Name="txtStatus" Grid.Row="11" Margin="120,0,0,0"/>
+
+                    <Button Content="Добавить" Grid.Row="12" Margin="0,20,0,0" Click="Button_Click"/>
 
                 </Grid>
 

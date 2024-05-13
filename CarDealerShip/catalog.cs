@@ -16,9 +16,9 @@ namespace CarDealerShip
     {
         public int catalog_id { get; set; }
         public int car_id { get; set; }
-        public string description { get; set; }
-        public string image_url { get; set; }
+        public Nullable<int> inventory_id { get; set; }
     
         public virtual car car { get; set; }
+        public virtual inventory inventory { get; set; }
     }
 }
