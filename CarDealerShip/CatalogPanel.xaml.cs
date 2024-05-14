@@ -38,6 +38,7 @@ namespace CarDealerShip
                         join car_types in db.car_types on car.type_id equals car_types.type_id
                         join inventory in db.inventories on catalog.inventory_id equals inventory.inventory_id
                         join status in db.status on inventory.status_id equals status.status_id
+                        join location in db.locations on inventory.location_id equals location.location_id
                         select new
                         {
                             CatalogId = catalog.catalog_id,
@@ -49,7 +50,8 @@ namespace CarDealerShip
                             Price = car.price,
                             TrimLevel = car.trim_level,
                             Modification = car.modification,
-                            StatusName = status.status_name
+                            StatusName = status.status_name,
+                            LocationName = location.location_name
                         };
             DGridCatalog.ItemsSource = query.ToList();
         }
@@ -70,7 +72,6 @@ namespace CarDealerShip
                     if (DGridCatalog.SelectedItem != null)
                     {
                         var selectedCatalogItem = (dynamic)DGridCatalog.SelectedItem;
-
                         int CatalogId = selectedCatalogItem.CatalogId;
 
                         var selectedCatalogItemToDelete = db.catalogs.Find(CatalogId);

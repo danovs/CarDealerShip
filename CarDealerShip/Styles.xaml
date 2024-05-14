@@ -118,6 +118,55 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="BuyButton" TargetType="Button">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Montserrat"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Width" Value="250"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Margin" Value="0 20 0 0"/>
+        <Setter Property="Background" Value="#355858"/>
+        <Setter Property="Foreground" Value="#fdfefe"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="#3c6464" Padding="15">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#385b5b"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsMouseCaptured" Value="True">
+                <Setter Property="Background" Value="#436b6b"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="textMarkModel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="Montserrat"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="Grid.Column" Value="1"/>
+        <Setter Property="Panel.ZIndex" Value="1"/>
+        <Setter Property="Foreground" Value="#303030"/>
+    </Style>
+
+    <Style x:Key="textSpecs" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Montserrat"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Grid.Column" Value="1"/>
+        <Setter Property="Panel.ZIndex" Value="1"/>
+        <Setter Property="Foreground" Value="#808080"/>
+    </Style>
+
 
 
 

@@ -41,7 +41,7 @@ namespace CarDealerShip
             txtLastname.Text = currentEmployee.lastname;
             txtPhone.Text = currentEmployee.phone;
             txtEmail.Text = currentEmployee.email;
-            cmbRole.SelectedItem = currentEmployee.role.role_name;
+            cmbRole.SelectedItem = currentEmployee.user.role.role_name;
             cmbUsername.SelectedItem = currentEmployee.user.username;
             txtSalary.Text = currentEmployee.salary.ToString();
 
@@ -87,25 +87,13 @@ namespace CarDealerShip
                     }
 
                     // Get selected role and update employee's role
-                    string selectedRole = cmbRole.SelectedItem as string;
+                    string selectedRoleName = cmbRole.SelectedItem as string;
 
-                    var newRole = db.roles.FirstOrDefault(r => r.role_name == selectedRole);
+                    var newRole = db.roles.FirstOrDefault(r => r.role_name == selectedRoleName);
 
                     if (newRole != null)
                     {
-                        currentEmployee.role = newRole;
-
-                        var associatedUser = currentEmployee.user;
-
-                        if (associatedUser != null)
-                        {
-                            associatedUser.role = newRole;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Подходящий пользователь не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
+                        currentEmployee.user.role = newRole;
 
                         db.SaveChanges();
                         MessageBox.Show("Изменения сохранены!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);

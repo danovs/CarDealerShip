@@ -380,6 +380,8 @@
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
       <LastGenOutput>CarDealershipModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="MenuImages\bmw.jpg" />
+    <Resource Include="MenuImages\layers.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

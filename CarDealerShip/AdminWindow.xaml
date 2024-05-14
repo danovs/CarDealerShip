@@ -38,7 +38,7 @@
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_5">
-                        <Image Source="/MenuImages/phone.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Image Source="/MenuImages/layers.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                 </StackPanel>
 

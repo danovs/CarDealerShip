@@ -27,6 +27,7 @@
                             <DataGridTextColumn Header="Комлпектация" Binding="{Binding TrimLevel}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Модификация" Binding="{Binding Modification}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Расположение" Binding="{Binding LocationName}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Статус" Binding="{Binding StatusName}" Width="*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>

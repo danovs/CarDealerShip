@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a550b4efaf144d54aed37aaa60cdae47" Name="Diagram1">
+      <Diagram DiagramId="a7ec733ea74645d598a27c91417a0a51" Name="Diagram1">
         <EntityTypeShape EntityType="CarDealershipModel.appointment" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDealershipModel.car_types" Width="1.5" PointX="1.5" PointY="15.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDealershipModel.car" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="CarDealershipModel.feedback" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDealershipModel.inventory" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDealershipModel.location" Width="1.5" PointX="3.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.role" Width="1.5" PointX="1.5" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.role" Width="1.5" PointX="1.5" PointY="25.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDealershipModel.sale" Width="1.5" PointX="11.25" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDealershipModel.status" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CarDealershipModel.user" Width="1.5" PointX="1.5" PointY="22.125" IsExpanded="true" />
@@ -29,7 +29,6 @@
         <AssociationConnector Association="CarDealershipModel.FK__clients__user_id__403A8C7D" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__feedback__client__4CA06362" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__sales__client_id__48CFD27E" ManuallyRouted="false" />
-        <AssociationConnector Association="CarDealershipModel.FK__employees__role___3D5E1FD2" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__employees__user___3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__sales__employee___49C3F6B7" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__sales__inventory__47DBAE45" ManuallyRouted="false" />

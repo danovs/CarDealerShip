@@ -18,7 +18,25 @@ namespace CarDealerShip
 
         private void LoadEmployeeData()
         {
-            DGridEmployees.ItemsSource = db.employees.ToList();
+            var query = (from employee in db.employees
+                         join user in db.users on employee.user_id equals user.user_id
+                         join role in db.roles on user.role_id equals role.role_id
+                         select new
+                         {
+                             EmployeeId = employee.employee_id,
+                             UserId = employee.user_id,
+                             HireDate = employee.hiredate,
+                             RoleName = role.role_name,
+                             Surname = employee.surname,
+                             Name = employee.name,
+                             LastName = employee.lastname,
+                             Phone = employee.phone,
+                             Email = employee.email,
+                             SalesCount = employee.sales_count,
+                             Salary = employee.salary
+
+                         });
+            DGridEmployees.ItemsSource = query.ToList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

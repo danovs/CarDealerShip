@@ -103,43 +103,54 @@ namespace CarDealerShip
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             car selectedCar = cmbCar.SelectedItem as car;
+            location selectedLocation = cmbLocation.SelectedItem as location;
 
-            if (selectedCar != null)
+            if (selectedCar != null && selectedLocation != null)
             {
-                // Проверяем наличие для выбранного автомобиля
-                var invInfo = db.inventories.FirstOrDefault(inv => inv.car_id == selectedCar.car_id);
+                var existingEntry = db.catalogs.FirstOrDefault(c=> c.car_id == selectedCar.car_id && c.inventory.location_id == selectedLocation.location_id);
 
-                if (invInfo != null && invInfo.count > 0)
+                if(existingEntry != null)
                 {
-                    try
-                    {
-                        // Создаем новую запись в каталоге
-                        catalog newCatalogEntry = new catalog
-                        {
-                            car_id = selectedCar.car_id,
-                            inventory_id = invInfo.inventory_id
-                            // Добавьте другие поля, если необходимо
-                        };
-
-                        // Добавляем запись в таблицу каталогов
-                        db.catalogs.Add(newCatalogEntry);
-                        db.SaveChanges();
-
-                        MessageBox.Show("Запись успешно добавлена в каталог.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Ошибка при добавлении записи: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    MessageBox.Show("Данный автомобиль уже добавлен в каталог для выбранного расположения.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+
                 else
                 {
-                    MessageBox.Show("Недостаточное количество автомобиля для добавления в каталог.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var invInfo = db.inventories.FirstOrDefault(inv => inv.car_id == selectedCar.car_id && inv.location_id == selectedLocation.location_id);
+
+                    if (invInfo != null && invInfo.count > 0)
+                    {
+                        try
+                        {
+                            // Создаем новую запись в каталоге
+                            catalog newCatalogEntry = new catalog
+                            {
+                                car_id = selectedCar.car_id,
+                                inventory_id = invInfo.inventory_id
+                                // Добавьте другие поля, если необходимо
+                            };
+
+                            // Добавляем запись в таблицу каталогов
+                            db.catalogs.Add(newCatalogEntry);
+                            db.SaveChanges();
+
+                            MessageBox.Show("Запись успешно добавлена в каталог.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ошибка при добавлении записи: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Недостаточное количество автомобиля на складе для добавления в каталог.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
+
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите автомобиль для добавления в каталог.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Пожалуйста, выберите автомобиль и местоположение для добавления в каталог.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

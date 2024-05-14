@@ -23,7 +23,6 @@ namespace CarDealerShip
     
         public int employee_id { get; set; }
         public int user_id { get; set; }
-        public int role_id { get; set; }
         public string surname { get; set; }
         public string name { get; set; }
         public string lastname { get; set; }
@@ -35,7 +34,6 @@ namespace CarDealerShip
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<appointment> appointments { get; set; }
-        public virtual role role { get; set; }
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sale> sales { get; set; }

@@ -18,16 +18,16 @@
                     </Grid.RowDefinitions>
                     <DataGrid x:Name="DGridEmployees" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID сотрудника" Binding="{Binding employee_id}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Принят" Binding="{Binding hiredate, StringFormat={}{0:d}}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Роль" Binding="{Binding role.role_name}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Фамилия" Binding="{Binding surname}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Имя" Binding="{Binding name}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Отчество" Binding="{Binding lastname}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Номер телефона" Binding="{Binding phone}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Кол-во продаж" Binding="{Binding sales_count}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Зарплата" Binding="{Binding salary}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="ID сотрудника" Binding="{Binding EmployeeId}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Принят" Binding="{Binding HireDate, StringFormat={}{0:dd.MM.yyyy}}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Роль" Binding="{Binding RoleName}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Отчество" Binding="{Binding LastName}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Кол-во продаж" Binding="{Binding SalesCount}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary}" Width="*"></DataGridTextColumn>
                             <DataGridTemplateColumn Width="auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
