@@ -153,5 +153,6 @@ namespace CarDealerShip
                 MessageBox.Show("Пожалуйста, выберите автомобиль и местоположение для добавления в каталог.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

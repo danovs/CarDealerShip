@@ -16,40 +16,15 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+                <!-- Заголовок каталога -->
                 <TextBlock Grid.Row="0" Text="Каталог" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
                            HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,10" Foreground="#3C3C3C"/>
 
                 <!-- ScrollViewer для содержимого каталога -->
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <!-- WrapPanel для карточек с автоматическим расположением в строку с переносом -->
-                    <WrapPanel Margin="20" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <!-- Пример карточки с элементами -->
-                        <Border Background="White" CornerRadius="5" Margin="5" Padding="10" Width="300">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Gray" Direction="270" ShadowDepth="5" Opacity="0.15"/>
-                            </Border.Effect>
-                            <StackPanel>
-                                <TextBlock Text="Марка и модель" Style="{StaticResource textMarkModel}"/>
-                                <TextBlock Text="Комплектация" Style="{StaticResource textSpecs}"/>
-                                <TextBlock Text="Модификация" Style="{StaticResource textSpecs}"/>
-                                <TextBlock Text="Комллектация" Style="{StaticResource textSpecs}"/>
-                                <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0" Margin="0,10,0,10" Opacity="0.5"/>
-                                <Border CornerRadius="5">
-                                    <Image Source="/MenuImages/bmw.jpg" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                </Border>
-                                <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0" Margin="0,10,0,10" Opacity="0.5"/>
-                                <TextBlock Text="Цена" FontSize="16" Style="{StaticResource textMarkModel}"/>
-                                <TextBlock Text="Наличие" FontSize="16" Style="{StaticResource textMarkModel}"/>
-                                <Button Content="Купить" Style="{StaticResource BuyButton}"/>
-                                <!-- Дополнительные элементы и данные для карточки -->
-                            </StackPanel>
-                        </Border>
-
-                        <!-- Пример второй карточки -->
-
-
-                        <!-- Можно добавлять дополнительные карточки с автомобилями с аналогичным шаблоном -->
-
+                    <!-- WrapPanel для карточек с автомобилями -->
+                    <WrapPanel x:Name="wrapPanel" Margin="20" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <!-- Здесь будут добавляться карточки автомобилей -->
                     </WrapPanel>
                 </ScrollViewer>
             </Grid>
