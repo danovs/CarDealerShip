@@ -19,14 +19,6 @@
                 <!-- Заголовок каталога -->
                 <TextBlock Grid.Row="0" Text="Каталог" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
                            HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,10" Foreground="#3C3C3C"/>
-
-                <!-- ScrollViewer для содержимого каталога -->
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <!-- WrapPanel для карточек с автомобилями -->
-                    <WrapPanel x:Name="wrapPanel" Margin="20" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <!-- Здесь будут добавляться карточки автомобилей -->
-                    </WrapPanel>
-                </ScrollViewer>
             </Grid>
         </Border>
     </Grid>
