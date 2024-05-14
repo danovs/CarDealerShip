@@ -9,7 +9,7 @@
       Title="Каталог">
 
     <Grid>
-        <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
+        <Border Grid.Column="1" Background="#FFF7F7F7" CornerRadius="0 30 30 0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -19,6 +19,10 @@
                 <!-- Заголовок каталога -->
                 <TextBlock Grid.Row="0" Text="Каталог" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
                            HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,10" Foreground="#3C3C3C"/>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+                    <WrapPanel x:Name="carCardsContainer" Orientation="Horizontal" Margin="10" />
+                </ScrollViewer>
             </Grid>
         </Border>
     </Grid>
