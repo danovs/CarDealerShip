@@ -11,10 +11,16 @@
           </Key>
           <Property Name="appointment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="client_id" Type="int" Nullable="false" />
-          <Property Name="employee_id" Type="int" Nullable="false" />
           <Property Name="car_id" Type="int" Nullable="false" />
           <Property Name="appointment_date" Type="datetime" Nullable="false" />
-          <Property Name="status_id" Type="int" Nullable="false" />
+          <Property Name="appointmentStatus_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="appointments_status">
+          <Key>
+            <PropertyRef Name="appointmentStatus_id" />
+          </Key>
+          <Property Name="appointmentStatus_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="appoinmentStatus_name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="car_types">
           <Key>
@@ -161,18 +167,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__appointme__emplo__534D60F1">
-          <End Role="employees" Type="Self.employees" Multiplicity="1" />
-          <End Role="appointments" Type="Self.appointments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employees">
-              <PropertyRef Name="employee_id" />
-            </Principal>
-            <Dependent Role="appointments">
-              <PropertyRef Name="employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__catalog__car_id__4F7CD00D">
           <End Role="cars" Type="Self.cars" Multiplicity="1" />
           <End Role="catalog" Type="Self.catalog" Multiplicity="*" />
@@ -294,14 +288,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_appointments_status">
-          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="appointments_status" Type="Self.appointments_status" Multiplicity="1" />
           <End Role="appointments" Type="Self.appointments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="status">
-              <PropertyRef Name="status_id" />
+            <Principal Role="appointments_status">
+              <PropertyRef Name="appointmentStatus_id" />
             </Principal>
             <Dependent Role="appointments">
-              <PropertyRef Name="status_id" />
+              <PropertyRef Name="appointmentStatus_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -367,6 +361,7 @@
         </Association>
         <EntityContainer Name="Хранилище CarDealershipModelContainer">
           <EntitySet Name="appointments" EntityType="Self.appointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="appointments_status" EntityType="Self.appointments_status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="car_types" EntityType="Self.car_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cars" EntityType="Self.cars" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="catalog" EntityType="Self.catalog" Schema="dbo" store:Type="Tables" />
@@ -386,10 +381,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__appointme__clien__52593CB8" Association="Self.FK__appointme__clien__52593CB8">
             <End Role="clients" EntitySet="clients" />
-            <End Role="appointments" EntitySet="appointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK__appointme__emplo__534D60F1" Association="Self.FK__appointme__emplo__534D60F1">
-            <End Role="employees" EntitySet="employees" />
             <End Role="appointments" EntitySet="appointments" />
           </AssociationSet>
           <AssociationSet Name="FK__catalog__car_id__4F7CD00D" Association="Self.FK__catalog__car_id__4F7CD00D">
@@ -433,7 +424,7 @@
             <End Role="users" EntitySet="users" />
           </AssociationSet>
           <AssociationSet Name="FK_appointments_status" Association="Self.FK_appointments_status">
-            <End Role="status" EntitySet="status" />
+            <End Role="appointments_status" EntitySet="appointments_status" />
             <End Role="appointments" EntitySet="appointments" />
           </AssociationSet>
           <AssociationSet Name="FK_cars_car_types" Association="Self.FK_cars_car_types">
@@ -468,14 +459,20 @@
           </Key>
           <Property Name="appointment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="client_id" Type="Int32" Nullable="false" />
-          <Property Name="employee_id" Type="Int32" Nullable="false" />
           <Property Name="car_id" Type="Int32" Nullable="false" />
           <Property Name="appointment_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="status_id" Type="Int32" Nullable="false" />
+          <Property Name="appointmentStatus_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="car" Relationship="Self.FK__appointme__car_i__5441852A" FromRole="appointments" ToRole="cars" />
           <NavigationProperty Name="client" Relationship="Self.FK__appointme__clien__52593CB8" FromRole="appointments" ToRole="clients" />
-          <NavigationProperty Name="employee" Relationship="Self.FK__appointme__emplo__534D60F1" FromRole="appointments" ToRole="employees" />
-          <NavigationProperty Name="status" Relationship="Self.FK_appointments_status" FromRole="appointments" ToRole="status" />
+          <NavigationProperty Name="appointments_status" Relationship="Self.FK_appointments_status" FromRole="appointments" ToRole="appointments_status" />
+        </EntityType>
+        <EntityType Name="appointments_status">
+          <Key>
+            <PropertyRef Name="appointmentStatus_id" />
+          </Key>
+          <Property Name="appointmentStatus_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="appoinmentStatus_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="appointments" Relationship="Self.FK_appointments_status" FromRole="appointments_status" ToRole="appointments" />
         </EntityType>
         <EntityType Name="car_types">
           <Key>
@@ -540,7 +537,6 @@
           <Property Name="email" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="hiredate" Type="DateTime" Precision="0" />
           <Property Name="salary" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="appointments" Relationship="Self.FK__appointme__emplo__534D60F1" FromRole="employees" ToRole="appointments" />
           <NavigationProperty Name="user" Relationship="Self.FK__employees__user___3C69FB99" FromRole="employees" ToRole="users" />
           <NavigationProperty Name="sales" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="employees" ToRole="sales" />
           <NavigationProperty Name="sales_counts" Relationship="Self.FK__sales_cou__emplo__1B9317B3" FromRole="employees" ToRole="sales_counts" />
@@ -616,7 +612,6 @@
           </Key>
           <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="status_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="appointments" Relationship="Self.FK_appointments_status" FromRole="status" ToRole="appointments" />
           <NavigationProperty Name="inventories" Relationship="Self.FK_inventory_status" FromRole="status" ToRole="inventory" />
           <NavigationProperty Name="sales" Relationship="Self.FK_sales_status" FromRole="status" ToRole="sales" />
         </EntityType>
@@ -656,27 +651,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__appointme__emplo__534D60F1">
-          <End Role="employees" Type="Self.employee" Multiplicity="1" />
-          <End Role="appointments" Type="Self.appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employees">
-              <PropertyRef Name="employee_id" />
-            </Principal>
-            <Dependent Role="appointments">
-              <PropertyRef Name="employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_appointments_status">
-          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="appointments_status" Type="Self.appointments_status" Multiplicity="1" />
           <End Role="appointments" Type="Self.appointment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="status">
-              <PropertyRef Name="status_id" />
+            <Principal Role="appointments_status">
+              <PropertyRef Name="appointmentStatus_id" />
             </Principal>
             <Dependent Role="appointments">
-              <PropertyRef Name="status_id" />
+              <PropertyRef Name="appointmentStatus_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -862,6 +845,7 @@
         </Association>
         <EntityContainer Name="CarDealershipEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="appointments" EntityType="Self.appointment" />
+          <EntitySet Name="appointments_status" EntityType="Self.appointments_status" />
           <EntitySet Name="car_types" EntityType="Self.car_types" />
           <EntitySet Name="cars" EntityType="Self.car" />
           <EntitySet Name="catalogs" EntityType="Self.catalog" />
@@ -883,12 +867,8 @@
             <End Role="clients" EntitySet="clients" />
             <End Role="appointments" EntitySet="appointments" />
           </AssociationSet>
-          <AssociationSet Name="FK__appointme__emplo__534D60F1" Association="Self.FK__appointme__emplo__534D60F1">
-            <End Role="employees" EntitySet="employees" />
-            <End Role="appointments" EntitySet="appointments" />
-          </AssociationSet>
           <AssociationSet Name="FK_appointments_status" Association="Self.FK_appointments_status">
-            <End Role="status" EntitySet="status" />
+            <End Role="appointments_status" EntitySet="appointments_status" />
             <End Role="appointments" EntitySet="appointments" />
           </AssociationSet>
           <AssociationSet Name="FK_cars_car_types" Association="Self.FK_cars_car_types">
@@ -963,10 +943,17 @@
               <MappingFragment StoreEntitySet="appointments">
                 <ScalarProperty Name="appointment_id" ColumnName="appointment_id" />
                 <ScalarProperty Name="client_id" ColumnName="client_id" />
-                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="car_id" ColumnName="car_id" />
                 <ScalarProperty Name="appointment_date" ColumnName="appointment_date" />
-                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="appointmentStatus_id" ColumnName="appointmentStatus_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="appointments_status">
+            <EntityTypeMapping TypeName="CarDealershipModel.appointments_status">
+              <MappingFragment StoreEntitySet="appointments_status">
+                <ScalarProperty Name="appointmentStatus_id" ColumnName="appointmentStatus_id" />
+                <ScalarProperty Name="appoinmentStatus_name" ColumnName="appoinmentStatus_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

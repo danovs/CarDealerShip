@@ -12,16 +12,18 @@ namespace CarDealerShip
     using System;
     using System.Collections.Generic;
     
-    public partial class appointment
+    public partial class appointments_status
     {
-        public int appointment_id { get; set; }
-        public int client_id { get; set; }
-        public int car_id { get; set; }
-        public System.DateTime appointment_date { get; set; }
-        public int appointmentStatus_id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public appointments_status()
+        {
+            this.appointments = new HashSet<appointment>();
+        }
     
-        public virtual car car { get; set; }
-        public virtual client client { get; set; }
-        public virtual appointments_status appointments_status { get; set; }
+        public int appointmentStatus_id { get; set; }
+        public string appoinmentStatus_name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<appointment> appointments { get; set; }
     }
 }

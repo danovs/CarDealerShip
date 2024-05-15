@@ -40,6 +40,10 @@
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_5">
                         <Image Source="/MenuImages/layers.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
+
+                    <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click_6">
+                        <Image Source="/MenuImages/quit.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
                 </StackPanel>
 
                 <!-- Quit Button at the bottom -->

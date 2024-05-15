@@ -26,6 +26,7 @@ namespace CarDealerShip
         }
     
         public virtual DbSet<appointment> appointments { get; set; }
+        public virtual DbSet<appointments_status> appointments_status { get; set; }
         public virtual DbSet<car_types> car_types { get; set; }
         public virtual DbSet<car> cars { get; set; }
         public virtual DbSet<catalog> catalogs { get; set; }

@@ -87,8 +87,8 @@ namespace CarDealerShip
             Image carImage = new Image();
             carImage.Source = LoadImageFromBytes(catalogEntry.car.photo);
             carImage.Stretch = Stretch.Uniform;
-            carImage.MaxWidth = 280;
-            carImage.MaxHeight = 140;
+            carImage.MaxWidth = 253;
+            carImage.MaxHeight = 190;
             carImage.Margin = new Thickness(0, 10, 0, 10);
 
             Border topBorder = new Border();
@@ -116,9 +116,19 @@ namespace CarDealerShip
             buyButton.Style = (Style)FindResource("BuyButton");
             buyButton.Click += (sender, e) =>
             {
-                MessageBox.Show($"Вы выбрали покупку автомобиля {catalogEntry.car.make} {catalogEntry.car.model}");
+                // Создаем экземпляр PurchasePage
+                OrderPage orderPage = new OrderPage();
+
+                // Получаем объект NavigationService текущей страницы
+                NavigationService navigationService = NavigationService.GetNavigationService(this);
+
+                // Переходим на страницу PurchasePage
+                if (navigationService != null)
+                {
+                    navigationService.Navigate(orderPage);
+                }
             };
-            
+
             stackPanel.Children.Add(carInfo);
             stackPanel.Children.Add(modificationInfo);
             stackPanel.Children.Add(trimLevelInfo);

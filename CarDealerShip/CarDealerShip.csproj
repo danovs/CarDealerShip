@@ -95,6 +95,9 @@
     <Compile Include="appointment.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="appointments_status.cs">
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="car.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
@@ -179,6 +182,12 @@
     </Compile>
     <Compile Include="location.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderEditPage.xaml.cs">
+      <DependentUpon>OrderEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OrderList.xaml.cs">
+      <DependentUpon>OrderList.xaml</DependentUpon>
     </Compile>
     <Compile Include="OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
@@ -291,6 +300,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OrderEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OrderList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

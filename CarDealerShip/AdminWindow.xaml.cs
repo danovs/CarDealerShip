@@ -69,5 +69,10 @@ namespace CarDealerShip
         {
             FrameManger.AdminFrame.Navigate(new CatalogPanel());
         }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            FrameManger.AdminFrame.Navigate(new OrderList());
+        }
     }
 }

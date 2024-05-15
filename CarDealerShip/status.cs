@@ -17,7 +17,6 @@ namespace CarDealerShip
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public status()
         {
-            this.appointments = new HashSet<appointment>();
             this.inventories = new HashSet<inventory>();
             this.sales = new HashSet<sale>();
         }
@@ -25,8 +24,6 @@ namespace CarDealerShip
         public int status_id { get; set; }
         public string status_name { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<appointment> appointments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<inventory> inventories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

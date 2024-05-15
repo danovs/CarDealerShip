@@ -17,7 +17,6 @@ namespace CarDealerShip
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public employee()
         {
-            this.appointments = new HashSet<appointment>();
             this.sales = new HashSet<sale>();
         }
     
@@ -31,8 +30,6 @@ namespace CarDealerShip
         public Nullable<System.DateTime> hiredate { get; set; }
         public Nullable<decimal> salary { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<appointment> appointments { get; set; }
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sale> sales { get; set; }

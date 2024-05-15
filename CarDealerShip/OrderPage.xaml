@@ -36,7 +36,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock x:Name="textName" Text="Введите ваше ФИО:" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            <TextBlock x:Name="textName" Text="ФИО" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
                             <TextBox x:Name="txtName"  Style="{StaticResource textBox}" Grid.Column="1"/>
                         </Grid>
                     </Border>
@@ -64,7 +64,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock x:Name="textCar" Text="Введите ваше ФИО:" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            <TextBlock x:Name="textCar" Text="Автомобиль" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
                             <TextBox x:Name="txtCar" Style="{StaticResource textBox}" Grid.Column="1"/>
                         </Grid>
                     </Border>
