@@ -31,6 +31,9 @@ namespace CarDealerShip
             db = new CarDealershipEntities();
 
             LoadCarCards();
+
+            minPriceTextBox.TextChanged += FilterCarsByPrice;
+            maxPriceTextBox.TextChanged += FilterCarsByPrice;
         }
 
         private void LoadCarCards()
@@ -146,6 +149,53 @@ namespace CarDealerShip
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
             }
             return image;
+        }
+
+        private void FilterCarsByPrice(object sender, TextChangedEventArgs e)
+        {
+            if (int.TryParse(minPriceTextBox.Text, out int minPrice) && int.TryParse(maxPriceTextBox.Text, out int maxPrice))
+            {
+                var FilterEntries = db.catalogs.Where(catalogEntry => catalogEntry.car.price >= minPrice && catalogEntry.car.price <= maxPrice).ToList();
+
+                carCardsContainer.Children.Clear();
+
+                foreach (var catalogEntry in FilterEntries)
+                {
+                    var carCard = CreateCarCard(catalogEntry);
+                    carCardsContainer.Children.Add(carCard);
+                }
+            }
+            else
+            {
+                LoadCarCards();
+            }
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (textBox != null && (textBox.Text == "цена от" || textBox.Text == "цена до"))
+            {
+                textBox.Text = string.Empty;
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (textBox != null && string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                if (textBox.Name == "minPriceTextBox")
+                {
+                    textBox.Text = "цена от";
+                }
+                else if (textBox.Name == "maxPriceTextBox")
+                {
+                    textBox.Text = "цена до";
+                }
+            }
         }
     }
 }

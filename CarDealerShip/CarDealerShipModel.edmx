@@ -66,7 +66,6 @@
           <Property Name="lastname" Type="nvarchar" MaxLength="75" />
           <Property Name="phone" Type="nvarchar" MaxLength="75" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
-          <Property Name="sales_count" Type="int" Nullable="false" />
           <Property Name="hiredate" Type="date" />
           <Property Name="salary" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
@@ -114,6 +113,13 @@
           <Property Name="sale_date" Type="date" Nullable="false" />
           <Property Name="sale_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="status_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sales_counts">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="sales_count" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="status">
           <Key>
@@ -263,6 +269,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__sales_cou__emplo__1B9317B3">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="sales_counts" Type="Self.sales_counts" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="sales_counts">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__users__role_id__398D8EEE">
           <End Role="roles" Type="Self.roles" Multiplicity="1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -359,6 +377,7 @@
           <EntitySet Name="locations" EntityType="Self.locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sales_counts" EntityType="Self.sales_counts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__appointme__car_i__5441852A" Association="Self.FK__appointme__car_i__5441852A">
@@ -404,6 +423,10 @@
           <AssociationSet Name="FK__sales__inventory__47DBAE45" Association="Self.FK__sales__inventory__47DBAE45">
             <End Role="inventory" EntitySet="inventory" />
             <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sales_cou__emplo__1B9317B3" Association="Self.FK__sales_cou__emplo__1B9317B3">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="sales_counts" EntitySet="sales_counts" />
           </AssociationSet>
           <AssociationSet Name="FK__users__role_id__398D8EEE" Association="Self.FK__users__role_id__398D8EEE">
             <End Role="roles" EntitySet="roles" />
@@ -515,12 +538,12 @@
           <Property Name="lastname" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
           <Property Name="phone" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="sales_count" Type="Int32" Nullable="false" />
           <Property Name="hiredate" Type="DateTime" Precision="0" />
           <Property Name="salary" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="appointments" Relationship="Self.FK__appointme__emplo__534D60F1" FromRole="employees" ToRole="appointments" />
           <NavigationProperty Name="user" Relationship="Self.FK__employees__user___3C69FB99" FromRole="employees" ToRole="users" />
           <NavigationProperty Name="sales" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="employees" ToRole="sales" />
+          <NavigationProperty Name="sales_counts" Relationship="Self.FK__sales_cou__emplo__1B9317B3" FromRole="employees" ToRole="sales_counts" />
         </EntityType>
         <EntityType Name="feedback">
           <Key>
@@ -578,6 +601,14 @@
           <NavigationProperty Name="employee" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="sales" ToRole="employees" />
           <NavigationProperty Name="inventory" Relationship="Self.FK__sales__inventory__47DBAE45" FromRole="sales" ToRole="inventory" />
           <NavigationProperty Name="status" Relationship="Self.FK_sales_status" FromRole="sales" ToRole="status" />
+        </EntityType>
+        <EntityType Name="sales_counts">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="sales_count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__sales_cou__emplo__1B9317B3" FromRole="sales_counts" ToRole="employees" />
         </EntityType>
         <EntityType Name="status">
           <Key>
@@ -757,6 +788,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__sales_cou__emplo__1B9317B3">
+          <End Role="employees" Type="Self.employee" Multiplicity="1" />
+          <End Role="sales_counts" Type="Self.sales_counts" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="sales_counts">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__sales__inventory__47DBAE45">
           <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
           <End Role="sales" Type="Self.sale" Multiplicity="*" />
@@ -829,6 +872,7 @@
           <EntitySet Name="locations" EntityType="Self.location" />
           <EntitySet Name="roles" EntityType="Self.role" />
           <EntitySet Name="sales" EntityType="Self.sale" />
+          <EntitySet Name="sales_counts" EntityType="Self.sales_counts" />
           <EntitySet Name="status" EntityType="Self.status" />
           <EntitySet Name="users" EntityType="Self.user" />
           <AssociationSet Name="FK__appointme__car_i__5441852A" Association="Self.FK__appointme__car_i__5441852A">
@@ -882,6 +926,10 @@
           <AssociationSet Name="FK__sales__employee___49C3F6B7" Association="Self.FK__sales__employee___49C3F6B7">
             <End Role="employees" EntitySet="employees" />
             <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sales_cou__emplo__1B9317B3" Association="Self.FK__sales_cou__emplo__1B9317B3">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="sales_counts" EntitySet="sales_counts" />
           </AssociationSet>
           <AssociationSet Name="FK__sales__inventory__47DBAE45" Association="Self.FK__sales__inventory__47DBAE45">
             <End Role="inventory" EntitySet="inventories" />
@@ -975,7 +1023,6 @@
                 <ScalarProperty Name="lastname" ColumnName="lastname" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="sales_count" ColumnName="sales_count" />
                 <ScalarProperty Name="hiredate" ColumnName="hiredate" />
                 <ScalarProperty Name="salary" ColumnName="salary" />
               </MappingFragment>
@@ -1028,6 +1075,14 @@
                 <ScalarProperty Name="sale_date" ColumnName="sale_date" />
                 <ScalarProperty Name="sale_price" ColumnName="sale_price" />
                 <ScalarProperty Name="status_id" ColumnName="status_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales_counts">
+            <EntityTypeMapping TypeName="CarDealershipModel.sales_counts">
+              <MappingFragment StoreEntitySet="sales_counts">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="sales_count" ColumnName="sales_count" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

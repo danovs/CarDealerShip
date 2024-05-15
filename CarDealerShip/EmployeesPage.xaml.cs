@@ -32,7 +32,6 @@ namespace CarDealerShip
                              LastName = employee.lastname,
                              Phone = employee.phone,
                              Email = employee.email,
-                             SalesCount = employee.sales_count,
                              Salary = employee.salary
 
                          });

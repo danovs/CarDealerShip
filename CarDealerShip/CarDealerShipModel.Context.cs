@@ -36,6 +36,7 @@ namespace CarDealerShip
         public virtual DbSet<location> locations { get; set; }
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<sale> sales { get; set; }
+        public virtual DbSet<sales_counts> sales_counts { get; set; }
         public virtual DbSet<status> status { get; set; }
         public virtual DbSet<user> users { get; set; }
     }

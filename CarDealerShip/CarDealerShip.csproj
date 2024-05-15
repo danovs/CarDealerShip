@@ -189,6 +189,9 @@
     <Compile Include="sale.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sales_counts.cs">
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SettingProfile.xaml.cs">
       <DependentUpon>SettingProfile.xaml</DependentUpon>
     </Compile>
@@ -370,6 +373,10 @@
     <Resource Include="MenuImages\inventory.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="MenuImages\bmw.jpg" />
+    <Resource Include="MenuImages\layers.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="CarDealershipModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
@@ -380,8 +387,6 @@
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
       <LastGenOutput>CarDealershipModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="MenuImages\bmw.jpg" />
-    <Resource Include="MenuImages\layers.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
