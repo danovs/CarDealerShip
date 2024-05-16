@@ -20,57 +20,98 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
-                    <!-- Content will occupy remaining space -->
                 </Grid.RowDefinitions>
 
                 <!-- Заголовок -->
                 <TextBlock Grid.Row="0" Text="Оформление заказа" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
                        HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20" Foreground="#3C3C3C"/>
 
-                <!-- Поле для ввода имени -->
-                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" Width="300">
+                <!-- Контактные данные -->
+                <TextBlock Grid.Row="1" Text="Ваши контактные данные" HorizontalAlignment="Center" Margin="0,0,0,10"
+                           FontFamily="Montserrat" FontSize="16" Foreground="#404040"/>
+
+                <!-- Панель для ФИО и номера телефона -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Панель для ФИО -->
+                    <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="300" Margin="0 0 15 0">
                         <Grid Margin="7 9">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock x:Name="textName" Text="ФИО" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                            <TextBox x:Name="txtName"  Style="{StaticResource textBox}" Grid.Column="1"/>
+                            <TextBlock Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            <TextBox x:Name="txtName" Style="{StaticResource textBox}" Grid.Column="1" IsEnabled="False"/>
                         </Grid>
                     </Border>
-                </StackPanel>
 
-
-                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" Width="300">
+                    <!-- Панель для номера телефона -->
+                    <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="300">
                         <Grid Margin="7 9">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Image Source="/AuthReg/Images/phone.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <xctk:MaskedTextBox x:Name="textPhoneNumber" Mask="+7 (000) 000-00-00" Style="{StaticResource textBox}"/>
+                            <xctk:MaskedTextBox x:Name="textPhoneNumber" Mask="+7 (000) 000-00-00" Style="{StaticResource textBox}" Grid.Column="1" IsEnabled="False"/>
                         </Grid>
                     </Border>
                 </StackPanel>
 
-                <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" Width="300">
-                        <Grid Margin="7 9">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock x:Name="textCar" Text="Автомобиль" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                            <TextBox x:Name="txtCar" Style="{StaticResource textBox}" Grid.Column="1"/>
-                        </Grid>
-                    </Border>
+                <!-- Выбранный автомобиль -->
+                <TextBlock Grid.Row="3" Text="Выбранный автомобиль" HorizontalAlignment="Center" Margin="0,20,0,10"
+                           FontFamily="Montserrat" FontSize="16" Foreground="#404040"/>
+
+                <!-- Панель для информации об автомобиле -->
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Панель для марки и модели -->
+                    <StackPanel Orientation="Vertical" Margin="0,0,15,0">
+                        <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="250">
+                            <Grid Margin="7 9">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/MenuImages/carorder.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock x:Name="textCarMakeAndModel" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                <TextBox x:Name="txtCarMakeAndModel" Style="{StaticResource textBox}" Grid.Column="1"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Панель для комплектации и модификации -->
+                    <StackPanel Orientation="Vertical" Margin="0,0,15,0">
+                        <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="250">
+                            <Grid Margin="7 9">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/MenuImages/speed.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock x:Name="textTrimLevelAndModification" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                <TextBox x:Name="txtTrimLevelAndModification" Style="{StaticResource textBox}" Grid.Column="1"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Панель для цвета -->
+                    <StackPanel Orientation="Vertical">
+                        <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="250">
+                            <Grid Margin="7 9">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/MenuImages/brushcolor.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock x:Name="textColor" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                <TextBox x:Name="txtColor" Style="{StaticResource textBox}" Grid.Column="1"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
                 </StackPanel>
 
-                <Button Grid.Row="4" Content="Сохранить" Style="{StaticResource SaveButton}" x:Name="SaveButton"/>
+                <!-- Кнопка сохранения -->
+                <Button Grid.Row="5" Content="Сохранить" Style="{StaticResource SaveButton}" HorizontalAlignment="Center" Margin="0,20,0,0" x:Name="SaveButton" Click="SaveButton_Click"/>
             </Grid>
         </Border>
     </Grid>

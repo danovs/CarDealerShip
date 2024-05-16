@@ -116,17 +116,13 @@ namespace CarDealerShip
             buyButton.Style = (Style)FindResource("BuyButton");
             buyButton.Click += (sender, e) =>
             {
-                // Создаем экземпляр PurchasePage
                 OrderPage orderPage = new OrderPage();
 
-                // Получаем объект NavigationService текущей страницы
-                NavigationService navigationService = NavigationService.GetNavigationService(this);
+                orderPage.txtCarMakeAndModel.Text = $"{catalogEntry.car.make} {catalogEntry.car.model}";
+                orderPage.txtTrimLevelAndModification.Text = $"{catalogEntry.car.trim_level} {catalogEntry.car.modification}";
+                orderPage.txtColor.Text = $"{catalogEntry.car.color}";
 
-                // Переходим на страницу PurchasePage
-                if (navigationService != null)
-                {
-                    navigationService.Navigate(orderPage);
-                }
+                NavigationService.Navigate(orderPage);
             };
 
             stackPanel.Children.Add(carInfo);
