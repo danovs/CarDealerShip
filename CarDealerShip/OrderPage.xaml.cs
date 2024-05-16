@@ -32,6 +32,7 @@ namespace CarDealerShip
             currentUserId = ((App)Application.Current).CurrentUserId;
 
             LoadClientData();
+            LoadClientOrderData();
         }
 
         private void LoadClientData()
@@ -121,6 +122,45 @@ namespace CarDealerShip
             catch (Exception ex)
             {
                 MessageBox.Show($"Произошла ошибка при добавлении записи о заказе: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadClientOrderData()
+        {
+            try
+            {
+                var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
+
+                if (client != null)
+                {
+                    txtName.Text = client.full_name;
+                    textPhoneNumber.Text = client.phone;
+
+                    // Поиск последнего оформленного заказа пользователя
+                    var lastAppointment = db.appointments
+                        .Where(a => a.client_id == client.client_id)
+                        .OrderByDescending(a => a.appointment_date)
+                        .FirstOrDefault();
+
+                    if (lastAppointment != null)
+                    {
+                        var car = db.cars.FirstOrDefault(c => c.car_id == lastAppointment.car_id);
+
+                        if (car != null)
+                        {
+                            // Заполнение текстбоксов данными о последнем заказе
+                            SetCarDetails($"{car.make} {car.model}", car.trim_level, car.color);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Данные пользователя не найдены в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при загрузке данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
