@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
@@ -48,14 +37,15 @@ namespace CarDealerShip
                 }
                 else
                 {
-                    MessageBox.Show("Данные пользователя не найдены в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Не удалось найти данные пользователя в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Произошла ошибка при загрузке данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Произошла ошибка при загрузке данных клиента: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         public void SetCarDetails(string makeModel, string trimAndModification, string color)
         {
             txtCarMakeAndModel.Text = makeModel;
@@ -76,7 +66,7 @@ namespace CarDealerShip
 
                 if (makeModelParts.Length < 2)
                 {
-                    MessageBox.Show("Неверный формат марки и модели автомобиля. Пожалуйста, укажите их в формате 'Марка Модель'.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Пожалуйста, укажите марку и модель автомобиля в формате 'Марка Модель'.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -85,7 +75,7 @@ namespace CarDealerShip
 
                 if (string.IsNullOrWhiteSpace(carMake) || string.IsNullOrWhiteSpace(carModel) || string.IsNullOrWhiteSpace(trimLevelAndModification) || string.IsNullOrWhiteSpace(color))
                 {
-                    MessageBox.Show("Пожалуйста, заполните все поля об автомобиле.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Пожалуйста, заполните все поля автомобиля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -93,9 +83,10 @@ namespace CarDealerShip
 
                 var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
 
-                if (client == null)
+                if (client == null || string.IsNullOrWhiteSpace(client.full_name) || string.IsNullOrWhiteSpace(client.phone))
                 {
-                    MessageBox.Show("Данные пользователя не найдены в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Не удалось найти данные клиента или они неполные. Пожалуйста, заполните свои контактные данные.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Для внесения данных нажмите на значок в верхнем левом углу приложения.", "Подсказка", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
 
@@ -103,7 +94,7 @@ namespace CarDealerShip
 
                 if (car == null)
                 {
-                    MessageBox.Show("Данные об автомобиле не найдены в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Не удалось найти данные об автомобиле в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -117,7 +108,7 @@ namespace CarDealerShip
 
                 db.appointments.Add(newAppointment);
                 db.SaveChanges();
-                MessageBox.Show("Запись о заказе добавлена успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Ваш заказ был оформлен. Ожидайте звонок от сотрудника на указанный Вами номер телефона.", "Оформление заказа", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -155,12 +146,12 @@ namespace CarDealerShip
                 }
                 else
                 {
-                    MessageBox.Show("Данные пользователя не найдены в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Не удалось найти данные пользователя в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Произошла ошибка при загрузке данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Произошла ошибка при загрузке данных клиента: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
