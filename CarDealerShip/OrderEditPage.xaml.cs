@@ -1,29 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для OrderEditPage.xaml
-    /// </summary>
     public partial class OrderEditPage : Page
     {
+        // Поля для хранения ID клиента и заказа.
         private int clientId;
         private int appointmentId;
+
+        // Экземпляр контекста БД.
         private CarDealershipEntities db;
+
+        // Инициализация ID клиента и заказа. Также, инициализируем БД.
+        // Производим загрузку данных клиента и статусов в раскрывающийся список.
 
         public OrderEditPage(int clientId, int appointmentId)
         {
@@ -35,6 +27,7 @@ namespace CarDealerShip
             LoadAppointmentStatus();
         }
 
+        // Загрузка данных о клиенте. Производим поиск по ID клиента, и устанавливаем ФИО и номер телефона в текстовые поля.   
         private void LoadClientData()
         {
             var client = db.clients.FirstOrDefault(c => c.client_id == clientId);
@@ -45,6 +38,7 @@ namespace CarDealerShip
             }
         }
 
+        // Установка списка статусов в раскрывающийся список.
         private void LoadAppointmentStatus()
         {
             var statusList = db.appointments_status.ToList();
@@ -53,21 +47,22 @@ namespace CarDealerShip
             CmbStatus.SelectedValuePath = "appointmentStatus_id";
         }
 
+        // Кнопка для сохранения изменений.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Получаем выбранный статус из раскрывающегося списка.
             var selectedStatus = (appointments_status)CmbStatus.SelectedItem;
 
-            // Найти соответствующую запись по appointmentId
+            // Находим соответствующую запись по appointmentId.
             var appointment = db.appointments.FirstOrDefault(a => a.appointment_id == appointmentId);
 
             if (appointment != null)
             {
-                // Обновить статус записи
+                // Обновить статус записи и сохраняем новые данные в БД.
                 appointment.appointmentStatus_id = selectedStatus.appointmentStatus_id;
 
                 try
                 {
-                    // Сохранить изменения в базе данных
                     db.SaveChanges();
                     MessageBox.Show("Запись успешно обновлена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }

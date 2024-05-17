@@ -5,14 +5,16 @@ using System.Windows.Controls;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для OrderPage.xaml
-    /// </summary>
     public partial class OrderPage : Page
     {
+        // Экземпляр контекста БД и ID текущего пользователя.
+
         private CarDealershipEntities db;
         private int currentUserId;
 
+        // Инициализация экземпляра контекста БД и получение ID пользователя в текущей сессии из класса app.cs
+        // Загружаем данные о клиенте, и о последнем оформленном заказе клиента.
+        
         public OrderPage()
         {
             InitializeComponent();
@@ -24,6 +26,10 @@ namespace CarDealerShip
             LoadClientOrderData();
         }
 
+        // Загрузка данных клиента. Обращаемся к таблице "Clients", делая запрос через LINQ.
+        // Прописываем условие фильтрации, где c.user_id == currentUserId, и возвращаем первый элемент последовательности, удовлеторяющий условию.
+        // Присваиваем данные с БД в текстовые поля на форме.
+        
         private void LoadClientData()
         {
             try
@@ -32,7 +38,7 @@ namespace CarDealerShip
 
                 if (client != null)
                 {
-                    txtName.Text = client.full_name;
+                    txtName.Text = client.full_name; 
                     textPhoneNumber.Text = client.phone;
                 }
                 else
@@ -46,6 +52,7 @@ namespace CarDealerShip
             }
         }
 
+        // Установка характеристик автомобиля на форме.
         public void SetCarDetails(string makeModel, string trimAndModification, string color)
         {
             txtCarMakeAndModel.Text = makeModel;
@@ -53,25 +60,30 @@ namespace CarDealerShip
             txtColor.Text = color;
         }
 
+        // Добавление заказа в БД.
+        
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                // Получение данных об автомобиле из текстоывх полей на форме.
+
                 string carMakeAndModel = txtCarMakeAndModel.Text;
                 string trimLevelAndModification = txtTrimLevelAndModification.Text;
                 string color = txtColor.Text;
 
-                // Разделение строки carMakeAndModel на марку и модель по пробелу
+                // Разделение строки carMakeAndModel на марку и модель по пробелу (В каталоге строки были конкатенированы)
                 string[] makeModelParts = carMakeAndModel.Split(' ');
 
+                // Проверка наличия марки и модели автомобиля
                 if (makeModelParts.Length < 2)
                 {
                     MessageBox.Show("Пожалуйста, укажите марку и модель автомобиля в формате 'Марка Модель'.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
-                string carMake = makeModelParts[0]; // Первая часть после разделителя - марка
-                string carModel = string.Join(" ", makeModelParts.Skip(1)); // Остальное - модель
+                string carMake = makeModelParts[0]; // Первая часть после разделителя - марка.
+                string carModel = string.Join(" ", makeModelParts.Skip(1)); // Остальное - модель.
 
                 if (string.IsNullOrWhiteSpace(carMake) || string.IsNullOrWhiteSpace(carModel) || string.IsNullOrWhiteSpace(trimLevelAndModification) || string.IsNullOrWhiteSpace(color))
                 {
@@ -79,7 +91,9 @@ namespace CarDealerShip
                     return;
                 }
 
-                int currentUserId = ((App)Application.Current).CurrentUserId;
+                // Проверка заполенности данных пользователя. Проверяем через таблицу Clients.
+
+                currentUserId = ((App)Application.Current).CurrentUserId;
 
                 var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
 
@@ -90,6 +104,7 @@ namespace CarDealerShip
                     return;
                 }
 
+               // Проверяем наличие автомобиля в БД.
                 var car = db.cars.FirstOrDefault(c => c.make == carMake && c.model == carModel && c.color == color);
 
                 if (car == null)
@@ -98,6 +113,7 @@ namespace CarDealerShip
                     return;
                 }
 
+                // Если все проверки пройдены, создаем новую запись в базе данных.
                 appointment newAppointment = new appointment
                 {
                     client_id = client.client_id,
@@ -116,6 +132,8 @@ namespace CarDealerShip
             }
         }
 
+        // Загрузка последнего оформленного заказа пользователя.
+        // Принцип функции следующий: если пользователь уже оформил заказ, то при перезахоже в приложение, зайдя на страницу оформление заказа, пользователю будет выведен его последний заказ.
         private void LoadClientOrderData()
         {
             try
@@ -127,7 +145,7 @@ namespace CarDealerShip
                     txtName.Text = client.full_name;
                     textPhoneNumber.Text = client.phone;
 
-                    // Поиск последнего оформленного заказа пользователя
+                    // Поиск последнего оформленного заказа пользователя.
                     var lastAppointment = db.appointments
                         .Where(a => a.client_id == client.client_id)
                         .OrderByDescending(a => a.appointment_date)
@@ -135,11 +153,12 @@ namespace CarDealerShip
 
                     if (lastAppointment != null)
                     {
+                        // Поиск данных об автомобиле по ID автомобиля в последнем заказе
                         var car = db.cars.FirstOrDefault(c => c.car_id == lastAppointment.car_id);
 
                         if (car != null)
                         {
-                            // Заполнение текстбоксов данными о последнем заказе
+                            // Заполнение текстбоксов данными о последнем заказе.
                             SetCarDetails($"{car.make} {car.model}", car.trim_level, car.color);
                         }
                     }

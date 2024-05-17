@@ -9,6 +9,7 @@
       Title="OrderEditPage">
 
     <Grid>
+        <!-- Настройка страницы для корректного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid VerticalAlignment="Center" Width="700">
@@ -28,19 +29,21 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <!-- Вывод данных из базы данных-->
                     <TextBlock Text="Клиент:" Grid.Row="1"/>
                     <TextBlock x:Name="txtClient" Grid.Row="1" Margin="120,0,0,0"/>
                     <TextBlock Text="Номер телефона" Grid.Row="2"/>
                     <TextBlock x:Name="txtNumber" Grid.Row="2" Margin="120,0,0,0"/>
                     <TextBlock Text="Статус:" Grid.Row="3"/>
+
+                    <!-- Раскрывающиеся список со статусами о заказе. Статусы хранятся в таблице "appointment_status" -->
                     <ComboBox x:Name="CmbStatus" Grid.Row="3" Margin="120,0,0,0"/>
 
+                    <!-- Кнопка сохранения изменений -->
                     <Button Content="Сохранить" Grid.Row="4" Margin="0,20,0,0" Click="Button_Click"/>
 
                 </Grid>
-
             </Border>
-
         </Grid>
     </Grid>
 </Page>

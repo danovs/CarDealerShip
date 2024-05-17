@@ -1,26 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         
+        // После успешной авторизации/регистрации производим переход на домашнюю страницу.
+        // ВАЖНО: FrameManager - является классом для перехода на страницы. Если хотите внести изменения - откройте FrameManager.cs в обозревателе решений.
         public MainWindow()
         {
             InitializeComponent();
@@ -28,39 +15,46 @@ namespace CarDealerShip
             FrameManger.MainFrame = MainFrame;
         }
 
+        // Кнопка для выхода из приложения.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        // Событие "MouseDown" для перемещения окна за его заголовок.
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left) // Проверка нажатия ЛКМ. В случае, если ЛКМ зажат, можно перемещать окно.
             {
                 this.DragMove();
             }
         }
 
+        // Переход на страницу "Каталог автомобилей".
         private void Car_Click(object sender, RoutedEventArgs e)
         {
             FrameManger.MainFrame.Navigate(new CatalogPage());
         }
 
+        // Переход на страницу "Домашняя страница".
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             FrameManger.MainFrame.Navigate(new HomePage());
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            FrameManger.MainFrame.Navigate(new SettingProfile());
-        }
-
+        // Переход на страницу "Оформление заказа".
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             FrameManger.MainFrame.Navigate(new OrderPage());
         }
 
+        // Переход на страницу "Настройка профиля".
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            FrameManger.MainFrame.Navigate(new SettingProfile());
+        }
+
+        // Переход на страницу "Отзыв".
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             FrameManger.MainFrame.Navigate(new FeedbackPage());

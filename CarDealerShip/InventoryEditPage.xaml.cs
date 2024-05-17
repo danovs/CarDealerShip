@@ -1,104 +1,94 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для InventoryEditPage.xaml
-    /// </summary>
     public partial class InventoryEditPage : Page
     {
-        private CarDealershipEntities db;
-        private int inventoryId;
-        
+        private CarDealershipEntities db; // Поле для хранения экземпляра контекста базы данных.
+        private int inventoryId; // Поле для хранения ID инвентаря, который редактируется.
+
+
+        // Инициализация экземпляра контекста базы данных.
+        // Присваивание переданного ID инвентаря полю inventoryId.
+        // Установка источников данных для комбо-боксов.
+        // Заполнение полей данными для редактируемого инвентаря.
         public InventoryEditPage(int inventoryId)
         {
             InitializeComponent();
-
             db = new CarDealershipEntities();
-
             this.inventoryId = inventoryId;
-
 
             cmbCar.ItemsSource = db.cars.ToList();
             cmbCar.DisplayMemberPath = "make";
             cmbCar.SelectedValuePath = "car_id";
 
             cmbStatus.ItemsSource = db.status.ToList();
-
             cmbStatus.DisplayMemberPath = "status_name";
             cmbStatus.SelectedValuePath = "status_id";
 
             cmbLocation.ItemsSource = db.locations.ToList();
-            cmbLocation.DisplayMemberPath = "location_name"; // Или другое подходящее свойство
+            cmbLocation.DisplayMemberPath = "location_name";
             cmbLocation.SelectedValuePath = "location_id";
 
             FillFields();
         }
 
+        // Метод для заполнения полей данными редактируемого инвентаря.
         private void FillFields()
         {
             var selectedInventory = db.inventories.FirstOrDefault(i => i.inventory_id == inventoryId);
 
             if (selectedInventory != null)
             {
+                // Заполнение полей данными из выбранного инвентаря.
                 cmbCar.SelectedValue = selectedInventory.car_id;
                 txtCount.Text = selectedInventory.count.ToString();
                 cmbLocation.SelectedValue = selectedInventory.location_id;
                 cmbStatus.SelectedValue = selectedInventory.status_id;
-
             }
             else
             {
                 MessageBox.Show("Данные не загружены");
             }
-            
         }
 
+        // Кнопка "Сохранить".
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Проверка подтверждения для изменения данных
             MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите сохранить изменения?", "Сохранение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
+                    // Получение выбранного инвентаря для редактирования.
+                    // В случае, если инентарь найден, получить ID выбранного автомобиля и местоположения.
+                    // Производим проверку наличия другого инвентаря с таким же автомобилей на выбранной локации.
+                    // Если автомобиля нет на выбранной локации, обновляем сойства редактируемого инвентаря.
+                    // Сохраняем изменения в базе данных.
                     var selectedInventory = db.inventories.FirstOrDefault(i => i.inventory_id == inventoryId);
 
                     if (selectedInventory != null)
                     {
                         int carId = (int)cmbCar.SelectedValue;
                         int locationId = (int)cmbLocation.SelectedValue;
-
                         bool isDuplicateLocation = db.inventories.Any(inv => inv.car_id == carId && inv.location_id == locationId && inv.inventory_id != selectedInventory.inventory_id);
 
                         if (isDuplicateLocation)
                         {
                             MessageBox.Show("Указанное расположение для выбранного автомобиля уже занято.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
+                            return; // Прерывание выполнения метода.
                         }
 
-
-                        // Обновляем свойства объекта selectedInventory
                         selectedInventory.car_id = (int)cmbCar.SelectedValue;
                         selectedInventory.location_id = (int)cmbLocation.SelectedValue;
                         selectedInventory.count = int.Parse(txtCount.Text);
                         selectedInventory.status_id = (int)cmbStatus.SelectedValue;
 
-                        // Сохраняем изменения в базе данных
                         db.SaveChanges();
 
                         MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -109,14 +99,16 @@ namespace CarDealerShip
                     MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            else
+            else // Если пользователь не подтвердил сохранение
             {
                 MessageBox.Show("Изменения не сохранены.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
+        // Обработчик события изменения выбранного автомобиля в раскрывающиемся списке.
         private void cmbCar_SelectedChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Если атомобиль выбран, производим получение выбранного автомобиля, и если данный атвомобиль найден, то заполняем текстоые поля данными о его характеристиках.
             if (cmbCar.SelectedItem != null)
             {
                 car selectedCar = cmbCar.SelectedItem as car;
@@ -129,24 +121,25 @@ namespace CarDealerShip
                     txtColor.Text = selectedCar.color;
                     txtModification.Text = selectedCar.modification;
                     txtTrimLevel.Text = selectedCar.trim_level;
-                }
 
-                if (selectedCar.type_id != null)
-                {
-                    var carType = db.car_types.FirstOrDefault(ct => ct.type_id == selectedCar.type_id);
+                    // Поиск и вывод типа кузова автомобиля.
+                    if (selectedCar.type_id != null)
+                    {
+                        var carType = db.car_types.FirstOrDefault(ct => ct.type_id == selectedCar.type_id); // Получение типа кузова
 
-                    if (carType != null)
-                    {
-                        txtBodyType.Text = carType.type_name;
+                        if (carType != null)
+                        {
+                            txtBodyType.Text = carType.type_name; // Вывод типа кузова
+                        }
+                        else
+                        {
+                            txtBodyType.Text = "Незивестно";
+                        }
                     }
-                    else
+                    else // Если тип кузова не указан
                     {
-                        txtBodyType.Text = "Незивестно";
+                        txtBodyType.Text = "Не указан";
                     }
-                }
-                else
-                {
-                    txtBodyType.Text = "Не указан";
                 }
             }
         }

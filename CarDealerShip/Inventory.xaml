@@ -9,6 +9,7 @@
       Title="Inventory">
 
     <Grid>
+        <!-- Настройка страницы для правильного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid>
@@ -16,6 +17,8 @@
                         <RowDefinition Height="377*"/>
                         <RowDefinition Height="30*"/>
                     </Grid.RowDefinitions>
+
+                    <!-- Датагрид для вывода записей из базы данных с таблицы Inventory. Разметка колонок с привязкой данных, которые будут объялвены в коде-->
                     <DataGrid x:Name="DGridInventory" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding inventoryId}" Width="*"></DataGridTextColumn>
@@ -28,6 +31,8 @@
                             <DataGridTextColumn Header="Количество" Binding="{Binding Count}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Расположение" Binding="{Binding LocationName}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Статус" Binding="{Binding StatusName}" Width="*"></DataGridTextColumn>
+
+                            <!-- Кнопка изменить для каждой записи -->
                             <DataGridTemplateColumn Width="auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -38,13 +43,12 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
+                    <!-- Кнопки для добавления записи (переход на страницу добавления записи в инвентарь) и для удаления записи с базы данных -->
                     <Button Content="Добавить" Grid.Row="2" Width="100" HorizontalAlignment="Left" Margin="10" Click="Button_Click"></Button>
                     <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Right" Margin="10" Click="Button_Click_1"></Button>
 
                 </Grid>
-
             </Border>
-
         </Grid>
     </Grid>
 </Page>

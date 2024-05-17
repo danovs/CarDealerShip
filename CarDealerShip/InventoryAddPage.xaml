@@ -8,6 +8,7 @@
       d:DesignHeight="720" d:DesignWidth="1130"
       Title="InventoryAddPage">
     <Grid>
+        <!-- Настройка страницы для корректного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid VerticalAlignment="Center" Width="700">
@@ -26,6 +27,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <!-- При выборе автомобиля, в текстовые поля установятся информация авто из БД -->
                     <TextBlock Text="Автомобиль:" Grid.Row="0" />
                     <ComboBox x:Name="cmbCar" Grid.Row="0" Margin="120,0,0,0" SelectionChanged="cmbCar_SelectedChanged"/>
 
@@ -50,21 +52,22 @@
                     <TextBlock Text="Модификация" Grid.Row="7" />
                     <TextBlock x:Name="txtModification" Grid.Row="7" Margin="120,0,0,0"/>
 
+                    <!-- При выборе расположения, в текстовые поля установится количество автомобилей из БД. -->
                     <TextBlock Text="Расположение" Grid.Row="8" />
                     <ComboBox x:Name="cmbLocation" Grid.Row="8" Margin="120,0,0,0"/>
 
                     <TextBlock Text="Количество:" Grid.Row="9" />
                     <TextBox x:Name="txtCount" Grid.Row="9" Margin="120,0,0,0" MaxLength="10"/>
 
+                    <!-- Статус о наличии атомобиля в инвентаре автосалона -->
                     <TextBlock Text="Статус:" Grid.Row="10"/>
                     <ComboBox x:Name="cmbStatus" Grid.Row="10" Margin="120,0,0,0"/>
 
+                    <!-- Кнопка "Сохранить" -->
                     <Button Content="Сохранить" Grid.Row="11" Margin="0,20,0,0" Click="Button_Click"/>
 
                 </Grid>
-
             </Border>
-
         </Grid>
     </Grid>
 </Page>

@@ -10,6 +10,7 @@
       Title="OrderPage">
 
     <Grid>
+        <!-- Настройка страницы -->
         <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="900" Margin="20">
                 <Grid.RowDefinitions>
@@ -32,7 +33,7 @@
 
                 <!-- Панель для ФИО и номера телефона -->
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <!-- Панель для ФИО -->
+                    <!-- Текстовое поле для ФИО -->
                     <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="300" Margin="0 0 15 0">
                         <Grid Margin="7 9">
                             <Grid.ColumnDefinitions>
@@ -45,7 +46,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Панель для номера телефона -->
+                    <!-- Текстовое поле для номера телефона -->
                     <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="300">
                         <Grid Margin="7 9">
                             <Grid.ColumnDefinitions>
@@ -64,7 +65,7 @@
 
                 <!-- Панель для информации об автомобиле -->
                 <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <!-- Панель для марки и модели -->
+                    <!-- Текстовое поле для марки и модели -->
                     <StackPanel Orientation="Vertical" Margin="0,0,15,0">
                         <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="250">
                             <Grid Margin="7 9">
@@ -79,7 +80,7 @@
                         </Border>
                     </StackPanel>
 
-                    <!-- Панель для комплектации и модификации -->
+                    <!-- Текстовое поле для комплектации и модификации -->
                     <StackPanel Orientation="Vertical" Margin="0,0,15,0">
                         <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="250">
                             <Grid Margin="7 9">
@@ -94,7 +95,7 @@
                         </Border>
                     </StackPanel>
 
-                    <!-- Панель для цвета -->
+                    <!-- Текстовое поле для цвета-->
                     <StackPanel Orientation="Vertical">
                         <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5" Width="250">
                             <Grid Margin="7 9">
@@ -109,9 +110,10 @@
                         </Border>
                     </StackPanel>
                 </StackPanel>
-
-                <!-- Кнопка сохранения -->
-                <Button Grid.Row="5" Content="Сохранить" Style="{StaticResource SaveButton}" HorizontalAlignment="Center" Margin="0,20,0,0" x:Name="SaveButton" Click="SaveButton_Click"/>
+                
+                <!-- Кнопка для добаления записи в БД -->
+                <Button Grid.Row="5" Content="Оформить заказ" Style="{StaticResource SaveButton}" HorizontalAlignment="Center" Margin="0,20,0,0" x:Name="SaveButton" Click="SaveButton_Click"/>
+                
             </Grid>
         </Border>
     </Grid>

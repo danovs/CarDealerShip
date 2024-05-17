@@ -1,50 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для InventoryAddPage.xaml
-    /// </summary>
     public partial class InventoryAddPage : Page
     {
-        private CarDealershipEntities db;
+        private CarDealershipEntities db; // Поле для хранения экземпляра контекста базы данных.
 
         public InventoryAddPage()
         {
             InitializeComponent();
 
+            // Инициализация экземпляра контекста базы данных.
             db = new CarDealershipEntities();
 
+            // Установка источников данных для раскрывающийся списков.
             cmbCar.ItemsSource = db.cars.ToList();
             cmbCar.DisplayMemberPath = "make";
             cmbCar.SelectedValuePath = "car_id";
 
             cmbStatus.ItemsSource = db.status.ToList();
-
             cmbStatus.DisplayMemberPath = "status_name";
             cmbStatus.SelectedValuePath = "status_id";
 
             cmbLocation.ItemsSource = db.locations.ToList();
-            cmbLocation.DisplayMemberPath = "location_name"; // Или другое подходящее свойство
+            cmbLocation.DisplayMemberPath = "location_name";
             cmbLocation.SelectedValuePath = "location_id";
-
-
         }
 
+        // Обработчик события изменения выбранного автомобиля в комбобоксах.
         private void cmbCar_SelectedChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cmbCar.SelectedItem != null)
@@ -53,47 +39,47 @@ namespace CarDealerShip
 
                 if (selectedCar != null)
                 {
+                    // Заполнение текстовых полей данными об автомобиле.
                     txtMake.Text = selectedCar.make;
                     txtModel.Text = selectedCar.model;
                     txtYear.Text = selectedCar.year.ToString() ?? "Не указан";
                     txtColor.Text = selectedCar.color;
                     txtModification.Text = selectedCar.modification;
                     txtTrimLevel.Text = selectedCar.trim_level;
-                }
 
-                if (selectedCar.type_id != null)
-                {
-                    var carType = db.car_types.FirstOrDefault(ct => ct.type_id == selectedCar.type_id);
-
-                    if (carType != null)
+                    // Поиск и вывод типа кузова автомобиля.
+                    if (selectedCar.type_id != null)
                     {
-                        txtBodyType.Text = carType.type_name;
+                        var carType = db.car_types.FirstOrDefault(ct => ct.type_id == selectedCar.type_id);
+                        txtBodyType.Text = carType != null ? carType.type_name : "Незивестно";
                     }
                     else
                     {
-                        txtBodyType.Text = "Незивестно";
+                        txtBodyType.Text = "Не указан";
                     }
-                }
-                else
-                {
-                    txtBodyType.Text = "Не указан";
                 }
             }
         }
 
+        // Кнопка "Добавить" для добавления автомобиля в инвентарь. (Производится добавление записи в БД)
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Проверка подтверждения операции добавления
             MessageBoxResult result = MessageBox.Show("Вы точно хотите добавить автомобиль в инвентарь?", "Добавление автомобиля", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
+                    // Получение данных из элементов на форме.
                     int carId = (int)cmbCar.SelectedValue;
                     int locationId = (int)cmbLocation.SelectedValue;
                     int count = int.Parse(txtCount.Text);
                     int statusId = (int)cmbStatus.SelectedValue;
 
+                    // Поиск выбранного автомобиля в базе данных
+                    // Если автомобиль найден, проверяем наличие автомобиля в инвентаре на выбранной лоакции.
+                    // Если автомобиль уже есть в инвентаре на выбранной локации, выводим сообщение, что уже существует данный автомобиль по указанному расположению.
                     var selectedCar = db.cars.FirstOrDefault(c => c.car_id == carId);
 
                     if (selectedCar != null)
@@ -104,7 +90,7 @@ namespace CarDealerShip
                         {
                             MessageBox.Show("Такой автомобиль уже существует в инвентаре по указанному расположению.");
                         }
-
+                        // В протином случае, создаем новую запись об инвентаре и добавляем её в базу данных.
                         else
                         {
                             inventory newInventory = new inventory
@@ -115,7 +101,7 @@ namespace CarDealerShip
                                 status_id = statusId
                             };
                             db.inventories.Add(newInventory);
-                            db.SaveChanges();
+                            db.SaveChanges(); // Сохранение изменений
                             MessageBox.Show("Данные успешно сохранены в инвентаре!");
                         }
                     }
@@ -126,7 +112,7 @@ namespace CarDealerShip
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message); // Вывод сообщения об ошибке при возникновении исключения
                 }
             }
             else

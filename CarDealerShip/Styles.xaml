@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-
+    <!-- Стиль кнопкок меню -->
     <Style x:Key="menuButton" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#787c86"/>
@@ -26,6 +26,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Стиль кнопки меню в верхней части (Настройка профиля пользователя)-->
     <Style x:Key="menuButtonTop" TargetType="Button" BasedOn="{StaticResource menuButton}">
         <Setter Property="Background" Value="White"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
@@ -34,11 +35,13 @@
         <Setter Property="Margin" Value="0 20 0 0"/>
     </Style>
 
+    <!-- Стиль иконок в кнопках меню -->
     <Style x:Key="menuButtonIcon" TargetType="Image">
         <Setter Property="Width" Value="18"/>
         <Setter Property="Height" Value="18"/>
     </Style>
 
+    <!-- Стиль для кнопки "Старт" на домашней странице приложения -->
     <Style x:Key="Start" TargetType="Button">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="Montserrat"/>
@@ -69,6 +72,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Стиль для текста-подсказки -->
     <Style x:Key="textHint" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Grid.Column" Value="1"/>
@@ -78,6 +82,7 @@
         <Setter Property="FontFamily" Value="Montserrat"/>
     </Style>
 
+    <!-- Стиль для текстовых полей -->
     <Style x:Key="textBox" TargetType="Control">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Grid.Column" Value="1"/>
@@ -88,6 +93,7 @@
         <Setter Property="FontFamily" Value="Montserrat"/>
     </Style>
 
+    <!-- Стиль для кнопки "Сохранить -->
     <Style x:Key="SaveButton" TargetType="Button">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="Montserrat"/>
@@ -118,6 +124,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Стиль для кнопки "Купить" -->
     <Style x:Key="BuyButton" TargetType="Button">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="Montserrat"/>
@@ -149,6 +156,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Стиль для текста марки и модели автомобия на странице "Каталог автомобилей" -->
     <Style x:Key="textMarkModel" TargetType="TextBlock">
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontFamily" Value="Montserrat"/>
@@ -158,6 +166,7 @@
         <Setter Property="Foreground" Value="#303030"/>
     </Style>
 
+    <!-- Стиль для текста характеристик автомобиля на странице "Каталог автомобилей" -->
     <Style x:Key="textSpecs" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="Montserrat"/>
@@ -167,6 +176,7 @@
         <Setter Property="Foreground" Value="#808080"/>
     </Style>
 
+    <!-- Стиль для округленного текстового поля -->
     <Style x:Key="RoundedTextBoxStyle" TargetType="TextBox">
         <Setter Property="Foreground" Value="#808080"/>
         <Setter Property="FontFamily" Value="Montserrat"/>
@@ -185,7 +195,6 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         CornerRadius="10"
                         Margin="0,0,0,10">
-                        <!-- Добавленный нижний отступ -->
                         <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
                     </Border>
                     <ControlTemplate.Triggers>

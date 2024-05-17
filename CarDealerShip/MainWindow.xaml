@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Left Menu Column -->
+        <!-- Создаем навигационное меню -->
         <Border Background="#f4f4f4" CornerRadius="30 0 0 30" BorderThickness="0 0 1 0" BorderBrush="#d9d9d9">
             <Grid>
                 <Button Style="{StaticResource menuButtonTop}" Click="Button_Click_3">
@@ -24,7 +24,7 @@
                     <TextBlock Text="You" FontSize="18" FontWeight="SemiBold" FontFamily="Montserrat" Margin="0 0 0 2" Foreground="#355858"/>
                 </Button>
 
-                <!-- Menu Buttons -->
+                <!-- Кнопки в меню -->
                 <StackPanel VerticalAlignment="Center">
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_1">
                         <Image Source="/MenuImages/HomeCatalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -40,14 +40,14 @@
                     </Button>
                 </StackPanel>
 
-                <!-- Quit Button at the bottom -->
+                <!-- Кнопка для выхода из приложения -->
                 <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click">
                     <Image Source="/MenuImages/quit.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
             </Grid>
         </Border>
 
-        <!-- Main Content Column -->
+        <!-- Основная колонка для страниц -->
         <Border Grid.Column="1" Background="#f4f4f4" CornerRadius="0 30 30 0" MouseDown="Border_MouseDown">
 
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>

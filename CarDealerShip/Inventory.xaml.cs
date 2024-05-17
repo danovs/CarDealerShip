@@ -1,27 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для Inventory.xaml
-    /// </summary>
     public partial class Inventory : Page
     {
+        // Экземпляр контекста БД
         private CarDealershipEntities db;
 
+        // Инициализация экземпляра контекста БД и загрузка данных в датагрид.
         public Inventory()
         {
             InitializeComponent();
@@ -31,7 +20,8 @@ namespace CarDealerShip
             LoadInventoryData();
         }
 
-
+        // Загрузка данных в датагрид. Создаем запрос через LINQ, после присваиваем поля для хранения данных с БД.
+        // Данные поля используются для свойства Binding в xaml, чтобы мы могли вывести данные в колонки датагрида.
         private void LoadInventoryData()
         {
             var query = from inventory in db.inventories
@@ -52,40 +42,39 @@ namespace CarDealerShip
                             LocationName = location.location_name,
                             StatusName = status.status_name
                         };
-            DGridInventory.ItemsSource = query.ToList();
+            DGridInventory.ItemsSource = query.ToList(); // Устанавливаем данные в датагрид.
         }
 
+        // Кнопка "Добавить" производится переход на страницу добавления записи.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FrameManger.AdminFrame.Navigate(new InventoryAddPage());
         }
 
+        // Кнопка "Удалить" производится удаление записи с БД.
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            // Проверка подтверждения удаления записи.
             MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить запись с базы данных?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
+                    // Если выбранная запись не пустая, получаем выбранную запись, и производим поиск по ID выбранной записи.
+                    // Найдя ID выбранной записи, заносим в переменную inventoryToDelete, и делаем проверку, если не пустая переменная, то производим удаление записи и сохраняем изменение в БД.
+                    // После удаления - обновляем датагрид с помощью вызова функции "LoadInventoryData"
                     if (DGridInventory.SelectedItem != null)
                     {
-                        // Get the selected inventory item
                         var selectedInventory = (dynamic)DGridInventory.SelectedItem;
-
-                        // Find the inventoryId from the selected item (using lowercase property name)
                         int inventoryId = selectedInventory.inventoryId;
-
-                        // Find the inventory record to delete from the database
                         var inventoryToDelete = db.inventories.Find(inventoryId);
 
                         if (inventoryToDelete != null)
                         {
-                            // Remove the inventory record from the database
                             db.inventories.Remove(inventoryToDelete);
                             db.SaveChanges();
 
-                            // Refresh the data grid
                             MessageBox.Show("Запись удалена");
                             LoadInventoryData();
                         }
@@ -110,13 +99,16 @@ namespace CarDealerShip
             }
         }
 
-
+        // Кнопка "Изменить" на каждой записи в датагриде.
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
+            // Проверям на пустоту выбранную запись. Если не пустая, то получаем выбранный элемент и получаем свойство inventoryId (ID инвентаря)
             if (DGridInventory.SelectedItem != null)
             {
                 var selectedItem = DGridInventory.SelectedItem;
                 var propertyInfo = selectedItem.GetType().GetProperty("inventoryId");
+                
+                // Если свойство найдено, производим поиск записи инвентаря в БД.
                 if (propertyInfo != null)
                 {
                     int inventoryId = (int)propertyInfo.GetValue(selectedItem);
@@ -125,7 +117,7 @@ namespace CarDealerShip
 
                     if (selectedInventory != null)
                     {
-                        // Передаем inventory_id при создании InventoryEditPage
+                        // Переход на страницу редактирования инвентаря с передачей идентификатора.
                         FrameManger.AdminFrame.Navigate(new InventoryEditPage(selectedInventory.inventory_id));
                     }
                     else
