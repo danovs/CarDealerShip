@@ -25,6 +25,39 @@ namespace CarDealerShip
         {
             DGridCars.ItemsSource = db.cars.ToList(); // Установка источника данных для датагрид из списка всех автомобилей в базе данных.
         }
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (db != null)
+            {
+                string searchText = SearchTextBox.Text.Trim(); // Получаем текст из текстового поля поиска и удаляем лишние пробелы
+
+                // Если текст поиска не пустой, выполняем поиск
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    // Преобразуем текст поиска в нижний регистр для регистронезависимого поиска
+                    string lowercaseSearchText = searchText.ToLower();
+
+                    // Выполняем поиск записей, удовлетворяющих критериям поиска
+                    var searchResult = db.cars.Where(car => car.make.ToLower().Contains(lowercaseSearchText) ||
+                    car.model.ToLower().Contains(lowercaseSearchText) ||
+                    car.year.ToString().Contains(searchText) ||
+                    car.color.ToLower().Contains(lowercaseSearchText) ||
+                    car.price.ToString().Contains(searchText));
+
+                    // Обновляем источник данных для DataGrid, отображая найденные результаты
+                    DGridCars.ItemsSource = searchResult.ToList();
+                }
+                else
+                {
+                    // Если текст поиска пустой, отображаем все записи
+                    LoadCarsData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ошибка: База данных не инициализирована.");
+            }
+        }
 
         // Кнопка "Добавить". Производит переход на страницу добавления автомобиля.
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -92,6 +125,6 @@ namespace CarDealerShip
             {
                 MessageBox.Show("Ошибка: " + ex.Message);
             }
-        }
+        }      
     }
 }
