@@ -16,7 +16,16 @@ namespace CarDealerShip
         // Кнопка "Закрытие приложения"
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите выйти из приложения?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                MessageBox.Show("Мы рады, что вы продолжаете пользоваться нашим приложением! :)", "Спасибо", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         // Обработчик события нажатия мыши на границе окна для перемещения.

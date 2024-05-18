@@ -15,10 +15,19 @@ namespace CarDealerShip
             FrameManger.MainFrame = MainFrame;
         }
 
-        // Кнопка для выхода из приложения.
+        // Кнопка "Закрытие приложения"
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите выйти из приложения?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                MessageBox.Show("Мы рады, что вы продолжаете пользоваться нашим приложением! :)", "Спасибо", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         // Событие "MouseDown" для перемещения окна за его заголовок.

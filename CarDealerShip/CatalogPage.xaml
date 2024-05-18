@@ -19,7 +19,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- Заголовок каталога -->
-                <TextBlock Grid.Row="0" Text="Каталог" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
+                <TextBlock Grid.Row="0" Text="Каталог автомобилей" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
                            HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,10" Foreground="#3C3C3C"/>
 
                 <!-- Бордер с текстовыми полями. Они выполняют роль фильтрации каталога -->

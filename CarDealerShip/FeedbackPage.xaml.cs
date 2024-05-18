@@ -11,7 +11,7 @@ namespace CarDealerShip
         // Экземпляр контекста БД
         private CarDealershipEntities db;
 
-        // Инициализируем экземпляр контекста БД и загружает отзыв пользователь, если он был оставлен.
+        // Инициализируем экземпляр контекста БД и загружаем отзыв пользователя, если он был оставлен.
         public FeedbackPage()
         {
             InitializeComponent();
@@ -27,10 +27,11 @@ namespace CarDealerShip
 
             var existingFeedback = GetExistingFeedback(userId);
 
-            // Если отзыв существует, отображаем его текст в текстовом поле.
+            // Если отзыв существует, отображаем его текст в текстовом поле и отключаем текстовое поле.
             if (existingFeedback != null)
             {
                 txtFeedback.Text = existingFeedback.feedback_text;
+                txtFeedback.IsEnabled = false;
             }
         }
 
@@ -163,6 +164,5 @@ namespace CarDealerShip
 
             return db.feedbacks.FirstOrDefault(f => f.client_id == clientId);
         }
-
     }
 }

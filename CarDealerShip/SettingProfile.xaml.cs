@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -40,48 +41,71 @@ namespace CarDealerShip
             }
         }
 
+        // Обработчик события предварительного ввода текста для текстового поля txtName
+        private void txtName_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Разрешены только буквы и пробелы
+            Regex regex = new Regex("^[a-zA-Zа-яА-Я ]+$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
         // Кнопка "Сохранить".
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка наличия корректного идентификатора пользователя. Если проверка пройдена - получаем ноое имя и номер телефона из текстовых полей.
-            if (currentUserId != 0)
+            MessageBoxResult result = MessageBox.Show("Вы действительно сохранить новые изменения?", "Изменение данных", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                string newFullName = txtName.Text;
-                string phoneNumber = textPhoneNumber.Text;
-
-                try
+                // Проверка наличия корректного идентификатора пользователя. Если проверка пройдена - получаем ноое имя и номер телефона из текстовых полей.
+                if (currentUserId != 0)
                 {
-                    // Поиск клиента в базе данных по идентификатору пользователя. Если клиент есть, проеряем наличие изменений в данных клиента, после обновляем их.
-                    var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
+                    string newFullName = txtName.Text;
+                    string phoneNumber = textPhoneNumber.Text;
 
-                    if (client != null)
+                    // Проверка длины имени
+                    if (newFullName.Length < 10)
                     {
-                        if (client.full_name != newFullName || client.phone != phoneNumber)
-                        {
-                            client.full_name = newFullName;
-                            client.phone = phoneNumber;
-                            db.SaveChanges();
+                        MessageBox.Show("ФИО должно содержать минимум 10 символов.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
-                            MessageBox.Show("Данные успешно сохранены!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    try
+                    {
+                        // Поиск клиента в базе данных по идентификатору пользователя. Если клиент есть, проеряем наличие изменений в данных клиента, после обновляем их.
+                        var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
+
+                        if (client != null)
+                        {
+                            if (client.full_name != newFullName || client.phone != phoneNumber)
+                            {
+                                client.full_name = newFullName;
+                                client.phone = phoneNumber;
+                                db.SaveChanges();
+
+                                MessageBox.Show("Данные успешно сохранены!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Нет изменений для сохранения.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("Нет изменений для сохранения.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show("Клиент не найден в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Клиент не найден в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Произошла ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show($"Произошла ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Некорректный идентификатор пользователя!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Некорректный идентификатор пользователя!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Данные не были сохранены");
             }
         }
 

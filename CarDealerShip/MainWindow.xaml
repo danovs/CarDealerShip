@@ -17,7 +17,7 @@
         <!-- Создаем навигационное меню -->
         <Border Background="#f4f4f4" CornerRadius="30 0 0 30" BorderThickness="0 0 1 0" BorderBrush="#d9d9d9">
             <Grid>
-                <Button Style="{StaticResource menuButtonTop}" Click="Button_Click_3">
+                <Button Style="{StaticResource menuButtonTop}" Click="Button_Click_3" ToolTip="Настройка профиля">
                     <Button.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.1"/>
                     </Button.Effect>
@@ -27,25 +27,25 @@
                 <!-- Кнопки в меню -->
                 <StackPanel VerticalAlignment="Center">
                     <!-- Домашняя страница -->
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_1">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_1" ToolTip="Домашняя страница">
                         <Image Source="/MenuImages/HomeCatalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <!-- Каталог автомобилей -->
-                    <Button Style="{StaticResource menuButton}" Click="Car_Click">
+                    <Button Style="{StaticResource menuButton}" Click="Car_Click" ToolTip="Каталог автомобилей">
                         <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <!-- Оформление заказа -->
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_2">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_2" ToolTip="Оформление заказа">
                         <Image Source="/MenuImages/ShoppingCart.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <!-- Отзывы -->
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_4">
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_4" ToolTip="Отзыв">
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                 </StackPanel>
 
                 <!-- Кнопка для выхода из приложения -->
-                <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click">
+                <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click" ToolTip="Выйти из приложения">
                     <Image Source="/MenuImages/quit.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
             </Grid>

@@ -14,7 +14,7 @@ namespace CarDealerShip
 
         // Инициализация экземпляра контекста БД и получение ID пользователя в текущей сессии из класса app.cs
         // Загружаем данные о клиенте, и о последнем оформленном заказе клиента.
-        
+
         public OrderPage()
         {
             InitializeComponent();
@@ -29,7 +29,7 @@ namespace CarDealerShip
         // Загрузка данных клиента. Обращаемся к таблице "Clients", делая запрос через LINQ.
         // Прописываем условие фильтрации, где c.user_id == currentUserId, и возвращаем первый элемент последовательности, удовлеторяющий условию.
         // Присваиваем данные с БД в текстовые поля на форме.
-        
+
         private void LoadClientData()
         {
             try
@@ -38,7 +38,7 @@ namespace CarDealerShip
 
                 if (client != null)
                 {
-                    txtName.Text = client.full_name; 
+                    txtName.Text = client.full_name;
                     textPhoneNumber.Text = client.phone;
                 }
                 else
@@ -61,75 +61,94 @@ namespace CarDealerShip
         }
 
         // Добавление заказа в БД.
-        
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите оформить данный заказ?", "Оформление заказа", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                // Получение данных об автомобиле из текстоывх полей на форме.
-
-                string carMakeAndModel = txtCarMakeAndModel.Text;
-                string trimLevelAndModification = txtTrimLevelAndModification.Text;
-                string color = txtColor.Text;
-
-                // Разделение строки carMakeAndModel на марку и модель по пробелу (В каталоге строки были конкатенированы)
-                string[] makeModelParts = carMakeAndModel.Split(' ');
-
-                // Проверка наличия марки и модели автомобиля
-                if (makeModelParts.Length < 2)
+                try
                 {
-                    MessageBox.Show("Пожалуйста, укажите марку и модель автомобиля в формате 'Марка Модель'.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    // Получение данных об автомобиле из текстоывх полей на форме.
+
+                    string carMakeAndModel = txtCarMakeAndModel.Text;
+                    string trimLevelAndModification = txtTrimLevelAndModification.Text;
+                    string color = txtColor.Text;
+
+                    // Разделение строки carMakeAndModel на марку и модель по пробелу (В каталоге строки были конкатенированы)
+                    string[] makeModelParts = carMakeAndModel.Split(' ');
+
+                    // Проверка наличия марки и модели автомобиля
+                    if (makeModelParts.Length < 2)
+                    {
+                        MessageBox.Show("Пожалуйста, укажите марку и модель автомобиля в формате 'Марка Модель'.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    string carMake = makeModelParts[0]; // Первая часть после разделителя - марка.
+                    string carModel = string.Join(" ", makeModelParts.Skip(1)); // Остальное - модель.
+
+                    if (string.IsNullOrWhiteSpace(carMake) || string.IsNullOrWhiteSpace(carModel) || string.IsNullOrWhiteSpace(trimLevelAndModification) || string.IsNullOrWhiteSpace(color))
+                    {
+                        MessageBox.Show("Пожалуйста, заполните все поля автомобиля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Проверка заполенности данных пользователя. Проверяем через таблицу Clients.
+
+                    currentUserId = ((App)Application.Current).CurrentUserId;
+
+                    var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
+
+                    if (client == null || string.IsNullOrWhiteSpace(client.full_name) || string.IsNullOrWhiteSpace(client.phone))
+                    {
+                        MessageBox.Show("Не удалось найти данные клиента или они неполные. Пожалуйста, заполните свои контактные данные.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Для внесения данных нажмите на значок в верхнем левом углу приложения.", "Подсказка", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+
+                    // Проверяем наличие автомобиля в БД.
+                    var car = db.cars.FirstOrDefault(c => c.make == carMake && c.model == carModel && c.color == color);
+
+                    if (car == null)
+                    {
+                        MessageBox.Show("Не удалось найти данные об автомобиле в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Проверка, не заказывал ли пользователь этот автомобиль ранее.
+                    var existingOrder = db.appointments
+                        .Any(a => a.client_id == client.client_id && a.car_id == car.car_id);
+
+                    if (existingOrder)
+                    {
+                        MessageBox.Show("Вы уже заказали этот автомобиль ранее. Повторный заказ невозможен.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Если все проверки пройдены, создаем новую запись в базе данных.
+                    appointment newAppointment = new appointment
+                    {
+                        client_id = client.client_id,
+                        car_id = car.car_id,
+                        appointment_date = DateTime.Now,
+                        appointmentStatus_id = 1
+                    };
+
+                    db.appointments.Add(newAppointment);
+                    db.SaveChanges();
+                    MessageBox.Show("Ваш заказ был оформлен. Ожидайте звонок от сотрудника на указанный Вами номер телефона.", "Оформление заказа", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-
-                string carMake = makeModelParts[0]; // Первая часть после разделителя - марка.
-                string carModel = string.Join(" ", makeModelParts.Skip(1)); // Остальное - модель.
-
-                if (string.IsNullOrWhiteSpace(carMake) || string.IsNullOrWhiteSpace(carModel) || string.IsNullOrWhiteSpace(trimLevelAndModification) || string.IsNullOrWhiteSpace(color))
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Пожалуйста, заполните все поля автомобиля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    MessageBox.Show($"Произошла ошибка при добавлении записи о заказе: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                // Проверка заполенности данных пользователя. Проверяем через таблицу Clients.
-
-                currentUserId = ((App)Application.Current).CurrentUserId;
-
-                var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
-
-                if (client == null || string.IsNullOrWhiteSpace(client.full_name) || string.IsNullOrWhiteSpace(client.phone))
-                {
-                    MessageBox.Show("Не удалось найти данные клиента или они неполные. Пожалуйста, заполните свои контактные данные.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    MessageBox.Show("Для внесения данных нажмите на значок в верхнем левом углу приложения.", "Подсказка", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-
-               // Проверяем наличие автомобиля в БД.
-                var car = db.cars.FirstOrDefault(c => c.make == carMake && c.model == carModel && c.color == color);
-
-                if (car == null)
-                {
-                    MessageBox.Show("Не удалось найти данные об автомобиле в базе данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                // Если все проверки пройдены, создаем новую запись в базе данных.
-                appointment newAppointment = new appointment
-                {
-                    client_id = client.client_id,
-                    car_id = car.car_id,
-                    appointment_date = DateTime.Now,
-                    appointmentStatus_id = 1
-                };
-
-                db.appointments.Add(newAppointment);
-                db.SaveChanges();
-                MessageBox.Show("Ваш заказ был оформлен. Ожидайте звонок от сотрудника на указанный Вами номер телефона.", "Оформление заказа", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Произошла ошибка при добавлении записи о заказе: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Вы всегда можете проверить свои данные перед оформлением заказа.", "Оформление заказа", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
         }
 
         // Загрузка последнего оформленного заказа пользователя.

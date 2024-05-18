@@ -117,15 +117,23 @@ namespace CarDealerShip
             buyButton.Style = (Style)FindResource("BuyButton");
             buyButton.Click += (sender, e) =>
             {
-            // Кнопка "Купить".
-            OrderPage orderPage = new OrderPage();
+                MessageBoxResult result = MessageBox.Show("Вы действительно хотите выбрать данный автомобиль?", "Выбор автомобиля", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Кнопка "Купить".
+                    OrderPage orderPage = new OrderPage();
 
-                // Передача информации об автомобиле на страницу оформления заказа/
-                orderPage.txtCarMakeAndModel.Text = $"{catalogEntry.car.make} {catalogEntry.car.model}";
-                orderPage.txtTrimLevelAndModification.Text = $"{catalogEntry.car.trim_level} {catalogEntry.car.modification}";
-                orderPage.txtColor.Text = $"{catalogEntry.car.color}";
+                    // Передача информации об автомобиле на страницу оформления заказа/
+                    orderPage.txtCarMakeAndModel.Text = $"{catalogEntry.car.make} {catalogEntry.car.model}";
+                    orderPage.txtTrimLevelAndModification.Text = $"{catalogEntry.car.trim_level} {catalogEntry.car.modification}";
+                    orderPage.txtColor.Text = $"{catalogEntry.car.color}";
 
-                NavigationService.Navigate(orderPage);
+                    NavigationService.Navigate(orderPage);
+                }
+                else
+                {
+                    MessageBox.Show("Вы можете выбрать другой автомобиль :)", "Выбор автомобиля", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             };
 
             // Добавление элементов в панель.

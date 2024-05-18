@@ -28,7 +28,7 @@
 
                 <!-- Поле для ввода имени -->
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" Width="300">
+                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" Width="300" PreviewTextInput="txtName_PreviewTextInput">
                         <Grid Margin="7 9">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -36,7 +36,7 @@
                             </Grid.ColumnDefinitions>
                             <Image Source="/AuthReg/Images/userupd.png" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
                             <TextBlock x:Name="textName" Text="Введите ваше ФИО:" Style="{StaticResource textHint}" VerticalAlignment="Center" Margin="10,0,0,0" MouseDown="textName_MouseDown"/>
-                            <TextBox x:Name="txtName" TextChanged="txtName_TextChanged"  Style="{StaticResource textBox}" Grid.Column="1"/>
+                            <TextBox x:Name="txtName" TextChanged="txtName_TextChanged"  Style="{StaticResource textBox}" Grid.Column="1" MaxLength="100"/>
                         </Grid>
                     </Border>
                 </StackPanel>
