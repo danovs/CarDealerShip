@@ -1,58 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для AdminWindow.xaml
-    /// </summary>
     public partial class AdminWindow : Window
     {
+        // Устанавливаем главный фрейм администратора для навигации.
         public AdminWindow()
         {
             InitializeComponent();
             FrameManger.AdminFrame = AdminFrame;
         }
 
+        // Кнопка "Закрытие приложения"
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        // Обработчик события нажатия мыши на границе окна для перемещения.
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            // Если нажата левая кнопка мыши, перемещаем окно.
             if (e.ChangedButton == MouseButton.Left)
             {
                 this.DragMove();
             }
         }
 
+        // Кнопка "Сотрудники"
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             FrameManger.AdminFrame.Navigate(new EmployeesPage());
         }
 
+        // Кнопка "Автомобили"
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             FrameManger.AdminFrame.Navigate(new CarsPage());
         }
 
+        // Кнопка "Инвентарь"
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             FrameManger.AdminFrame.Navigate(new Inventory());
         }
 
+        // Кнопка "Отзывы"
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             try
@@ -65,11 +60,13 @@ namespace CarDealerShip
             }
         }
 
+        // Кнопка "Каталог"
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
             FrameManger.AdminFrame.Navigate(new CatalogPanel());
         }
 
+        // Кнопка "Заказы"
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
             FrameManger.AdminFrame.Navigate(new OrderList());

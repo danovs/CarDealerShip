@@ -1,31 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для SettingProfile.xaml
-    /// </summary>
     public partial class SettingProfile : Page
     {
-
+        // Экземпляр контекста БД и поле для хранения ID текущего пользователя.
         private readonly CarDealershipEntities db;
         private int currentUserId;
-        
+
+        // Инициализируем экземпляр базы данных. Получаем ID текущего пользователя из класса app.cs. И загружаем данные о пользователе.
         public SettingProfile()
         {
             InitializeComponent();
@@ -34,25 +21,29 @@ namespace CarDealerShip
             LoadUserData();
         }
 
+        // Обработчик события нажатия кнопки мыши на текстовом поле для имени
         private void textName_MouseDown(object sender, MouseButtonEventArgs e)
         {
             txtName.Focus();
         }
+
+        // Обработчик события изменения текста в текстовом поле для имени
         private void txtName_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(txtName.Text) && txtName.Text.Length > 0)
             {
                 textName.Visibility = Visibility.Collapsed;
             }
-
             else
             {
                 textName.Visibility = Visibility.Visible;
             }
         }
 
+        // Кнопка "Сохранить".
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // Проверка наличия корректного идентификатора пользователя. Если проверка пройдена - получаем ноое имя и номер телефона из текстовых полей.
             if (currentUserId != 0)
             {
                 string newFullName = txtName.Text;
@@ -60,18 +51,17 @@ namespace CarDealerShip
 
                 try
                 {
+                    // Поиск клиента в базе данных по идентификатору пользователя. Если клиент есть, проеряем наличие изменений в данных клиента, после обновляем их.
                     var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
 
                     if (client != null)
                     {
-                        // Проверяем, были ли внесены изменения
                         if (client.full_name != newFullName || client.phone != phoneNumber)
                         {
-                            // Обновляем данные клиента только при наличии изменений
                             client.full_name = newFullName;
                             client.phone = phoneNumber;
-
                             db.SaveChanges();
+
                             MessageBox.Show("Данные успешно сохранены!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
@@ -95,10 +85,12 @@ namespace CarDealerShip
             }
         }
 
+        // Метод для загрузки данных пользователя.
         private void LoadUserData()
         {
             try
             {
+                // Поиск клиента в базе данных по идентификатору пользователя. Если запись найдена, передаем данные в текстовые поля.
                 var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
 
                 if (client != null)
@@ -106,13 +98,11 @@ namespace CarDealerShip
                     txtName.Text = client.full_name;
                     textPhoneNumber.Text = client.phone;
                 }
-
                 else
                 {
                     MessageBox.Show("Данные пользователя не найдены в базе данных!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            
             catch (Exception ex)
             {
                 MessageBox.Show($"Произошла ошибка при загрузке данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);

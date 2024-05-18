@@ -9,6 +9,8 @@
       Title="FeedbackPageEA">
 
     <Grid>
+        
+        <!-- Настройка страницы для корректного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid>
@@ -16,6 +18,8 @@
                         <RowDefinition Height="377*"/>
                         <RowDefinition Height="30*"/>
                     </Grid.RowDefinitions>
+                    
+                    <!-- Настраиваем датагрид. Проводим разметку колонок. -->
                     <DataGrid x:Name="DGridFeedback" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding feedback_id}" Width="35"></DataGridTextColumn>
@@ -30,10 +34,11 @@
                             <DataGridTextColumn Header="Дата отзыва" Binding="{Binding feedback_date,StringFormat={}{0:dd.MM.yyyy}}" Width="*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    
+                    <!-- Кнопка удаления для отзыва -->
                     <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Center" Margin="10" Click="Button_Click"></Button>
                 </Grid>
             </Border>
         </Grid>
-        
     </Grid>
 </Page>

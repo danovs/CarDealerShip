@@ -7,17 +7,23 @@ namespace CarDealerShip
 {
     public partial class EmployeesPage : Page
     {
+        // Экземпляр контекста базы данных
         private CarDealershipEntities db;
 
+        // Инициализация контекста базы данных и загрузка данных сотрудников из БД.
         public EmployeesPage()
         {
             InitializeComponent();
+
             db = new CarDealershipEntities();
+
             LoadEmployeeData();
         }
 
+        // Метод для загрузки данных сотрудников из базы данных.
         private void LoadEmployeeData()
         {
+            // Запрос к базе данных для получения данных о сотрудниках и их ролях (Данные поля будут задействованы в привязке в датагриде XAML)
             var query = (from employee in db.employees
                          join user in db.users on employee.user_id equals user.user_id
                          join role in db.roles on user.role_id equals role.role_id
@@ -33,39 +39,45 @@ namespace CarDealerShip
                              Phone = employee.phone,
                              Email = employee.email,
                              Salary = employee.salary
-
                          });
+
+            // Установка источника данных для DataGrid на основе результата запроса.
             DGridEmployees.ItemsSource = query.ToList();
         }
 
+        // Кнопка "Добавить".
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Навигация на страницу редактирования с пустым сотрудником для добавления
+            
             FrameManger.AdminFrame.Navigate(new EditEmployeePage());
         }
 
+        // Кнопка "Удалить".
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            // Проверка выбранного элемента в DataGrid
             if (DGridEmployees.SelectedItem != null)
             {
+                // Преобразование выбранного элемента в тип employee
                 employee selectedEmployee = DGridEmployees.SelectedItem as employee;
 
+                // Проверка подтверждения действия пользователя
                 MessageBoxResult result = MessageBox.Show("Вы точно хотите удалить данного сотрудника?", "Удаление сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (MessageBoxResult.Yes == result)
                 {
                     try
                     {
-                        // Подключаем выбранного сотрудника к текущему контексту данных
+                        // Подключение выбранного сотрудника к текущему контексту данных.
                         db.employees.Attach(selectedEmployee);
                         db.employees.Remove(selectedEmployee);
                         db.SaveChanges();
 
-                        // Обновляем роль пользователя
+                        // Обновление роли пользователя
                         var selectedUser = db.users.FirstOrDefault(u => u.user_id == selectedEmployee.user_id);
                         if (selectedUser != null)
                         {
-                            selectedUser.role_id = 3;
+                            selectedUser.role_id = 3; // 3 - ID роли "Клиент"
                             db.SaveChanges();
                         }
 
@@ -76,7 +88,7 @@ namespace CarDealerShip
                         MessageBox.Show("Ошибка при удалении сотрудника: " + ex.Message);
                     }
 
-                    // Обновляем список сотрудников после удаления
+                    // Обновление списка сотрудников после удаления
                     LoadEmployeeData();
                 }
                 else
@@ -90,17 +102,18 @@ namespace CarDealerShip
             }
         }
 
+        // Кнопка "Изменить".
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                // Получение выбранного сотрудника из датагрид.
                 employee selectedEmployee = (employee)DGridEmployees.SelectedItem;
 
                 if (selectedEmployee != null)
                 {
                     FrameManger.AdminFrame.Navigate(new EditCurrentEmployeePage(selectedEmployee));
                 }
-
                 else
                 {
                     MessageBox.Show("Пожалуйста, выберите сотрудника для редактирования.");

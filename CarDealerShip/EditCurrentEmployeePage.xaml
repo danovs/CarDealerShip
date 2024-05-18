@@ -6,10 +6,11 @@
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:CarDealerShip"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1130"
       Title="EditCurrentEmployeePage">
 
     <Grid>
+        <!-- Настройка страницы для корректного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid VerticalAlignment="Center" Width="700">
@@ -25,6 +26,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <!-- Изменение информации о сотруднике -->
                     <TextBlock Text="Фамилия:" Grid.Row="0" />
                     <TextBox x:Name="txtSurname" Grid.Row="0" Margin="120,0,0,0" MaxLength="75" />
 
@@ -50,12 +52,11 @@
                     <TextBlock Text="Зарплата:" Grid.Row="7" />
                     <TextBox x:Name="txtSalary" Grid.Row="7" Margin="120,0,0,0" MaxLength="6" />
 
+                    <!-- Кнопка "Сохранить" -->
                     <Button Content="Сохранить" Grid.Row="7" Margin="0,20,0,0" Click="Button_Click"/>
 
                 </Grid>
-
             </Border>
-
         </Grid>
     </Grid>
 </Page>

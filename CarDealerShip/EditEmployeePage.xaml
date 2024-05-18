@@ -6,10 +6,11 @@
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:CarDealerShip"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1130"
       Title="EditEmployeePage">
 
     <Grid>
+        <!-- Настройка страницы для правильного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid VerticalAlignment="Center" Width="700">
@@ -24,6 +25,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <!-- Текстовые поля для заполнения данных о сотруднике -->
                     <TextBlock Text="Фамилия:" Grid.Row="0" />
                     <TextBox x:Name="txtSurname" Grid.Row="0" Margin="120,0,0,0" MaxLength="75"/>
 
@@ -46,10 +48,9 @@
                     <TextBlock Text="Имя пользователя:" Grid.Row="6" />
                     <ComboBox x:Name="cmbUsername" Grid.Row="6" Margin="120,0,0,0"/>
 
+                    <!-- Кнопка "Добавить сотрудника" -->
                     <Button Content="Добавить сотрудника" Grid.Row="7" Margin="0,20,0,0" Click="Button_Click"/>
-
                 </Grid>
-
             </Border>
 
         </Grid>

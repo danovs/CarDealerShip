@@ -9,6 +9,7 @@
       Title="EmployeesPage">
 
     <Grid>
+        <!-- Настройка страницы для корректного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid>
@@ -16,6 +17,7 @@
                         <RowDefinition Height="377*"/>
                         <RowDefinition Height="30*"/>
                     </Grid.RowDefinitions>
+                    <!-- Датагрид для вывода записей из БД -->
                     <DataGrid x:Name="DGridEmployees" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID сотрудника" Binding="{Binding EmployeeId}" Width="*"></DataGridTextColumn>
@@ -28,6 +30,7 @@
                             <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Кол-во продаж" Binding="{Binding SalesCount}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary}" Width="*"></DataGridTextColumn>
+                            <!-- Кнопка "Изменить" для каждого элемента записи в датагриде -->
                             <DataGridTemplateColumn Width="auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -38,13 +41,12 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
+                    <!-- Кнопки "Добавить" и "Удалить" -->
                     <Button Content="Добавить" Grid.Row="2" Width="100" HorizontalAlignment="Left" Margin="10" Click="Button_Click"></Button>
                     <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Right" Margin="10" Click="Button_Click_1"></Button>
-                    
-                </Grid>
 
+                </Grid>
             </Border>
-            
         </Grid>
     </Grid>
 </Page>

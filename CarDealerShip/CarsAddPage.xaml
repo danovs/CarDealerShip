@@ -10,6 +10,7 @@
       Title="CarsAddPage">
 
     <Grid>
+        <!-- Настройка страницы для корректного отображения -->
         <Grid Margin="30">
             <Border Background="White" CornerRadius="20">
                 <Grid VerticalAlignment="Center" Width="700" Margin="20">
@@ -30,6 +31,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <!-- Текстовые поля для заполнения информации о автомобиле -->
                     <TextBlock Text="Марка:" Grid.Row="0" />
                     <TextBox x:Name="txtBrand" Grid.Row="0" Margin="120,0,0,0" MaxLength="50"/>
 
@@ -48,7 +50,6 @@
 
                     <TextBlock Text="Тип кузова:" Grid.Row="5" />
                     <ComboBox x:Name="cmbBodyType" Grid.Row="5" Margin="120,0,0,0"/>
-                    <!-- Добавьте другие варианты кузова -->
 
                     <TextBlock Text="Модификация:" Grid.Row="6" />
                     <TextBox x:Name="txtModification" Grid.Row="6" Margin="120,0,0,0" MaxLength="100" />
@@ -57,13 +58,17 @@
                     <TextBox x:Name="txtTrimLevel" Grid.Row="7" Margin="120,0,0,0" MaxLength="100"/>
 
                     <TextBlock Text="Изображение:" Grid.Row="8" />
+                    
+                    <!-- Путь к изображению -->
                     <StackPanel Grid.Row="8" Orientation="Horizontal">
                         <TextBox x:Name="txtImagePath" IsEnabled="False" Width="200" Margin="120,0,10,0"/>
                         <Button Content="Выбрать файл" Click="Button_Click"/>
                     </StackPanel>
 
+                    <!-- Вывод картинки -->
                     <Image x:Name="imgPreview" Grid.Row="9" Width="200" Height="150" Margin="120,10,0,0"/>
 
+                    <!-- Кнопка добавить автомобиль -->
                     <Button Content="Добавить автомобиль" Grid.Row="10" Margin="0,20,0,0" Click="Button_Click_1"/>
 
                 </Grid>

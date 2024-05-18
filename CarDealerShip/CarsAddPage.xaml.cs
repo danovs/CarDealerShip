@@ -1,27 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Win32;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для CarsAddPage.xaml
-    /// </summary>
     public partial class CarsAddPage : Page
     {
+        // Экземляр контекста БД. Текущий редактируемый автомобиль. Путь к выбанному изображению.
         private CarDealershipEntities db;
 
         private string imagePath;
@@ -30,16 +19,19 @@ namespace CarDealerShip
         {
             InitializeComponent();
 
-            db = new CarDealershipEntities();
+            db = new CarDealershipEntities(); // Инициализация контекста базы данных.
 
+            // Заполнение выпадающего списка типов кузовов данными из базы данных.
             cmbBodyType.ItemsSource = db.car_types.Select(c => c.type_name).ToList();
         }
 
+        // Кнопка выбора картинки для автомобиля.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image Files(*.png; *.jpg; *.jpeg)| *.png; *.jpg; *.jpeg | All files(*.*) | *.*";
 
+            // Открытие диалогового окна для выбора изображения. Получение пути к выбранному файлу, его отображение, и отображение выбранного изображения.
             if (openFileDialog.ShowDialog() == true)
             {
                 imagePath = openFileDialog.FileName;
@@ -48,15 +40,17 @@ namespace CarDealerShip
             }
         }
 
+        // Кнопка "Добавить автомобиль"
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Вы точно хотите добавить автомобиль в инвентарь?", "Добавление автомобиля", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            // Проверка подтверждения действия пользователя.
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    // Проверка на пустые поля
+                    // Проверка наличия заполнения всех обязательных полей формы.
                     if (string.IsNullOrWhiteSpace(txtBrand.Text) ||
                         string.IsNullOrWhiteSpace(txtModel.Text) ||
                         string.IsNullOrWhiteSpace(txtYear.Text) ||
@@ -71,6 +65,7 @@ namespace CarDealerShip
 
                     string color = txtColor.Text;
 
+                    // Проверка наличия автомобиля с такой же маркой, моделью и цветом в базе данных.
                     bool carExists = db.cars.Any(c => c.color == color && c.make == txtBrand.Text && c.model == txtModel.Text);
 
                     if (carExists)
@@ -81,15 +76,16 @@ namespace CarDealerShip
 
                     string imagePath = txtImagePath.Text;
 
-                    // Проверка наличия файла изображения
+                    // Проверка наличия выбранного файла изображения.
                     if (!File.Exists(imagePath))
                     {
                         MessageBox.Show("Выбранное изображение не найдено.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
-                    byte[] imageData = File.ReadAllBytes(imagePath);
+                    byte[] imageData = File.ReadAllBytes(imagePath); // Чтение байтов изображения из файла.
 
+                    // Создание нового объекта car и заполнение его данными.
                     car newCar = new car
                     {
                         make = txtBrand.Text,
@@ -103,6 +99,7 @@ namespace CarDealerShip
                         trim_level = txtTrimLevel.Text,
                     };
 
+                    // Добавление нового автомобиля в базу данных и сохранение изменений.
                     db.cars.Add(newCar);
                     db.SaveChanges();
 

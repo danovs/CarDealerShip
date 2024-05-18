@@ -404,6 +404,9 @@
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
       <LastGenOutput>CarDealershipModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="MenuImages\invPage.png" />
+    <Resource Include="MenuImages\addCatalog.png" />
+    <Resource Include="MenuImages\orderList.png" />
     <Resource Include="MenuImages\carorder.png" />
     <Resource Include="MenuImages\brushcolor.png" />
     <Resource Include="MenuImages\speed.png" />

@@ -1,40 +1,30 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для CarEditPage.xaml
-    /// </summary>
     public partial class CarEditPage : Page
     {
+        // Экземляр контекста БД. Текущий редактируемый автомобиль. Путь к выбанному изображению.
         private CarDealershipEntities db;
 
         private car currentCar;
 
         private string imagePath;
-
+        
+        // Инициализацтя контекста БД, поиск текущего автомобиля в БД по его ID. Заполняем выпадающий список типов кузовов и заполянем формы данными о текущем автомобиле.
         public CarEditPage(car car)
         {
-
             InitializeComponent();
 
             db = new CarDealershipEntities();
             currentCar = db.cars.Find(car.car_id);
+
             cmbBodyType.ItemsSource = db.car_types.Select(c => c.type_name).ToList();
 
             txtBrand.Text = currentCar.make;
@@ -45,19 +35,19 @@ namespace CarDealerShip
             cmbBodyType.SelectedItem = currentCar.car_types.type_name;
             txtModification.Text = currentCar.modification;
             txtConfiguration.Text = currentCar.trim_level;
-            DisplayImage();
 
+            DisplayImage(); // Отображение текущего автомобиля (фотография).
         }
 
+        // Метод для отображения изображения текущего автомобиля.
         private void DisplayImage()
         {
             if (currentCar.photo != null && currentCar.photo.Length > 0)
             {
                 try
                 {
-                    BitmapImage bitmapImage = LoadImage(currentCar.photo);
-
-                    imgPreview.Source = bitmapImage;
+                    BitmapImage bitmapImage = LoadImage(currentCar.photo); // Загружаем изображение из массива байтов.
+                    imgPreview.Source = bitmapImage; // Устанавливаем изображение в элемент Image.
                 }
                 catch (Exception ex)
                 {
@@ -66,7 +56,7 @@ namespace CarDealerShip
             }
         }
 
-
+        // Метод для загрузки изображения из массива байтов.
         public static BitmapImage LoadImage(byte[] imageData)
         {
             var image = new BitmapImage();
@@ -80,10 +70,11 @@ namespace CarDealerShip
                 image.StreamSource = mem;
                 image.EndInit();
             }
-            image.Freeze();
+            image.Freeze(); // Замораживаем изображение для повышения производительности.
             return image;
         }
 
+        // Обработчик события нажатия кнопки для выбора изображения.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -93,11 +84,11 @@ namespace CarDealerShip
             {
                 try
                 {
-                    imagePath = openFileDialog.FileName; // Сохраняем путь к выбранному файлу в переменную класса
-                    txtImagePath.Text = imagePath;
+                    imagePath = openFileDialog.FileName; // Сохраняем путь к выбранному файлу в переменной класса
+                    txtImagePath.Text = imagePath; // Отображаем путь к файлу в текстовом поле
 
-                    BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
-                    imgPreview.Source = bitmapImage;
+                    BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath)); // Создаем объект BitmapImage из выбранного файла
+                    imgPreview.Source = bitmapImage; // Устанавливаем выбранное изображение в элемент Image
                 }
                 catch (Exception ex)
                 {
@@ -106,16 +97,17 @@ namespace CarDealerShip
             }
         }
 
-
+        // Обработчик события нажатия кнопки для сохранения изменений.
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Вы точно хотите внести изменения в данный автомобиль?", "Изменение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            // Если пользователь подтвердил свое намерение внести изменения
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    // Check if any required fields are empty
+                    // Проверяем, заполнены ли обязательные поля
                     if (string.IsNullOrEmpty(txtBrand.Text) ||
                         string.IsNullOrEmpty(txtModel.Text) ||
                         string.IsNullOrEmpty(txtYear.Text) ||
@@ -124,16 +116,17 @@ namespace CarDealerShip
                         cmbBodyType.SelectedItem == null)
                     {
                         MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return; // Exit the method without saving if any field is empty
+                        return;
                     }
 
+                    // Если выбрано новое изображение, загружаем его и сохраняем в базе данных
                     if (!string.IsNullOrEmpty(imagePath))
                     {
-                        byte[] imageData = File.ReadAllBytes(imagePath);
-                        currentCar.photo = imageData; // Обновляем поле photo у объекта currentCar
+                        byte[] imageData = File.ReadAllBytes(imagePath); // Чтение байтов изображения из файла
+                        currentCar.photo = imageData; // Обновление поля photo у текущего автомобиля
                     }
 
-                    // Update other properties of currentCar
+                    // Обновляем остальные свойства текущего автомобиля
                     currentCar.make = txtBrand.Text;
                     currentCar.model = txtModel.Text;
                     currentCar.year = Convert.ToInt32(txtYear.Text);
@@ -142,7 +135,7 @@ namespace CarDealerShip
                     currentCar.modification = txtModification.Text;
                     currentCar.trim_level = txtConfiguration.Text;
 
-                    // Update car type (body type)
+                    // Обновляем тип кузова автомобиля и сохраняем данные в БД.
                     string selectedBodyType = cmbBodyType.SelectedItem.ToString();
                     car_types bodyType = db.car_types.FirstOrDefault(ct => ct.type_name == selectedBodyType);
                     if (bodyType != null)
@@ -150,7 +143,7 @@ namespace CarDealerShip
                         currentCar.type_id = bodyType.type_id;
                     }
 
-                    db.SaveChanges(); // Save changes to the database
+                    db.SaveChanges();
                     MessageBox.Show("Данные успешно обновлены в базе данных!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)

@@ -9,6 +9,7 @@
       Title="CarsPage">
 
     <Grid>
+        <!-- Настройка страницы для корректного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid>
@@ -16,6 +17,7 @@
                         <RowDefinition Height="377*"/>
                         <RowDefinition Height="30*"/>
                     </Grid.RowDefinitions>
+                    <!-- Дата грид. Разметка колонок, для вывода данных с БД о автомобиле. -->
                     <DataGrid x:Name="DGridCars" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID автомобиля" Binding="{Binding car_id}" Width="*"></DataGridTextColumn>
@@ -28,6 +30,7 @@
                             <DataGridTextColumn Header="Комплектация" Binding="{Binding trim_level}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="*"></DataGridTextColumn>
                             <DataGridTemplateColumn Width="auto">
+                                <!-- Кнопка изменить для каждого элемента записи -->
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Content="Изменить" x:Name="BtnEdit" Click="BtnEdit_Click"></Button>
@@ -37,13 +40,12 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
+                    <!-- Кнопки "Добавить и "Удалить" -->
                     <Button Content="Добавить" Grid.Row="2" Width="100" HorizontalAlignment="Left" Margin="10" Click="Button_Click"></Button>
                     <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Right" Margin="10" Click="Button_Click_1"></Button>
 
                 </Grid>
-
             </Border>
-
         </Grid>
     </Grid>
 </Page>

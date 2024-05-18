@@ -1,32 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для CatalogAddPage.xaml
-    /// </summary>
     public partial class CatalogAddPage : Page
     {
+        // Экземпляр контекста базы данных
         private CarDealershipEntities db;
 
+        // Инициализация контекста базы данных и установка источников данных для выпадающих списков (Автомобиль, расположение).
         public CatalogAddPage()
         {
             InitializeComponent();
 
-            db = new CarDealershipEntities();
+            db = new CarDealershipEntities(); 
 
             cmbCar.ItemsSource = db.cars.ToList();
             cmbCar.DisplayMemberPath = "make";
@@ -34,57 +23,58 @@ namespace CarDealerShip
             cmbLocation.ItemsSource = db.locations.ToList();
             cmbLocation.DisplayMemberPath = "location_name";
 
+            // Добавление обработчиков событий изменения выбора в комбо-боксах
             cmbCar.SelectionChanged += cmbCar_SelectionChanged;
             cmbLocation.SelectionChanged += cmbLocation_SelectionChanged;
         }
 
+        // Обработчик события изменения выбранного автомобиля. Загружает данные о автомобиле.
         private void cmbCar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadSelectedCarData();
         }
 
+        // Обработчик события изменения выбранного местоположения. Загружает данные о выбранном автомобиле, исходя из расположения. (Отображение количества и статуса).
         private void cmbLocation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadSelectedCarData();
         }
 
+        // Метод для загрузки данных о выбранном автомобиле.
         private void LoadSelectedCarData()
         {
-            car selectedCar = cmbCar.SelectedItem as car;
-            location selectedLocation = cmbLocation.SelectedItem as location;
+            car selectedCar = cmbCar.SelectedItem as car; // Получение выбранного автомобиля.
+            location selectedLocation = cmbLocation.SelectedItem as location; // Получение выбранного местоположения.
 
             if (selectedCar != null)
             {
-                // Устанавливаем данные в текстовые блоки
+                // Заполнение текстовых блоков данными о выбранном автомобиле.
                 txtMake.Text = selectedCar.make;
                 txtModel.Text = selectedCar.model;
-
-                var carType = db.car_types.FirstOrDefault(ct => ct.type_id == selectedCar.type_id);
-                if (carType != null)
-                {
-                    txtBodyType.Text = carType.type_name;
-                }
-
                 txtYear.Text = selectedCar.year.ToString();
                 txtColor.Text = selectedCar.color;
                 txtTrimLevel.Text = selectedCar.trim_level;
                 txtModification.Text = selectedCar.modification;
                 txtPrice.Text = selectedCar.price.ToString();
 
-                // Проверяем, что selectedLocation не равен null
+                // Поиск и отображение информации о типе кузова автомобиля.
+                var carType = db.car_types.FirstOrDefault(ct => ct.type_id == selectedCar.type_id);
+                if (carType != null)
+                {
+                    txtBodyType.Text = carType.type_name;
+                }
+
                 if (selectedLocation != null)
                 {
-                    // Поиск информации о инвентаре для выбранного автомобиля и расположения
+                    // Поиск и отображение информации о наличии автомобиля на выбранном местоположении.
                     var invInfo = db.inventories.FirstOrDefault(inv => inv.car_id == selectedCar.car_id && inv.location_id == selectedLocation.location_id);
                     if (invInfo != null)
                     {
-                        txtCount.Text = invInfo.count.ToString();
-
-                        var statusInfo = db.status.FirstOrDefault(st => st.status_id == invInfo.status_id);
-
+                        txtCount.Text = invInfo.count.ToString(); // Отображение количества доступных автомобилей.
+                        var statusInfo = db.status.FirstOrDefault(st => st.status_id == invInfo.status_id); // Получение информации о статусе автомобиля.
                         if (statusInfo != null)
                         {
-                            txtStatus.Text = statusInfo.status_name;
+                            txtStatus.Text = statusInfo.status_name; // Отображение статуса автомобиля.
                         }
                         else
                         {
@@ -100,6 +90,7 @@ namespace CarDealerShip
             }
         }
 
+        // Кнопка "Добавить".
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             car selectedCar = cmbCar.SelectedItem as car;
@@ -107,11 +98,12 @@ namespace CarDealerShip
 
             if (selectedCar != null && selectedLocation != null)
             {
-                // Ask for confirmation before proceeding
+                // Проверка подтверждения действия пользователя.
                 MessageBoxResult result = MessageBox.Show("Вы точно хотите добавить автомобиль в инвентарь?", "Добавление автомобиля", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
+                    // Проверка наличия записи о выбранном автомобиле и местоположении в каталоге
                     var existingEntry = db.catalogs.FirstOrDefault(c => c.car_id == selectedCar.car_id && c.inventory.location_id == selectedLocation.location_id);
 
                     if (existingEntry != null)
@@ -126,15 +118,14 @@ namespace CarDealerShip
                         {
                             try
                             {
-                                // Создаем новую запись в каталоге
+                                // Создание новой записи в каталоге
                                 catalog newCatalogEntry = new catalog
                                 {
                                     car_id = selectedCar.car_id,
                                     inventory_id = invInfo.inventory_id
-                                    // Добавьте другие поля, если необходимо
                                 };
 
-                                // Добавляем запись в таблицу каталогов
+                                // Добавление записи в таблицу каталогов
                                 db.catalogs.Add(newCatalogEntry);
                                 db.SaveChanges();
 

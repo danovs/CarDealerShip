@@ -1,61 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для EditCurrentEmployeePage.xaml
-    /// </summary>
     public partial class EditCurrentEmployeePage : Page
     {
+        // Экземпляр контекста базы данных. Текущий сотрудник для редактирования.
         private CarDealershipEntities db;
 
         private employee currentEmployee;
 
+        // Инициализация контекста базы данных. Поиск сотрудника по идентификатору. Установка источников данных для выпадающих списков cmbRole и cmbUsername.
         public EditCurrentEmployeePage(employee employee)
         {
             InitializeComponent();
+
             db = new CarDealershipEntities();
             currentEmployee = db.employees.Find(employee.employee_id);
 
+            
             cmbRole.ItemsSource = db.roles.Select(r => r.role_name).ToList();
             cmbUsername.ItemsSource = db.users.Select(u => u.username).ToList();
 
+            // Заполнение полей формы данными текущего сотрудника.
             txtSurname.Text = currentEmployee.surname;
             txtName.Text = currentEmployee.name;
             txtLastname.Text = currentEmployee.lastname;
             txtPhone.Text = currentEmployee.phone;
             txtEmail.Text = currentEmployee.email;
-            cmbRole.SelectedItem = currentEmployee.user.role.role_name;
-            cmbUsername.SelectedItem = currentEmployee.user.username;
-            txtSalary.Text = currentEmployee.salary.ToString();
-
+            cmbRole.SelectedItem = currentEmployee.user.role.role_name; // Выбранная роль сотрудника
+            cmbUsername.SelectedItem = currentEmployee.user.username; // Выбранное имя пользователя
+            txtSalary.Text = currentEmployee.salary.ToString(); // Заработная плата
         }
 
+        // Кнопка "Сохранить".
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Проверка подтверждения действия пользователя.
             MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите сохранить обновленные данные сотрудника?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    // Check for empty required fields
+                    // Проверка наличия и заполненности всех обязательных полей.
                     if (string.IsNullOrWhiteSpace(txtSurname.Text) ||
                         string.IsNullOrWhiteSpace(txtName.Text) ||
                         string.IsNullOrWhiteSpace(txtLastname.Text) ||
@@ -69,13 +59,14 @@ namespace CarDealerShip
                         return;
                     }
 
-                    // Update employee details
+                    // Обновление данных сотрудника.
                     currentEmployee.surname = txtSurname.Text;
                     currentEmployee.name = txtName.Text;
                     currentEmployee.lastname = txtLastname.Text;
                     currentEmployee.phone = txtPhone.Text;
                     currentEmployee.email = txtEmail.Text;
 
+                    // Проверка и преобразование заработной платы.
                     if (decimal.TryParse(txtSalary.Text, out decimal salaryValue))
                     {
                         currentEmployee.salary = salaryValue;
@@ -86,15 +77,13 @@ namespace CarDealerShip
                         return;
                     }
 
-                    // Get selected role and update employee's role
+                    // Получение выбранной роли и обновление роли сотрудника.
                     string selectedRoleName = cmbRole.SelectedItem as string;
-
                     var newRole = db.roles.FirstOrDefault(r => r.role_name == selectedRoleName);
 
                     if (newRole != null)
                     {
-                        currentEmployee.user.role = newRole;
-
+                        currentEmployee.user.role = newRole; // Установка новой роли сотруднику.
                         db.SaveChanges();
                         MessageBox.Show("Изменения сохранены!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }

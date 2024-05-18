@@ -9,6 +9,7 @@
       Title="Каталог">
 
     <Grid>
+        <!-- Настройка страницы для корректного отображения -->
         <Border Grid.Column="1" Background="#FFF7F7F7" CornerRadius="0 30 30 0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -21,7 +22,7 @@
                 <TextBlock Grid.Row="0" Text="Каталог" FontFamily="Montserrat" FontSize="30" FontWeight="Bold"
                            HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,10" Foreground="#3C3C3C"/>
 
-                <!-- Бордер с текстбоксами -->
+                <!-- Бордер с текстовыми полями. Они выполняют роль фильтрации каталога -->
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
                     <TextBox x:Name="minPriceTextBox" Width="100" VerticalAlignment="Center" Margin="5,0" Style="{StaticResource RoundedTextBoxStyle}" Text="цена от" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
                     <TextBox x:Name="maxPriceTextBox" Width="100" VerticalAlignment="Center" Margin="0,0,5,0" Style="{StaticResource RoundedTextBoxStyle}" Text="цена до" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>

@@ -1,28 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для FeedbackPageEA.xaml
-    /// </summary>
     public partial class FeedbackPageEA : Page
     {
+        //Экземпляр контекста БД.
         private CarDealershipEntities db;
         
+        // Инициализация экземпляра контекста БД и загрузка записей с таблицы "Feedback" (Отзывы).
         public FeedbackPageEA()
         {
             InitializeComponent();
@@ -32,18 +20,23 @@ namespace CarDealerShip
             LoadFeedbackData();
         }
 
+        // Метод для загрузки записей с таблицы "Feedback" (Отзывы). Устанавливаем источник данных для датагрид, содержающего отзывы.
         private void LoadFeedbackData()
         {
             DGridFeedback.ItemsSource = db.feedbacks.ToList();
         }
 
+        // Кнопка "Удалить"
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Проверка выбранного элемента в датагрид. Если запись найдена, то приводим выбранный элемент к типу feedback.
             if (DGridFeedback.SelectedItem != null)
             {
                 feedback selectedFeedback = DGridFeedback.SelectedItem as feedback;
 
-                MessageBoxResult result = System.Windows.MessageBox.Show("Вы действительно хотите удалить отзыв?", "Удаление отзыва", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                // Проверка подтверждения пользователем о удалении записи.
+                // Если проверка пройдена, то присоединяем выбранный отзыв к контексту БД, после удаляем его. Сохраняем изменения в БД.
+                MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить отзыв?", "Удаление отзыва", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -53,23 +46,24 @@ namespace CarDealerShip
                         db.feedbacks.Remove(selectedFeedback);
 
                         db.SaveChanges();
-                        System.Windows.MessageBox.Show("Отзыв был удалён.");
+                        MessageBox.Show("Отзыв был удалён.");
                     }
                     catch (Exception ex)
                     {
-                        System.Windows.MessageBox.Show("Ошибка при удалении отзыва: " + ex.Message);
+                        MessageBox.Show("Ошибка при удалении отзыва: " + ex.Message);
                     }
 
+                    // Обновляем датагрид.
                     LoadFeedbackData();
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("Отзыв не был удалён");
+                    MessageBox.Show("Отзыв не был удалён");
                 }
             }
             else
             {
-                System.Windows.MessageBox.Show("Выберите запись для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Выберите запись для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

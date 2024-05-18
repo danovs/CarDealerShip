@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Left Menu Column -->
+        <!-- Навигационное меню -->
         <Border Background="#f4f4f4" CornerRadius="30 0 0 30" BorderThickness="0 0 1 0" BorderBrush="#d9d9d9">
             <Grid>
                 <Button Style="{StaticResource menuButtonTop}">
@@ -23,37 +23,38 @@
                     <TextBlock Text="ADM" FontSize="13" FontWeight="SemiBold" FontFamily="Montserrat" Margin="0 0 0 2" Foreground="#355858"/>
                 </Button>
 
-                <!-- Menu Buttons -->
+                <!-- Кнопки навигационного меню -->
                 <StackPanel VerticalAlignment="Center">
+                    <!-- Сотрудники -->
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_1">
                         <Image Source="/AuthReg/Images/userupd.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
+                    <!-- Автомобили -->
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_2">
                         <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
+                    <!-- Инвентарь -->
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_3">
-                        <Image Source="/MenuImages/inventory.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Image Source="/MenuImages/invPage.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
+                    <!-- Каталог -->
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_5">
+                        <Image Source="/MenuImages/addCatalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                    <!-- Отзывы -->
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_4">
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_5">
-                        <Image Source="/MenuImages/layers.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                    </Button>
-
-                    <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click_6">
-                        <Image Source="/MenuImages/quit.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                    </Button>
                 </StackPanel>
 
-                <!-- Quit Button at the bottom -->
+                <!-- Выход из приложения -->
                 <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click">
                     <Image Source="/MenuImages/quit.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
             </Grid>
         </Border>
 
-        <!-- Main Content Column -->
+        <!-- Колонка для страниц -->
         <Border Grid.Column="1" Background="#f4f4f4" CornerRadius="0 30 30 0" MouseDown="Border_MouseDown">
 
             <Frame x:Name="AdminFrame" NavigationUIVisibility="Hidden"/>

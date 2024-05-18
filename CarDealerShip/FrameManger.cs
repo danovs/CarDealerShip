@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace CarDealerShip
 {
     class FrameManger
     {
+        // Статическое свойство для доступа к главному фрейму.
         public static Frame MainFrame { get; set; }
+
+        // Статическое свойство для доступа к административному фрейму.
         public static Frame AdminFrame { get; set; }
     }
 }

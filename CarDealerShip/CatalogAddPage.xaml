@@ -9,6 +9,7 @@
       Title="CatalogAddPage">
 
     <Grid>
+        <!-- Настройка страницы для корректного отображения -->
         <Grid>
             <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
                 <Grid VerticalAlignment="Center" Width="700">
@@ -28,6 +29,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <!-- При изменении автомобиля, меняется информация о нем-->
                     <TextBlock Text="Автомобиль:" Grid.Row="0" />
                     <ComboBox x:Name="cmbCar" Grid.Row="0" Margin="120,0,0,0" SelectionChanged="cmbCar_SelectionChanged"/>
 
@@ -55,6 +57,7 @@
                     <TextBlock Text="Цена" Grid.Row="8" />
                     <TextBlock x:Name="txtPrice" Grid.Row="8" Margin="120,0,0,0"/>
 
+                    <!-- При изменении расположения, меняется количество автомобилей и статус-->
                     <TextBlock Text="Расположение" Grid.Row="9"/>
                     <ComboBox x:Name="cmbLocation" Grid.Row="9" Margin="120,0,0,0" SelectionChanged="cmbLocation_SelectionChanged"/>
 
@@ -64,12 +67,11 @@
                     <TextBlock Text="Статус:" Grid.Row="11"/>
                     <TextBlock x:Name="txtStatus" Grid.Row="11" Margin="120,0,0,0"/>
 
+                    <!-- Кнопка "Добавить" -->
                     <Button Content="Добавить" Grid.Row="12" Margin="0,20,0,0" Click="Button_Click"/>
 
                 </Grid>
-
             </Border>
-
         </Grid>
     </Grid>
 </Page>
