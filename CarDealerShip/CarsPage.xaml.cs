@@ -9,6 +9,7 @@ namespace CarDealerShip
     {
         // Экземпляр контекста базы данных.
         private CarDealershipEntities db;
+        private bool isSearchPlaceholder = true;
 
         // Инициализация контекста базы данных и загрузка данных об автомобилях при открытии страницы.
         public CarsPage()
@@ -16,8 +17,15 @@ namespace CarDealerShip
             InitializeComponent();
 
             db = new CarDealershipEntities();
-
-            LoadCarsData();
+            if (db != null )
+            {
+                LoadCarsData();
+                SearchTextBox.TextChanged += SearchTextBox_TextChanged;
+            }
+            else
+            {
+                MessageBox.Show("Ошибка: База данных не инициализирована");
+            }
         }
 
         // Метод для загрузки данных об автомобилях из базы данных и отображения их в таблице.
@@ -27,37 +35,31 @@ namespace CarDealerShip
         }
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (db != null)
+            if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Поиск" && db != null)
             {
-                string searchText = SearchTextBox.Text.Trim(); // Получаем текст из текстового поля поиска и удаляем лишние пробелы
-
-                // Если текст поиска не пустой, выполняем поиск
-                if (!string.IsNullOrEmpty(searchText))
-                {
-                    // Преобразуем текст поиска в нижний регистр для регистронезависимого поиска
-                    string lowercaseSearchText = searchText.ToLower();
-
-                    // Выполняем поиск записей, удовлетворяющих критериям поиска
-                    var searchResult = db.cars.Where(car => car.make.ToLower().Contains(lowercaseSearchText) ||
-                    car.model.ToLower().Contains(lowercaseSearchText) ||
+                string searchText = SearchTextBox.Text.Trim().ToLower();
+                var searchResult = db.cars.Where(car =>
+                    car.make.ToLower().Contains(searchText) ||
+                    car.model.ToLower().Contains(searchText) ||
                     car.year.ToString().Contains(searchText) ||
-                    car.color.ToLower().Contains(lowercaseSearchText) ||
-                    car.price.ToString().Contains(searchText));
+                    car.color.ToLower().Contains(searchText) ||
+                    car.price.ToString().Contains(searchText) ||
+                    car.modification.ToLower().Contains(searchText) ||
+                    car.trim_level.ToLower().Contains(searchText) ||
+                    car.catalogs.Any(catalog =>
+                        catalog.inventory.status.status_name.ToLower().Contains(searchText)
+                    )).ToList();
 
-                    // Обновляем источник данных для DataGrid, отображая найденные результаты
-                    DGridCars.ItemsSource = searchResult.ToList();
-                }
-                else
-                {
-                    // Если текст поиска пустой, отображаем все записи
-                    LoadCarsData();
-                }
+                DGridCars.ItemsSource = searchResult;
             }
-            else
+            else if (db != null)
             {
-                MessageBox.Show("Ошибка: База данных не инициализирована.");
+                LoadCarsData();
             }
         }
+
+
+
 
         // Кнопка "Добавить". Производит переход на страницу добавления автомобиля.
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -125,6 +127,22 @@ namespace CarDealerShip
             {
                 MessageBox.Show("Ошибка: " + ex.Message);
             }
-        }      
+        }
+        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (isSearchPlaceholder)
+            {
+                SearchTextBox.Text = "";
+                isSearchPlaceholder = false;
+            }
+        }
+        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
+            {
+                SearchTextBox.Text = "Поиск";
+                isSearchPlaceholder = true;
+            }
+        }
     }
 }

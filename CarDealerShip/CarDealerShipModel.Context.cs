@@ -12,12 +12,23 @@ namespace CarDealerShip
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Net.NetworkInformation;
+
     public partial class CarDealershipEntities : DbContext
     {
+        private static CarDealershipEntities _context;
         public CarDealershipEntities()
             : base("name=CarDealershipEntities")
         {
+        }
+
+        public static CarDealershipEntities GetContext()
+        {
+            if (_context == null )
+            {
+                _context = new CarDealershipEntities();
+            }
+            return _context;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
