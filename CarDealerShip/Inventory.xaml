@@ -21,7 +21,7 @@
                     <!-- Датагрид для вывода записей из базы данных с таблицы Inventory. Разметка колонок с привязкой данных, которые будут объялвены в коде-->
                     <DataGrid x:Name="DGridInventory" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding inventoryId}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="ID" Binding="{Binding InventoryId}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Автомобиль" Binding="{Binding carMake}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Модель" Binding="{Binding Model}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Год выпуска" Binding="{Binding Year}" Width="*"></DataGridTextColumn>
@@ -43,7 +43,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
+
                     <!-- Кнопки для добавления записи (переход на страницу добавления записи в инвентарь) и для удаления записи с базы данных -->
+                    <TextBox x:Name="SearchTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="Поиск" HorizontalAlignment="Center" Width="400" Height="20" TextChanged="SearchTextBox_TextChanged" LostFocus="SearchTextBox_LostFocus" GotFocus="SearchTextBox_GotFocus"/>
                     <Button Content="Добавить" Grid.Row="2" Width="100" HorizontalAlignment="Left" Margin="10" Click="Button_Click"></Button>
                     <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Right" Margin="10" Click="Button_Click_1"></Button>
 

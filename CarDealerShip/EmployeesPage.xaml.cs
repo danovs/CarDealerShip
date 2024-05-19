@@ -9,6 +9,7 @@ namespace CarDealerShip
     {
         // Экземпляр контекста базы данных
         private CarDealershipEntities db;
+        private bool isSearchPlaceholder = true;
 
         // Инициализация контекста базы данных и загрузка данных сотрудников из БД.
         public EmployeesPage()
@@ -17,7 +18,12 @@ namespace CarDealerShip
 
             db = new CarDealershipEntities();
 
-            LoadEmployeeData();
+            if (db != null )
+            {
+                SearchTextBox.TextChanged += SearchTextBox_TextChanged;
+                LoadEmployeeData();
+            }
+
         }
 
         // Метод для загрузки данных сотрудников из базы данных.
@@ -122,6 +128,72 @@ namespace CarDealerShip
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка: " + ex.Message);
+            }
+        }
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Поиск" && db != null)
+            {
+                string searchText = SearchTextBox.Text.Trim().ToLower();
+                var searchTerms = searchText.Split(' ');
+
+                var searchResult = db.employees
+    .Where(employee =>
+        searchTerms.All(term =>
+            employee.surname.ToLower().Contains(term) ||
+            employee.name.ToLower().Contains(term) ||
+            employee.lastname.ToLower().Contains(term) ||
+            employee.phone.ToLower().Contains(term) ||
+            employee.email.ToLower().Contains(term) ||
+            employee.salary.ToString().Contains(term) ||
+            db.users.Any(user =>
+                user.user_id == employee.user_id &&
+                db.roles.Any(role =>
+                    role.role_id == user.role_id &&
+                    role.role_name.ToLower().Contains(term)
+                )
+            )
+        )
+    )
+    .Select(employee => new
+    {
+        EmployeeId = employee.employee_id,
+        HireDate = employee.hiredate,
+        RoleName = db.roles.FirstOrDefault(role =>
+            db.users.Any(user =>
+                user.user_id == employee.user_id &&
+                user.role_id == role.role_id
+            )).role_name,
+        Surname = employee.surname,
+        Name = employee.name,
+        LastName = employee.lastname,
+        Phone = employee.phone,
+        Email = employee.email,
+        Salary = employee.salary
+    })
+    .ToList();
+
+                DGridEmployees.ItemsSource = searchResult;
+            }
+            else if (db != null)
+            {
+                LoadEmployeeData();
+            }
+        }
+        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (isSearchPlaceholder)
+            {
+                SearchTextBox.Text = "";
+                isSearchPlaceholder = false;
+            }
+        }
+        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
+            {
+                SearchTextBox.Text = "Поиск";
+                isSearchPlaceholder = true;
             }
         }
     }

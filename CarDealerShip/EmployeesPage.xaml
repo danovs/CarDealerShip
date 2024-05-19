@@ -42,6 +42,7 @@
                     </DataGrid>
 
                     <!-- Кнопки "Добавить" и "Удалить" -->
+                    <TextBox x:Name="SearchTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="Поиск" HorizontalAlignment="Center" Width="400" Height="20" TextChanged="SearchTextBox_TextChanged" LostFocus="SearchTextBox_LostFocus" GotFocus="SearchTextBox_GotFocus"/>
                     <Button Content="Добавить" Grid.Row="2" Width="100" HorizontalAlignment="Left" Margin="10" Click="Button_Click"></Button>
                     <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Right" Margin="10" Click="Button_Click_1"></Button>
 

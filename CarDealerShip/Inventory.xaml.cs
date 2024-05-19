@@ -9,6 +9,7 @@ namespace CarDealerShip
     {
         // Экземпляр контекста БД
         private CarDealershipEntities db;
+        private bool isSearchPlaceholder = true;
 
         // Инициализация экземпляра контекста БД и загрузка данных в датагрид.
         public Inventory()
@@ -16,8 +17,15 @@ namespace CarDealerShip
             InitializeComponent();
 
             db = new CarDealershipEntities();
-
-            LoadInventoryData();
+            if (db != null )
+            {
+                LoadInventoryData();
+                SearchTextBox.TextChanged += SearchTextBox_TextChanged;
+            }
+            else
+            {
+                MessageBox.Show("БД не инициализирована");
+            }
         }
 
         // Загрузка данных в датагрид. Создаем запрос через LINQ, после присваиваем поля для хранения данных с БД.
@@ -31,7 +39,7 @@ namespace CarDealerShip
                         join status in db.status on inventory.status_id equals status.status_id
                         select new
                         {
-                            inventoryId = inventory.inventory_id,
+                            InventoryId = inventory.inventory_id,
                             carMake = car.make,
                             Model = car.model,
                             Year = car.year,
@@ -133,6 +141,66 @@ namespace CarDealerShip
             else
             {
                 MessageBox.Show("Пожалуйста, выберите запись для редактирования.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Поиск" && db != null)
+            {
+                string searchText = SearchTextBox.Text.Trim().ToLower();
+                var searchTerms = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                var searchResult = from inventory in db.inventories
+                                   join car in db.cars on inventory.car_id equals car.car_id
+                                   join location in db.locations on inventory.location_id equals location.location_id
+                                   join status in db.status on inventory.status_id equals status.status_id
+                                   where searchTerms.All(term =>
+                                       car.make.ToLower().Contains(term) ||
+                                       car.model.ToLower().Contains(term) ||
+                                       car.year.ToString().Contains(term) ||
+                                       car.color.ToLower().Contains(term) ||
+                                       car.trim_level.ToLower().Contains(term) ||
+                                       car.modification.ToLower().Contains(term) ||
+                                       location.location_name.ToLower().Contains(term) ||
+                                       status.status_name.ToLower().Contains(term)
+                                   )
+                                   select new
+                                   {
+                                       InventoryId = inventory.inventory_id,
+                                       carMake = car.make,
+                                       Model = car.model,
+                                       Year = car.year,
+                                       Color = car.color,
+                                       TrimLevel = car.trim_level,
+                                       Modification = car.modification,
+                                       Count = inventory.count,
+                                       LocationName = location.location_name,
+                                       StatusName = status.status_name
+                                   };
+
+                DGridInventory.ItemsSource = searchResult.ToList();
+            }
+            else if (db != null)
+            {
+                LoadInventoryData();
+            }
+        }
+
+        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (isSearchPlaceholder)
+            {
+                SearchTextBox.Text = "";
+                isSearchPlaceholder = false;
+            }
+        }
+        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
+            {
+                SearchTextBox.Text = "Поиск";
+                isSearchPlaceholder = true;
             }
         }
 

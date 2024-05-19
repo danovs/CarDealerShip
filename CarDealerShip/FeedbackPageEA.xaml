@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:CarDealerShip"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1130"
-      Title="FeedbackPageEA">
+      Title="FeedbackPageEA"
+      Loaded="Page_Loaded">
 
     <Grid>
         
@@ -23,7 +24,8 @@
                     <DataGrid x:Name="DGridFeedback" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding feedback_id}" Width="35"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Клиент" Binding="{Binding client.full_name}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*"></DataGridTextColumn>
+                            <!-- Исправлено на ClientName -->
                             <DataGridTextColumn Header="Отзыв" Binding="{Binding feedback_text}" Width="*">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
@@ -34,9 +36,10 @@
                             <DataGridTextColumn Header="Дата отзыва" Binding="{Binding feedback_date,StringFormat={}{0:dd.MM.yyyy}}" Width="*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    
+
                     <!-- Кнопка удаления для отзыва -->
-                    <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Center" Margin="10" Click="Button_Click"></Button>
+                    <TextBox x:Name="SearchTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="Поиск" HorizontalAlignment="Center" Width="400" Height="20" TextChanged="SearchTextBox_TextChanged" LostFocus="SearchTextBox_LostFocus" GotFocus="SearchTextBox_GotFocus"/>
+                    <Button Content="Удалить" Grid.Row="2" Width="100" HorizontalAlignment="Right" Margin="10" Click="Button_Click"></Button>
                 </Grid>
             </Border>
         </Grid>

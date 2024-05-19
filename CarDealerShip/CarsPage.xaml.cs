@@ -38,17 +38,21 @@ namespace CarDealerShip
             if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Поиск" && db != null)
             {
                 string searchText = SearchTextBox.Text.Trim().ToLower();
+                var searchTerms = searchText.Split(' ');
                 var searchResult = db.cars.Where(car =>
-                    car.make.ToLower().Contains(searchText) ||
-                    car.model.ToLower().Contains(searchText) ||
-                    car.year.ToString().Contains(searchText) ||
-                    car.color.ToLower().Contains(searchText) ||
-                    car.price.ToString().Contains(searchText) ||
-                    car.modification.ToLower().Contains(searchText) ||
-                    car.trim_level.ToLower().Contains(searchText) ||
-                    car.catalogs.Any(catalog =>
-                        catalog.inventory.status.status_name.ToLower().Contains(searchText)
-                    )).ToList();
+            searchTerms.All(term =>
+                car.make.ToLower().Contains(term) ||
+                car.model.ToLower().Contains(term) ||
+                car.year.ToString().Contains(term) ||
+                car.color.ToLower().Contains(term) ||
+                car.price.ToString().Contains(term) ||
+                car.modification.ToLower().Contains(term) ||
+                car.trim_level.ToLower().Contains(term) ||
+                car.catalogs.Any(catalog =>
+                    catalog.inventory.status.status_name.ToLower().Contains(term)
+                )
+            )
+        ).ToList();
 
                 DGridCars.ItemsSource = searchResult;
             }
@@ -57,9 +61,6 @@ namespace CarDealerShip
                 LoadCarsData();
             }
         }
-
-
-
 
         // Кнопка "Добавить". Производит переход на страницу добавления автомобиля.
         private void Button_Click(object sender, RoutedEventArgs e)
