@@ -14,8 +14,10 @@ namespace CarDealerShip
     
     public partial class sales_counts
     {
+        public int sales_count_id { get; set; }
         public int employee_id { get; set; }
-        public int sales_count { get; set; }
+        public int Sales_count { get; set; }
+        public decimal total_sales { get; set; }
     
         public virtual employee employee { get; set; }
     }

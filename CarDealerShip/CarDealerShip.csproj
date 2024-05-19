@@ -198,7 +198,19 @@
     <Compile Include="sale.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SaleAddPage.xaml.cs">
+      <DependentUpon>SaleAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SalesCount.xaml.cs">
+      <DependentUpon>SalesCount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SalesPage.xaml.cs">
+      <DependentUpon>SalesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="sales_counts.cs">
+      <DependentUpon>CarDealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sale_statuses.cs">
       <DependentUpon>CarDealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SettingProfile.xaml.cs">
@@ -312,6 +324,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SaleAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SalesCount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SalesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SettingProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -394,6 +418,14 @@
     <Resource Include="MenuImages\layers.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="MenuImages\invPage.png" />
+    <Resource Include="MenuImages\addCatalog.png" />
+    <Resource Include="MenuImages\orderList.png" />
+    <Resource Include="MenuImages\carorder.png" />
+    <Resource Include="MenuImages\brushcolor.png" />
+    <Resource Include="MenuImages\speed.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="CarDealershipModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
@@ -404,12 +436,6 @@
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
       <LastGenOutput>CarDealershipModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="MenuImages\invPage.png" />
-    <Resource Include="MenuImages\addCatalog.png" />
-    <Resource Include="MenuImages\orderList.png" />
-    <Resource Include="MenuImages\carorder.png" />
-    <Resource Include="MenuImages\brushcolor.png" />
-    <Resource Include="MenuImages\speed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

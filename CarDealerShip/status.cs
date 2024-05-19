@@ -18,7 +18,6 @@ namespace CarDealerShip
         public status()
         {
             this.inventories = new HashSet<inventory>();
-            this.sales = new HashSet<sale>();
         }
     
         public int status_id { get; set; }
@@ -26,7 +25,5 @@ namespace CarDealerShip
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<inventory> inventories { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sale> sales { get; set; }
     }
 }

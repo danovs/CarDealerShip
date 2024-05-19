@@ -1,0 +1,42 @@
+﻿<Page x:Class="CarDealerShip.SalesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CarDealerShip"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1130"
+      Title="SalesPage">
+
+    <Grid>
+        <!-- Настройка страницы для корректного отображения -->
+        <Grid>
+            <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="377*"/>
+                        <RowDefinition Height="30*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Дата грид. Разметка колонок, для вывода данных с БД о автомобиле. -->
+                    <DataGrid x:Name="DGridSales" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding SaleId}" Width="25"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Сотрудник" Binding="{Binding EmployeeName}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Автомобиль" Binding="{Binding CarName}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Характеристики" Binding="{Binding CarFeatures}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Цвет" Binding="{Binding Color}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Дата продажи" Binding="{Binding SaleDate, StringFormat={}{0:dd.MM.yyyy}}" Width="*"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Кнопки "Добавить и "Удалить" -->
+                    <!--<TextBox x:Name="SearchTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="Поиск" HorizontalAlignment="Center" Width="400" Height="20" TextChanged="SearchTextBox_TextChanged" LostFocus="SearchTextBox_LostFocus" GotFocus="SearchTextBox_GotFocus"/> -->
+
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

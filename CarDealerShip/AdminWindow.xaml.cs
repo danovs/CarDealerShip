@@ -80,5 +80,20 @@ namespace CarDealerShip
         {
             FrameManger.AdminFrame.Navigate(new OrderList());
         }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            FrameManger.AdminFrame.Navigate(new SalesPage());
+        }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            FrameManger.AdminFrame.Navigate(new SaleAddPage());
+        }
+
+        private void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            FrameManger.AdminFrame.Navigate(new SalesCount());
+        }
     }
 }

@@ -45,6 +45,15 @@
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_4">
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_7">
+                        <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_8">
+                        <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                    <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click_9">
+                        <Image Source="/MenuImages/quit.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
                 </StackPanel>
 
                 <!-- Выход из приложения -->

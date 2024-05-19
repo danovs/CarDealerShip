@@ -1,0 +1,79 @@
+﻿<Page x:Class="CarDealerShip.SaleAddPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CarDealerShip"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1130"
+      Title="SaleAddPage">
+
+    <Grid>
+        <!-- Настройка страницы для корректного отображения -->
+        <Grid>
+            <Border Grid.Column="1" Background="White" CornerRadius="0 30 30 0">
+                <Grid VerticalAlignment="Center" Width="700">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- При изменении автомобиля, меняется информация о нем-->
+                    <TextBlock Text="Оформляет:" Grid.Row="0"/>
+                    <TextBlock x:Name="txtEmployee" Grid.Row="0" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Заказ:" Grid.Row="1"/>
+                    <ComboBox x:Name="cmbOrder" Grid.Row="1" Margin="120,0,0,0" SelectionChanged="cmbOrder_SelectionChanged"/>
+
+                    <TextBlock Text="Клиент:" Grid.Row="2"/>
+                    <TextBlock x:Name="txtClient" Grid.Row="2" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Автомобиль:" Grid.Row="3" />
+                    <TextBlock x:Name="txtCar" Grid.Row="3" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Модель" Grid.Row="4" />
+                    <TextBlock x:Name="txtModel" Grid.Row="4" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Тип кузова" Grid.Row="5" />
+                    <TextBlock x:Name="txtBodyType" Grid.Row="5" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Год выпуска:" Grid.Row="6" />
+                    <TextBlock x:Name="txtYear" Grid.Row="6" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Цвет" Grid.Row="7"/>
+                    <TextBlock x:Name="txtColor" Grid.Row="7" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Комлектация" Grid.Row="8" />
+                    <TextBlock x:Name="txtTrimLevel" Grid.Row="8" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Модификация" Grid.Row="9" />
+                    <TextBlock x:Name="txtModification" Grid.Row="9" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Цена автомобиля:" Grid.Row="10" />
+                    <TextBlock x:Name="txtPrice" Grid.Row="10" Margin="120,0,0,0"/>
+
+                    <TextBlock Text="Цена на продажу:" Grid.Row="11" />
+                    <TextBox x:Name="txtSalePrice" Grid.Row="11" Margin="120,0,0,0"/>
+                    
+                    <TextBlock Text="Статус" Grid.Row="12"/>
+                    <ComboBox x:Name="cmbStatus" Grid.Row="12" Margin="120,0,0,0"/>
+                    <!-- Кнопка "Добавить" -->
+                    <Button Content="Добавить" Grid.Row="13" Margin="0,20,0,0" Click="Button_Click"/>
+
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

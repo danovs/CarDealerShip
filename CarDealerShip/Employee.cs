@@ -18,6 +18,7 @@ namespace CarDealerShip
         public employee()
         {
             this.sales = new HashSet<sale>();
+            this.sales_counts = new HashSet<sales_counts>();
         }
     
         public int employee_id { get; set; }
@@ -33,6 +34,7 @@ namespace CarDealerShip
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sale> sales { get; set; }
-        public virtual sales_counts sales_counts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sales_counts> sales_counts { get; set; }
     }
 }

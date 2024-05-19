@@ -108,24 +108,34 @@
           <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="role_name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="sale_statuses">
+          <Key>
+            <PropertyRef Name="sale_status_id" />
+          </Key>
+          <Property Name="sale_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sale_status_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="sales">
           <Key>
             <PropertyRef Name="sale_id" />
           </Key>
           <Property Name="sale_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="inventory_id" Type="int" Nullable="false" />
           <Property Name="client_id" Type="int" Nullable="false" />
           <Property Name="employee_id" Type="int" Nullable="false" />
           <Property Name="sale_date" Type="date" Nullable="false" />
           <Property Name="sale_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="status_id" Type="int" Nullable="false" />
+          <Property Name="sale_status_id" Type="int" Nullable="false" />
+          <Property Name="car_id" Type="int" />
+          <Property Name="inventory_id" Type="int" />
         </EntityType>
         <EntityType Name="sales_counts">
           <Key>
-            <PropertyRef Name="employee_id" />
+            <PropertyRef Name="sales_count_id" />
           </Key>
+          <Property Name="sales_count_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="employee_id" Type="int" Nullable="false" />
-          <Property Name="sales_count" Type="int" Nullable="false" />
+          <Property Name="Sales_count" Type="int" Nullable="false" />
+          <Property Name="total_sales" Type="decimal" Precision="30" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="status">
           <Key>
@@ -251,30 +261,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__sales__inventory__47DBAE45">
-          <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
-          <End Role="sales" Type="Self.sales" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory">
-              <PropertyRef Name="inventory_id" />
-            </Principal>
-            <Dependent Role="sales">
-              <PropertyRef Name="inventory_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__sales_cou__emplo__1B9317B3">
-          <End Role="employees" Type="Self.employees" Multiplicity="1" />
-          <End Role="sales_counts" Type="Self.sales_counts" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="employees">
-              <PropertyRef Name="employee_id" />
-            </Principal>
-            <Dependent Role="sales_counts">
-              <PropertyRef Name="employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__users__role_id__398D8EEE">
           <End Role="roles" Type="Self.roles" Multiplicity="1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -347,15 +333,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_sales_status">
-          <End Role="status" Type="Self.status" Multiplicity="1" />
+        <Association Name="FK_sales_cars">
+          <End Role="cars" Type="Self.cars" Multiplicity="0..1" />
           <End Role="sales" Type="Self.sales" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="status">
-              <PropertyRef Name="status_id" />
+            <Principal Role="cars">
+              <PropertyRef Name="car_id" />
             </Principal>
             <Dependent Role="sales">
-              <PropertyRef Name="status_id" />
+              <PropertyRef Name="car_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_counts">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="sales_counts" Type="Self.sales_counts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="sales_counts">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_inventory">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="inventory_id" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="inventory_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_sale_statuses">
+          <End Role="sale_statuses" Type="Self.sale_statuses" Multiplicity="1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sale_statuses">
+              <PropertyRef Name="sale_status_id" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="sale_status_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -371,6 +393,7 @@
           <EntitySet Name="inventory" EntityType="Self.inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="locations" EntityType="Self.locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sale_statuses" EntityType="Self.sale_statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sales_counts" EntityType="Self.sales_counts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
@@ -411,14 +434,6 @@
             <End Role="employees" EntitySet="employees" />
             <End Role="sales" EntitySet="sales" />
           </AssociationSet>
-          <AssociationSet Name="FK__sales__inventory__47DBAE45" Association="Self.FK__sales__inventory__47DBAE45">
-            <End Role="inventory" EntitySet="inventory" />
-            <End Role="sales" EntitySet="sales" />
-          </AssociationSet>
-          <AssociationSet Name="FK__sales_cou__emplo__1B9317B3" Association="Self.FK__sales_cou__emplo__1B9317B3">
-            <End Role="employees" EntitySet="employees" />
-            <End Role="sales_counts" EntitySet="sales_counts" />
-          </AssociationSet>
           <AssociationSet Name="FK__users__role_id__398D8EEE" Association="Self.FK__users__role_id__398D8EEE">
             <End Role="roles" EntitySet="roles" />
             <End Role="users" EntitySet="users" />
@@ -443,8 +458,20 @@
             <End Role="status" EntitySet="status" />
             <End Role="inventory" EntitySet="inventory" />
           </AssociationSet>
-          <AssociationSet Name="FK_sales_status" Association="Self.FK_sales_status">
-            <End Role="status" EntitySet="status" />
+          <AssociationSet Name="FK_sales_cars" Association="Self.FK_sales_cars">
+            <End Role="cars" EntitySet="cars" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_counts" Association="Self.FK_sales_counts">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="sales_counts" EntitySet="sales_counts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_inventory" Association="Self.FK_sales_inventory">
+            <End Role="inventory" EntitySet="inventory" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_sale_statuses" Association="Self.FK_sales_sale_statuses">
+            <End Role="sale_statuses" EntitySet="sale_statuses" />
             <End Role="sales" EntitySet="sales" />
           </AssociationSet>
         </EntityContainer>
@@ -500,6 +527,7 @@
           <NavigationProperty Name="car_types" Relationship="Self.FK_cars_car_types" FromRole="cars" ToRole="car_types" />
           <NavigationProperty Name="catalogs" Relationship="Self.FK__catalog__car_id__4F7CD00D" FromRole="cars" ToRole="catalog" />
           <NavigationProperty Name="inventories" Relationship="Self.FK__inventory__car_i__44FF419A" FromRole="cars" ToRole="inventory" />
+          <NavigationProperty Name="sales" Relationship="Self.FK_sales_cars" FromRole="cars" ToRole="sales" />
         </EntityType>
         <EntityType Name="catalog">
           <Key>
@@ -539,7 +567,7 @@
           <Property Name="salary" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="user" Relationship="Self.FK__employees__user___3C69FB99" FromRole="employees" ToRole="users" />
           <NavigationProperty Name="sales" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="employees" ToRole="sales" />
-          <NavigationProperty Name="sales_counts" Relationship="Self.FK__sales_cou__emplo__1B9317B3" FromRole="employees" ToRole="sales_counts" />
+          <NavigationProperty Name="sales_counts" Relationship="Self.FK_sales_counts" FromRole="employees" ToRole="sales_counts" />
         </EntityType>
         <EntityType Name="feedback">
           <Key>
@@ -562,9 +590,9 @@
           <Property Name="location_id" Type="Int32" />
           <NavigationProperty Name="car" Relationship="Self.FK__inventory__car_i__44FF419A" FromRole="inventory" ToRole="cars" />
           <NavigationProperty Name="catalogs" Relationship="Self.FK_catalog_inventory" FromRole="inventory" ToRole="catalog" />
-          <NavigationProperty Name="sales" Relationship="Self.FK__sales__inventory__47DBAE45" FromRole="inventory" ToRole="sales" />
           <NavigationProperty Name="location" Relationship="Self.FK_inventory_locations" FromRole="inventory" ToRole="locations" />
           <NavigationProperty Name="status" Relationship="Self.FK_inventory_status" FromRole="inventory" ToRole="status" />
+          <NavigationProperty Name="sales" Relationship="Self.FK_sales_inventory" FromRole="inventory" ToRole="sales" />
         </EntityType>
         <EntityType Name="location">
           <Key>
@@ -582,29 +610,41 @@
           <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="users" Relationship="Self.FK__users__role_id__398D8EEE" FromRole="roles" ToRole="users" />
         </EntityType>
+        <EntityType Name="sale_statuses">
+          <Key>
+            <PropertyRef Name="sale_status_id" />
+          </Key>
+          <Property Name="sale_status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sale_status_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="sales" Relationship="Self.FK_sales_sale_statuses" FromRole="sale_statuses" ToRole="sales" />
+        </EntityType>
         <EntityType Name="sale">
           <Key>
             <PropertyRef Name="sale_id" />
           </Key>
           <Property Name="sale_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inventory_id" Type="Int32" Nullable="false" />
           <Property Name="client_id" Type="Int32" Nullable="false" />
           <Property Name="employee_id" Type="Int32" Nullable="false" />
           <Property Name="sale_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="sale_price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="status_id" Type="Int32" Nullable="false" />
+          <Property Name="sale_status_id" Type="Int32" Nullable="false" />
+          <Property Name="car_id" Type="Int32" />
+          <Property Name="inventory_id" Type="Int32" />
+          <NavigationProperty Name="car" Relationship="Self.FK_sales_cars" FromRole="sales" ToRole="cars" />
           <NavigationProperty Name="client" Relationship="Self.FK__sales__client_id__48CFD27E" FromRole="sales" ToRole="clients" />
           <NavigationProperty Name="employee" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="sales" ToRole="employees" />
-          <NavigationProperty Name="inventory" Relationship="Self.FK__sales__inventory__47DBAE45" FromRole="sales" ToRole="inventory" />
-          <NavigationProperty Name="status" Relationship="Self.FK_sales_status" FromRole="sales" ToRole="status" />
+          <NavigationProperty Name="inventory" Relationship="Self.FK_sales_inventory" FromRole="sales" ToRole="inventory" />
+          <NavigationProperty Name="sale_statuses" Relationship="Self.FK_sales_sale_statuses" FromRole="sales" ToRole="sale_statuses" />
         </EntityType>
         <EntityType Name="sales_counts">
           <Key>
-            <PropertyRef Name="employee_id" />
+            <PropertyRef Name="sales_count_id" />
           </Key>
+          <Property Name="sales_count_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="employee_id" Type="Int32" Nullable="false" />
-          <Property Name="sales_count" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="employee" Relationship="Self.FK__sales_cou__emplo__1B9317B3" FromRole="sales_counts" ToRole="employees" />
+          <Property Name="Sales_count" Type="Int32" Nullable="false" />
+          <Property Name="total_sales" Type="Decimal" Precision="30" Scale="2" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_sales_counts" FromRole="sales_counts" ToRole="employees" />
         </EntityType>
         <EntityType Name="status">
           <Key>
@@ -613,7 +653,6 @@
           <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="status_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="inventories" Relationship="Self.FK_inventory_status" FromRole="status" ToRole="inventory" />
-          <NavigationProperty Name="sales" Relationship="Self.FK_sales_status" FromRole="status" ToRole="sales" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -699,6 +738,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_sales_cars">
+          <End Role="cars" Type="Self.car" Multiplicity="0..1" />
+          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cars">
+              <PropertyRef Name="car_id" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="car_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_catalog_inventory">
           <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
           <End Role="catalog" Type="Self.catalog" Multiplicity="*" />
@@ -771,27 +822,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__sales_cou__emplo__1B9317B3">
+        <Association Name="FK_sales_counts">
           <End Role="employees" Type="Self.employee" Multiplicity="1" />
-          <End Role="sales_counts" Type="Self.sales_counts" Multiplicity="0..1" />
+          <End Role="sales_counts" Type="Self.sales_counts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="employees">
               <PropertyRef Name="employee_id" />
             </Principal>
             <Dependent Role="sales_counts">
               <PropertyRef Name="employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__sales__inventory__47DBAE45">
-          <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
-          <End Role="sales" Type="Self.sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory">
-              <PropertyRef Name="inventory_id" />
-            </Principal>
-            <Dependent Role="sales">
-              <PropertyRef Name="inventory_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -819,6 +858,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_sales_inventory">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="inventory_id" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="inventory_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__users__role_id__398D8EEE">
           <End Role="roles" Type="Self.role" Multiplicity="1" />
           <End Role="users" Type="Self.user" Multiplicity="*" />
@@ -831,15 +882,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_sales_status">
-          <End Role="status" Type="Self.status" Multiplicity="1" />
+        <Association Name="FK_sales_sale_statuses">
+          <End Role="sale_statuses" Type="Self.sale_statuses" Multiplicity="1" />
           <End Role="sales" Type="Self.sale" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="status">
-              <PropertyRef Name="status_id" />
+            <Principal Role="sale_statuses">
+              <PropertyRef Name="sale_status_id" />
             </Principal>
             <Dependent Role="sales">
-              <PropertyRef Name="status_id" />
+              <PropertyRef Name="sale_status_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -855,6 +906,7 @@
           <EntitySet Name="inventories" EntityType="Self.inventory" />
           <EntitySet Name="locations" EntityType="Self.location" />
           <EntitySet Name="roles" EntityType="Self.role" />
+          <EntitySet Name="sale_statuses" EntityType="Self.sale_statuses" />
           <EntitySet Name="sales" EntityType="Self.sale" />
           <EntitySet Name="sales_counts" EntityType="Self.sales_counts" />
           <EntitySet Name="status" EntityType="Self.status" />
@@ -883,6 +935,10 @@
             <End Role="cars" EntitySet="cars" />
             <End Role="inventory" EntitySet="inventories" />
           </AssociationSet>
+          <AssociationSet Name="FK_sales_cars" Association="Self.FK_sales_cars">
+            <End Role="cars" EntitySet="cars" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
           <AssociationSet Name="FK_catalog_inventory" Association="Self.FK_catalog_inventory">
             <End Role="inventory" EntitySet="inventories" />
             <End Role="catalog" EntitySet="catalogs" />
@@ -907,13 +963,9 @@
             <End Role="employees" EntitySet="employees" />
             <End Role="sales" EntitySet="sales" />
           </AssociationSet>
-          <AssociationSet Name="FK__sales_cou__emplo__1B9317B3" Association="Self.FK__sales_cou__emplo__1B9317B3">
+          <AssociationSet Name="FK_sales_counts" Association="Self.FK_sales_counts">
             <End Role="employees" EntitySet="employees" />
             <End Role="sales_counts" EntitySet="sales_counts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__sales__inventory__47DBAE45" Association="Self.FK__sales__inventory__47DBAE45">
-            <End Role="inventory" EntitySet="inventories" />
-            <End Role="sales" EntitySet="sales" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_locations" Association="Self.FK_inventory_locations">
             <End Role="locations" EntitySet="locations" />
@@ -923,12 +975,16 @@
             <End Role="status" EntitySet="status" />
             <End Role="inventory" EntitySet="inventories" />
           </AssociationSet>
+          <AssociationSet Name="FK_sales_inventory" Association="Self.FK_sales_inventory">
+            <End Role="inventory" EntitySet="inventories" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
           <AssociationSet Name="FK__users__role_id__398D8EEE" Association="Self.FK__users__role_id__398D8EEE">
             <End Role="roles" EntitySet="roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
-          <AssociationSet Name="FK_sales_status" Association="Self.FK_sales_status">
-            <End Role="status" EntitySet="status" />
+          <AssociationSet Name="FK_sales_sale_statuses" Association="Self.FK_sales_sale_statuses">
+            <End Role="sale_statuses" EntitySet="sale_statuses" />
             <End Role="sales" EntitySet="sales" />
           </AssociationSet>
         </EntityContainer>
@@ -1052,24 +1108,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sale_statuses">
+            <EntityTypeMapping TypeName="CarDealershipModel.sale_statuses">
+              <MappingFragment StoreEntitySet="sale_statuses">
+                <ScalarProperty Name="sale_status_id" ColumnName="sale_status_id" />
+                <ScalarProperty Name="sale_status_name" ColumnName="sale_status_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sales">
             <EntityTypeMapping TypeName="CarDealershipModel.sale">
               <MappingFragment StoreEntitySet="sales">
                 <ScalarProperty Name="sale_id" ColumnName="sale_id" />
-                <ScalarProperty Name="inventory_id" ColumnName="inventory_id" />
                 <ScalarProperty Name="client_id" ColumnName="client_id" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="sale_date" ColumnName="sale_date" />
                 <ScalarProperty Name="sale_price" ColumnName="sale_price" />
-                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="sale_status_id" ColumnName="sale_status_id" />
+                <ScalarProperty Name="car_id" ColumnName="car_id" />
+                <ScalarProperty Name="inventory_id" ColumnName="inventory_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sales_counts">
             <EntityTypeMapping TypeName="CarDealershipModel.sales_counts">
               <MappingFragment StoreEntitySet="sales_counts">
+                <ScalarProperty Name="sales_count_id" ColumnName="sales_count_id" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-                <ScalarProperty Name="sales_count" ColumnName="sales_count" />
+                <ScalarProperty Name="Sales_count" ColumnName="Sales_count" />
+                <ScalarProperty Name="total_sales" ColumnName="total_sales" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
