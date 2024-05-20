@@ -75,57 +75,65 @@ namespace CarDealerShip
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbOrder.SelectedItem == null || cmbStatus.SelectedItem == null)
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите добавить запись о продаже автомобиля?", "Добавление записи", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                MessageBox.Show("Пожалуйста, выберите заказ и статус продажи.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            try
-            {
-                var selectedAppointment = (appointment)cmbOrder.SelectedItem;
-                var currentEmployee = db.employees.FirstOrDefault(em => em.user_id == ((App)Application.Current).CurrentUserId);
-
-                decimal salePrice;
-                if (!decimal.TryParse(txtSalePrice.Text, out salePrice))
+                if (cmbOrder.SelectedItem == null || cmbStatus.SelectedItem == null)
                 {
-                    MessageBox.Show("Введите корректную цену на продажу.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Пожалуйста, выберите заказ и статус продажи.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                var newSales = new sale
+                try
                 {
-                    client_id = selectedAppointment.client_id,
-                    employee_id = currentEmployee.employee_id,
-                    car_id = selectedAppointment.car_id,
-                    sale_date = DateTime.Now,
-                    sale_price = salePrice,
-                    sale_status_id = (int)cmbStatus.SelectedValue
-                };
-                db.sales.Add(newSales);
+                    var selectedAppointment = (appointment)cmbOrder.SelectedItem;
+                    var currentEmployee = db.employees.FirstOrDefault(em => em.user_id == ((App)Application.Current).CurrentUserId);
 
-                var salesCount = db.sales_counts.FirstOrDefault(sc => sc.employee_id == currentEmployee.employee_id);
-                if (salesCount != null)
-                {
-                    salesCount.Sales_count += 1;
-                    salesCount.total_sales += salePrice;
-                }
-                else
-                {
-                    db.sales_counts.Add(new sales_counts
+                    decimal salePrice;
+                    if (!decimal.TryParse(txtSalePrice.Text, out salePrice))
                     {
-                        employee_id = currentEmployee.employee_id,
-                        Sales_count = 1,
-                        total_sales = salePrice
-                    });
-                }
+                        MessageBox.Show("Введите корректную цену на продажу.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
-                db.SaveChanges();
-                MessageBox.Show("Продажа успешно добавлена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var newSales = new sale
+                    {
+                        client_id = selectedAppointment.client_id,
+                        employee_id = currentEmployee.employee_id,
+                        car_id = selectedAppointment.car_id,
+                        sale_date = DateTime.Now,
+                        sale_price = salePrice,
+                        sale_status_id = (int)cmbStatus.SelectedValue
+                    };
+                    db.sales.Add(newSales);
+
+                    var salesCount = db.sales_counts.FirstOrDefault(sc => sc.employee_id == currentEmployee.employee_id);
+                    if (salesCount != null)
+                    {
+                        salesCount.Sales_count += 1;
+                        salesCount.total_sales += salePrice;
+                    }
+                    else
+                    {
+                        db.sales_counts.Add(new sales_counts
+                        {
+                            employee_id = currentEmployee.employee_id,
+                            Sales_count = 1,
+                            total_sales = salePrice
+                        });
+                    }
+
+                    db.SaveChanges();
+                    MessageBox.Show("Продажа успешно добавлена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при добавлении продажи: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Ошибка при добавлении продажи: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Запись не была добавлена в систему");
             }
         }
     }
