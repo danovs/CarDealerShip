@@ -4,30 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e8aa721f794d4190a503803be37dbbe1" Name="Diagram1">
-        <EntityTypeShape EntityType="CarDealershipModel.appointment" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.appointments_status" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.car_types" Width="1.5" PointX="3" PointY="17.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.car" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.catalog" Width="1.5" PointX="10.5" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.client" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.employee" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.feedback" Width="1.5" PointX="7.5" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.inventory" Width="1.5" PointX="8.25" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.location" Width="1.5" PointX="6" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.role" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.sale_statuses" Width="1.5" PointX="8.25" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.sale" Width="1.5" PointX="10.5" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.sales_counts" Width="1.5" PointX="7.5" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.status" Width="1.5" PointX="6" PointY="23.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarDealershipModel.user" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+      <Diagram DiagramId="dd1896dd87614616be0ad53038ef2521" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="CarDealershipModel.appointment" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.appointments_status" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.car_types" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.car" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.catalog" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.client" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.employee" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.feedback" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.inventory" Width="1.5" PointX="8.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.location" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.role" Width="1.5" PointX="1.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.sale_statuses" Width="1.5" PointX="8.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.sale" Width="1.5" PointX="10.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.sales_counts" Width="1.5" PointX="10.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.status" Width="1.5" PointX="6" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarDealershipModel.user" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <AssociationConnector Association="CarDealershipModel.FK__appointme__car_i__5441852A" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__appointme__clien__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK_appointments_status" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK_cars_car_types" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__catalog__car_id__4F7CD00D" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__inventory__car_i__44FF419A" ManuallyRouted="false" />
-        <AssociationConnector Association="CarDealershipModel.FK_sales_cars" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK_catalog_inventory" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__clients__user_id__403A8C7D" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.FK__feedback__client__4CA06362" ManuallyRouted="false" />

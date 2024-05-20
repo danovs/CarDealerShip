@@ -28,7 +28,6 @@
                             <DataGridTextColumn Header="Отчество" Binding="{Binding LastName}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Кол-во продаж" Binding="{Binding SalesCount}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary}" Width="*"></DataGridTextColumn>
                             <!-- Кнопка "Изменить" для каждого элемента записи в датагриде -->
                             <DataGridTemplateColumn Width="auto">

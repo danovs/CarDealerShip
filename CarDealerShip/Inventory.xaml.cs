@@ -110,39 +110,24 @@ namespace CarDealerShip
         // Кнопка "Изменить" на каждой записи в датагриде.
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            // Проверям на пустоту выбранную запись. Если не пустая, то получаем выбранный элемент и получаем свойство inventoryId (ID инвентаря)
+            // Проверяем, выбрана ли запись в датагриде
             if (DGridInventory.SelectedItem != null)
             {
-                var selectedItem = DGridInventory.SelectedItem;
-                var propertyInfo = selectedItem.GetType().GetProperty("inventoryId");
-                
-                // Если свойство найдено, производим поиск записи инвентаря в БД.
-                if (propertyInfo != null)
-                {
-                    int inventoryId = (int)propertyInfo.GetValue(selectedItem);
+                // Получаем выбранный инвентарь из датагрида
+                dynamic selectedItem = DGridInventory.SelectedItem;
 
-                    var selectedInventory = db.inventories.FirstOrDefault(i => i.inventory_id == inventoryId);
+                // Получаем значение inventoryId из выбранной записи
+                int inventoryId = selectedItem.InventoryId;
 
-                    if (selectedInventory != null)
-                    {
-                        // Переход на страницу редактирования инвентаря с передачей идентификатора.
-                        FrameManger.AdminFrame.Navigate(new InventoryEditPage(selectedInventory.inventory_id));
-                    }
-                    else
-                    {
-                        MessageBox.Show("Инвентарь не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Не удалось получить ID инвентаря.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                // Создаем экземпляр страницы редактирования и передаем значение inventoryId в конструктор
+                FrameManger.AdminFrame.Navigate(new InventoryEditPage(inventoryId));
             }
             else
             {
                 MessageBox.Show("Пожалуйста, выберите запись для редактирования.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

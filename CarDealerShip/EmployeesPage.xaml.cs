@@ -113,12 +113,30 @@ namespace CarDealerShip
         {
             try
             {
-                // Получение выбранного сотрудника из датагрид.
-                employee selectedEmployee = (employee)DGridEmployees.SelectedItem;
+                // Получение выбранного сотрудника из DataGrid
+                var selectedEmployee = DGridEmployees.SelectedItem;
 
+                // Проверка, что выбран сотрудник
                 if (selectedEmployee != null)
                 {
-                    FrameManger.AdminFrame.Navigate(new EditCurrentEmployeePage(selectedEmployee));
+                    // Создание анонимного объекта
+                    var employeeInfo = selectedEmployee as dynamic;
+
+                    // Получение ID выбранного сотрудника
+                    int employeeId = employeeInfo.EmployeeId;
+
+                    // Получение сотрудника из базы данных по ID
+                    var employee = db.employees.FirstOrDefault(emp => emp.employee_id == employeeId);
+
+                    if (employee != null)
+                    {
+                        // Передача выбранного сотрудника на страницу редактирования
+                        FrameManger.AdminFrame.Navigate(new EditCurrentEmployeePage(employee));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не удалось найти выбранного сотрудника в базе данных.");
+                    }
                 }
                 else
                 {

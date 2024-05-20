@@ -20,7 +20,6 @@ namespace CarDealerShip
             this.appointments = new HashSet<appointment>();
             this.catalogs = new HashSet<catalog>();
             this.inventories = new HashSet<inventory>();
-            this.sales = new HashSet<sale>();
         }
     
         public int car_id { get; set; }
@@ -41,7 +40,5 @@ namespace CarDealerShip
         public virtual ICollection<catalog> catalogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<inventory> inventories { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sale> sales { get; set; }
     }
 }

@@ -100,7 +100,7 @@ namespace CarDealerShip.AuthReg
 
             if (user.role_id == 1 | user.role_id == 2)
             {
-                AdminWindow adminWindow = new AdminWindow();
+                AdminWindow adminWindow = new AdminWindow(user.role_id);
                 adminWindow.Show();
             }
             else

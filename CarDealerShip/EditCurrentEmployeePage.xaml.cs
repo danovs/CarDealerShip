@@ -18,21 +18,29 @@ namespace CarDealerShip
             InitializeComponent();
 
             db = new CarDealershipEntities();
-            currentEmployee = db.employees.Find(employee.employee_id);
+            if (employee is employee)
+            {
+                currentEmployee = db.employees.Find(employee.employee_id);
 
+
+                cmbRole.ItemsSource = db.roles.Select(r => r.role_name).ToList();
+                cmbUsername.ItemsSource = db.users.Select(u => u.username).ToList();
+
+                // Заполнение полей формы данными текущего сотрудника.
+                txtSurname.Text = currentEmployee.surname;
+                txtName.Text = currentEmployee.name;
+                txtLastname.Text = currentEmployee.lastname;
+                txtPhone.Text = currentEmployee.phone;
+                txtEmail.Text = currentEmployee.email;
+                cmbRole.SelectedItem = currentEmployee.user.role.role_name; // Выбранная роль сотрудника
+                cmbUsername.SelectedItem = currentEmployee.user.username; // Выбранное имя пользователя
+                txtSalary.Text = currentEmployee.salary.ToString(); // Заработная плата
+            }
+            else
+            {
+                MessageBox.Show("Ошибка: Некорректный тип объекта передан в конструктор EditCurrentEmployeePage", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             
-            cmbRole.ItemsSource = db.roles.Select(r => r.role_name).ToList();
-            cmbUsername.ItemsSource = db.users.Select(u => u.username).ToList();
-
-            // Заполнение полей формы данными текущего сотрудника.
-            txtSurname.Text = currentEmployee.surname;
-            txtName.Text = currentEmployee.name;
-            txtLastname.Text = currentEmployee.lastname;
-            txtPhone.Text = currentEmployee.phone;
-            txtEmail.Text = currentEmployee.email;
-            cmbRole.SelectedItem = currentEmployee.user.role.role_name; // Выбранная роль сотрудника
-            cmbUsername.SelectedItem = currentEmployee.user.username; // Выбранное имя пользователя
-            txtSalary.Text = currentEmployee.salary.ToString(); // Заработная плата
         }
 
         // Кнопка "Сохранить".

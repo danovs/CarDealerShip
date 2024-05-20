@@ -1,16 +1,48 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace CarDealerShip
 {
     public partial class AdminWindow : Window
     {
         // Устанавливаем главный фрейм администратора для навигации.
-        public AdminWindow()
+
+        private readonly int userRole;
+        public AdminWindow(int role)
         {
             InitializeComponent();
+            userRole = role;
+            SetMenuUIVisibility();
             FrameManger.AdminFrame = AdminFrame;
+            
+        }
+
+        private void SetMenuUIVisibility()
+        {
+            if (userRole == 1)
+            {
+                Employees.Visibility = Visibility.Visible;
+                Catalog.Visibility = Visibility.Visible;
+                Inventory.Visibility = Visibility.Visible;
+                AddCatalog.Visibility = Visibility.Visible;
+                Feedback.Visibility = Visibility.Visible;
+                Sales.Visibility = Visibility.Visible;
+                SalesAdd.Visibility = Visibility.Visible;
+                SalesCount.Visibility = Visibility.Visible;
+            }
+            else if (userRole == 2)
+            {
+                Employees.Visibility = Visibility.Collapsed;
+                Catalog.Visibility = Visibility.Visible;
+                Inventory.Visibility = Visibility.Visible;
+                AddCatalog.Visibility = Visibility.Visible;
+                Feedback.Visibility = Visibility.Visible; // Предположим, что Feedback доступен для пользователей с ролью 2.
+                Sales.Visibility = Visibility.Collapsed;
+                SalesAdd.Visibility = Visibility.Visible;
+                SalesCount.Visibility = Visibility.Collapsed;
+            }
         }
 
         // Кнопка "Закрытие приложения"

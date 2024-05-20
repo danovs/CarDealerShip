@@ -45,9 +45,7 @@
                     <TextBox x:Name="txtColor" Grid.Row="3" Margin="120,0,0,0" MaxLength="20"/>
 
                     <TextBlock Text="Цена:" Grid.Row="4" />
-                    <xctk:MaskedTextBox x:Name="txtPrice" Grid.Row="4" Margin="120,0,0,0"
-                                        Mask="00000000.00"/>
-
+                    <TextBox x:Name="txtPrice" Grid.Row="4" Margin="120,0,0,0" MaxLength="11"/>
                     <TextBlock Text="Тип кузова:" Grid.Row="5" />
                     <ComboBox x:Name="cmbBodyType" Grid.Row="5" Margin="120,0,0,0"/>
 

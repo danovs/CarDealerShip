@@ -23,7 +23,6 @@ namespace CarDealerShip
         public Nullable<int> car_id { get; set; }
         public Nullable<int> inventory_id { get; set; }
     
-        public virtual car car { get; set; }
         public virtual client client { get; set; }
         public virtual employee employee { get; set; }
         public virtual inventory inventory { get; set; }

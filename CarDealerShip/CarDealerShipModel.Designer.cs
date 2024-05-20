@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\Users\Daniel Sludanov\Drive\College\Course Work\CarDealerShip\CarDealerShip\CarDealershipModel.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\dslud\Drive\College\Course Work\CarDealership\CarDealerShip\CarDealershipModel.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

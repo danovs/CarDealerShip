@@ -333,18 +333,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_sales_cars">
-          <End Role="cars" Type="Self.cars" Multiplicity="0..1" />
-          <End Role="sales" Type="Self.sales" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cars">
-              <PropertyRef Name="car_id" />
-            </Principal>
-            <Dependent Role="sales">
-              <PropertyRef Name="car_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_sales_counts">
           <End Role="employees" Type="Self.employees" Multiplicity="1" />
           <End Role="sales_counts" Type="Self.sales_counts" Multiplicity="*" />
@@ -458,10 +446,6 @@
             <End Role="status" EntitySet="status" />
             <End Role="inventory" EntitySet="inventory" />
           </AssociationSet>
-          <AssociationSet Name="FK_sales_cars" Association="Self.FK_sales_cars">
-            <End Role="cars" EntitySet="cars" />
-            <End Role="sales" EntitySet="sales" />
-          </AssociationSet>
           <AssociationSet Name="FK_sales_counts" Association="Self.FK_sales_counts">
             <End Role="employees" EntitySet="employees" />
             <End Role="sales_counts" EntitySet="sales_counts" />
@@ -527,7 +511,6 @@
           <NavigationProperty Name="car_types" Relationship="Self.FK_cars_car_types" FromRole="cars" ToRole="car_types" />
           <NavigationProperty Name="catalogs" Relationship="Self.FK__catalog__car_id__4F7CD00D" FromRole="cars" ToRole="catalog" />
           <NavigationProperty Name="inventories" Relationship="Self.FK__inventory__car_i__44FF419A" FromRole="cars" ToRole="inventory" />
-          <NavigationProperty Name="sales" Relationship="Self.FK_sales_cars" FromRole="cars" ToRole="sales" />
         </EntityType>
         <EntityType Name="catalog">
           <Key>
@@ -630,7 +613,6 @@
           <Property Name="sale_status_id" Type="Int32" Nullable="false" />
           <Property Name="car_id" Type="Int32" />
           <Property Name="inventory_id" Type="Int32" />
-          <NavigationProperty Name="car" Relationship="Self.FK_sales_cars" FromRole="sales" ToRole="cars" />
           <NavigationProperty Name="client" Relationship="Self.FK__sales__client_id__48CFD27E" FromRole="sales" ToRole="clients" />
           <NavigationProperty Name="employee" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="sales" ToRole="employees" />
           <NavigationProperty Name="inventory" Relationship="Self.FK_sales_inventory" FromRole="sales" ToRole="inventory" />
@@ -734,18 +716,6 @@
               <PropertyRef Name="car_id" />
             </Principal>
             <Dependent Role="inventory">
-              <PropertyRef Name="car_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_sales_cars">
-          <End Role="cars" Type="Self.car" Multiplicity="0..1" />
-          <End Role="sales" Type="Self.sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cars">
-              <PropertyRef Name="car_id" />
-            </Principal>
-            <Dependent Role="sales">
               <PropertyRef Name="car_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -934,10 +904,6 @@
           <AssociationSet Name="FK__inventory__car_i__44FF419A" Association="Self.FK__inventory__car_i__44FF419A">
             <End Role="cars" EntitySet="cars" />
             <End Role="inventory" EntitySet="inventories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_sales_cars" Association="Self.FK_sales_cars">
-            <End Role="cars" EntitySet="cars" />
-            <End Role="sales" EntitySet="sales" />
           </AssociationSet>
           <AssociationSet Name="FK_catalog_inventory" Association="Self.FK_catalog_inventory">
             <End Role="inventory" EntitySet="inventories" />
