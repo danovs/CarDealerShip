@@ -59,47 +59,63 @@ namespace CarDealerShip
         }
 
         // Кнопка "Удалить".
+        // Кнопка "Удалить".
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // Проверка выбранного элемента в DataGrid
             if (DGridEmployees.SelectedItem != null)
             {
-                // Преобразование выбранного элемента в тип employee
-                employee selectedEmployee = DGridEmployees.SelectedItem as employee;
+                var selectedEmployeeInfo = DGridEmployees.SelectedItem as dynamic;
 
-                // Проверка подтверждения действия пользователя
-                MessageBoxResult result = MessageBox.Show("Вы точно хотите удалить данного сотрудника?", "Удаление сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                if (MessageBoxResult.Yes == result)
+                if (selectedEmployeeInfo != null)
                 {
-                    try
-                    {
-                        // Подключение выбранного сотрудника к текущему контексту данных.
-                        db.employees.Attach(selectedEmployee);
-                        db.employees.Remove(selectedEmployee);
-                        db.SaveChanges();
+                    int employeeId = selectedEmployeeInfo.EmployeeId;
 
-                        // Обновление роли пользователя
-                        var selectedUser = db.users.FirstOrDefault(u => u.user_id == selectedEmployee.user_id);
-                        if (selectedUser != null)
+                    var selectedEmployee = db.employees.FirstOrDefault(emp => emp.employee_id == employeeId);
+
+                    if (selectedEmployee != null)
+                    {
+                        MessageBoxResult result = MessageBox.Show("Вы точно хотите удалить данного сотрудника?", "Удаление сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                        if (MessageBoxResult.Yes == result)
                         {
-                            selectedUser.role_id = 3; // 3 - ID роли "Клиент"
-                            db.SaveChanges();
+                            try
+                            {
+                                db.employees.Remove(selectedEmployee);
+                                db.SaveChanges();
+
+                                var selectedUser = db.users.FirstOrDefault(u => u.user_id == selectedEmployee.user_id);
+                                if (selectedUser != null)
+                                {
+                                    selectedUser.role_id = 3; // 3 - ID роли "Клиент"
+                                    db.SaveChanges();
+                                }
+
+                                MessageBox.Show("Сотрудник успешно удален и его роль изменена.");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Ошибка при удалении сотрудника: " + ex.Message);
+                                if (ex.InnerException != null)
+                                {
+                                    MessageBox.Show("Внутреннее исключение: " + ex.InnerException.Message);
+                                }
+                            }
+
+                            LoadEmployeeData();
                         }
-
-                        MessageBox.Show("Сотрудник успешно удален и его роль изменена.");
+                        else
+                        {
+                            MessageBox.Show("Сотрудник не был удален", "Удаление пользователя", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show("Ошибка при удалении сотрудника: " + ex.Message);
+                        MessageBox.Show("Не удалось найти выбранного сотрудника в базе данных.");
                     }
-
-                    // Обновление списка сотрудников после удаления
-                    LoadEmployeeData();
                 }
                 else
                 {
-                    MessageBox.Show("Сотрудник не был удален", "Удаление пользователя", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Не удалось преобразовать выбранного сотрудника.");
                 }
             }
             else
@@ -107,6 +123,9 @@ namespace CarDealerShip
                 MessageBox.Show("Выберите сотрудника для удаления.");
             }
         }
+
+
+
 
         // Кнопка "Изменить".
         private void BtnEdit_Click(object sender, RoutedEventArgs e)

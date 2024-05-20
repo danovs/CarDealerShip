@@ -69,6 +69,7 @@ namespace CarDealerShip
         }
 
         // Кнопка "Удалить".
+        // Кнопка "Удалить".
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (DGridCars.SelectedItem != null) // Проверка наличия выбранного автомобиля.
@@ -83,12 +84,15 @@ namespace CarDealerShip
                 {
                     try
                     {
-                        db.cars.Attach(selectedCar); 
+                        db.cars.Attach(selectedCar);
                         db.cars.Remove(selectedCar);
 
                         db.SaveChanges();
 
                         MessageBox.Show("Данный автомобиль удален из базы данных");
+
+                        // Обновляем данные в DataGrid
+                        LoadCarsData();
                     }
                     catch (Exception ex)
                     {
@@ -105,6 +109,7 @@ namespace CarDealerShip
                 MessageBox.Show("Выберите запись для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         // Кнопка "Изменить".
         private void BtnEdit_Click(object sender, RoutedEventArgs e)

@@ -81,21 +81,16 @@ namespace CarDealerShip
                 try
                 {
                     var selectedUser = DGridUsers.SelectedItem;
+
+                    // Получение идентификатора пользователя
                     int userId = (int)selectedUser.GetType().GetProperty("UserID").GetValue(selectedUser, null);
 
-                    // Найти связанные записи в таблице clients
+                    // Найти и удалить связанные записи в таблицах clients и employees
                     var relatedClients = db.clients.Where(c => c.user_id == userId).ToList();
-                    foreach (var client in relatedClients)
-                    {
-                        db.clients.Remove(client);
-                    }
+                    db.clients.RemoveRange(relatedClients);
 
-                    // Найти связанные записи в таблице employees
                     var relatedEmployees = db.employees.Where(re => re.user_id == userId).ToList();
-                    foreach (var employee in relatedEmployees)
-                    {
-                        db.employees.Remove(employee);
-                    }
+                    db.employees.RemoveRange(relatedEmployees);
 
                     // Найти и удалить пользователя
                     var userToDelete = db.users.FirstOrDefault(u => u.user_id == userId);

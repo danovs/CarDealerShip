@@ -62,20 +62,16 @@ namespace CarDealerShip
         // Кнопка "Удалить" производится удаление записи с БД.
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // Проверка подтверждения удаления записи.
             MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить запись с базы данных?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    // Если выбранная запись не пустая, получаем выбранную запись, и производим поиск по ID выбранной записи.
-                    // Найдя ID выбранной записи, заносим в переменную inventoryToDelete, и делаем проверку, если не пустая переменная, то производим удаление записи и сохраняем изменение в БД.
-                    // После удаления - обновляем датагрид с помощью вызова функции "LoadInventoryData"
                     if (DGridInventory.SelectedItem != null)
                     {
-                        var selectedInventory = (dynamic)DGridInventory.SelectedItem;
-                        int inventoryId = selectedInventory.inventoryId;
+                        dynamic selectedInventory = DGridInventory.SelectedItem;
+                        int inventoryId = selectedInventory.InventoryId; // Используйте правильное имя свойства
                         var inventoryToDelete = db.inventories.Find(inventoryId);
 
                         if (inventoryToDelete != null)
@@ -106,6 +102,7 @@ namespace CarDealerShip
                 MessageBox.Show("Запись не была удалена");
             }
         }
+
 
         // Кнопка "Изменить" на каждой записи в датагриде.
         private void BtnEdit_Click(object sender, RoutedEventArgs e)

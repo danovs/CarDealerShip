@@ -36,7 +36,9 @@
                         <TextBlock Text="Конец периода:" VerticalAlignment="Center" Margin="5"/>
                         <DatePicker x:Name="EndDatePicker" Margin="5"/>
                         <Button Content="Обновить данные" Click="UpdateSalesCounts_Click" Margin="5"/>
+
                     </StackPanel>
+                    <Button Content="Удалить" Grid.Row="1" Click="Button_Click"  Margin="5" HorizontalAlignment="Right"/>
                 </Grid>
             </Border>
         </Grid>

@@ -53,5 +53,44 @@ namespace CarDealerShip
             DGridSales.ItemsSource = salesData.ToList();
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (DGridSales.SelectedItem != null)
+            {
+                dynamic selectedSale = DGridSales.SelectedItem;
+
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить эту запись продажи?", "Подтвердите удаление", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        int saleId = selectedSale.SaleId;
+                        var saleToRemove = db.sales.FirstOrDefault(s => s.sale_id == saleId);
+
+                        if (saleToRemove != null)
+                        {
+                            db.sales.Remove(saleToRemove);
+                            db.SaveChanges();
+                            MessageBox.Show("Запись продажи успешно удалена.");
+                            LoadSalesData();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Не удалось найти запись продажи для удаления.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка при удалении записи продажи: " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления.");
+            }
+        }
     }
 }
