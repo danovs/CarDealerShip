@@ -40,8 +40,8 @@
                     </Grid>
                 </Border>
 
-                <!-- Кнопка "Сохранить" -->
-                <Button Grid.Row="3" Content="Сохранить" Style="{StaticResource SaveButton}" x:Name="SaveButton" Click="SaveButton_Click"  
+                <!-- Кнопка "Оставить" -->
+                <Button Grid.Row="3" Content="Оставить" Style="{StaticResource SaveButton}" x:Name="SaveButton" Click="SaveButton_Click"  
                         VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0"/>
             </Grid>
         </Border>

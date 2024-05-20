@@ -103,7 +103,7 @@ namespace CarDealerShip
                     if (client == null || string.IsNullOrWhiteSpace(client.full_name) || string.IsNullOrWhiteSpace(client.phone))
                     {
                         MessageBox.Show("Не удалось найти данные клиента или они неполные. Пожалуйста, заполните свои контактные данные.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                        MessageBox.Show("Для внесения данных нажмите на значок в верхнем левом углу приложения.", "Подсказка", MessageBoxButton.OK, MessageBoxImage.Information);
+                        FrameManger.MainFrame.Navigate(new SettingProfile());
                         return;
                     }
 
