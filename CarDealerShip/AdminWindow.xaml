@@ -54,6 +54,9 @@
                     <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click_9" Name="SalesCount" Visibility="Collapsed">
                         <Image Source="/MenuImages/coins.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
+                    <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="UsersReport_Click"  Name="UsersReport" Visibility="Collapsed">
+                        <Image Source="/MenuImages/coins.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
                 </StackPanel>
 
                 <!-- Выход из приложения -->

@@ -29,8 +29,9 @@ namespace CarDealerShip
                 AddCatalog.Visibility = Visibility.Visible;
                 Feedback.Visibility = Visibility.Visible;
                 Sales.Visibility = Visibility.Visible;
-                SalesAdd.Visibility = Visibility.Visible;
+                SalesAdd.Visibility = Visibility.Collapsed;
                 SalesCount.Visibility = Visibility.Visible;
+                UsersReport.Visibility = Visibility.Visible;
             }
             else if (userRole == 2)
             {
@@ -38,10 +39,11 @@ namespace CarDealerShip
                 Catalog.Visibility = Visibility.Visible;
                 Inventory.Visibility = Visibility.Visible;
                 AddCatalog.Visibility = Visibility.Visible;
-                Feedback.Visibility = Visibility.Visible; // Предположим, что Feedback доступен для пользователей с ролью 2.
+                Feedback.Visibility = Visibility.Visible;
                 Sales.Visibility = Visibility.Collapsed;
                 SalesAdd.Visibility = Visibility.Visible;
                 SalesCount.Visibility = Visibility.Collapsed;
+                UsersReport.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -126,6 +128,11 @@ namespace CarDealerShip
         private void Button_Click_9(object sender, RoutedEventArgs e)
         {
             FrameManger.AdminFrame.Navigate(new SalesCount());
+        }
+
+        private void UsersReport_Click(object sender, RoutedEventArgs e)
+        {
+            FrameManger.AdminFrame.Navigate(new usersReports());
         }
     }
 }
