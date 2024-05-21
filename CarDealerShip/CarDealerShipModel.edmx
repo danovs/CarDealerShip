@@ -261,7 +261,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__users__role_id__398D8EEE">
+        <Association Name="FK__users__role_id__656C112C">
           <End Role="roles" Type="Self.roles" Multiplicity="1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -422,7 +422,7 @@
             <End Role="employees" EntitySet="employees" />
             <End Role="sales" EntitySet="sales" />
           </AssociationSet>
-          <AssociationSet Name="FK__users__role_id__398D8EEE" Association="Self.FK__users__role_id__398D8EEE">
+          <AssociationSet Name="FK__users__role_id__656C112C" Association="Self.FK__users__role_id__656C112C">
             <End Role="roles" EntitySet="roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
@@ -591,7 +591,7 @@
           </Key>
           <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="users" Relationship="Self.FK__users__role_id__398D8EEE" FromRole="roles" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.FK__users__role_id__656C112C" FromRole="roles" ToRole="users" />
         </EntityType>
         <EntityType Name="sale_statuses">
           <Key>
@@ -646,7 +646,7 @@
           <Property Name="role_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="clients" Relationship="Self.FK__clients__user_id__403A8C7D" FromRole="users" ToRole="clients" />
           <NavigationProperty Name="employees" Relationship="Self.FK__employees__user___3C69FB99" FromRole="users" ToRole="employees" />
-          <NavigationProperty Name="role" Relationship="Self.FK__users__role_id__398D8EEE" FromRole="users" ToRole="roles" />
+          <NavigationProperty Name="role" Relationship="Self.FK__users__role_id__656C112C" FromRole="users" ToRole="roles" />
         </EntityType>
         <Association Name="FK__appointme__car_i__5441852A">
           <End Role="cars" Type="Self.car" Multiplicity="1" />
@@ -840,7 +840,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__users__role_id__398D8EEE">
+        <Association Name="FK__users__role_id__656C112C">
           <End Role="roles" Type="Self.role" Multiplicity="1" />
           <End Role="users" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
@@ -945,7 +945,7 @@
             <End Role="inventory" EntitySet="inventories" />
             <End Role="sales" EntitySet="sales" />
           </AssociationSet>
-          <AssociationSet Name="FK__users__role_id__398D8EEE" Association="Self.FK__users__role_id__398D8EEE">
+          <AssociationSet Name="FK__users__role_id__656C112C" Association="Self.FK__users__role_id__656C112C">
             <End Role="roles" EntitySet="roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
