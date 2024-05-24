@@ -50,26 +50,49 @@ namespace CarDealerShip
         // Кнопка для сохранения изменений.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранный статус из раскрывающегося списка.
-            var selectedStatus = (appointments_status)CmbStatus.SelectedItem;
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите изменить статус данной записи?", "Изменение статутса", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            // Находим соответствующую запись по appointmentId.
-            var appointment = db.appointments.FirstOrDefault(a => a.appointment_id == appointmentId);
-
-            if (appointment != null)
+            if (result == MessageBoxResult.Yes)
             {
-                // Обновить статус записи и сохраняем новые данные в БД.
-                appointment.appointmentStatus_id = selectedStatus.appointmentStatus_id;
-
                 try
                 {
-                    db.SaveChanges();
-                    MessageBox.Show("Запись успешно обновлена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var selectedStatus = (appointments_status)CmbStatus.SelectedItem;
+
+                    // Находим соответствующую запись по appointmentId.
+                    var appointment = db.appointments.FirstOrDefault(a => a.appointment_id == appointmentId);
+
+                    if (appointment != null)
+                    {
+                        // Проверяем, был ли выбран новый статус
+                        if (appointment.appointmentStatus_id != selectedStatus.appointmentStatus_id)
+                        {
+                            // Обновляем статус записи и сохраняем новые данные в БД.
+                            appointment.appointmentStatus_id = selectedStatus.appointmentStatus_id;
+
+                            try
+                            {
+                                db.SaveChanges();
+                                MessageBox.Show("Запись успешно обновлена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Ошибка при сохранении изменений: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Нет изменений для сохранения.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при сохранении изменений: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Запись не была обновлена");
             }
         }
     }

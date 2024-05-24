@@ -5,9 +5,6 @@ using System.Windows.Controls;
 
 namespace CarDealerShip
 {
-    /// <summary>
-    /// Логика взаимодействия для usersReports.xaml
-    /// </summary>
     public partial class usersReports : Page
     {
         private CarDealershipEntities db;
@@ -78,44 +75,53 @@ namespace CarDealerShip
         {
             if (DGridUsers.SelectedItem != null)
             {
-                try
+                MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить данного пользователя?", "Удаление пользователя", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
                 {
-                    var selectedUser = DGridUsers.SelectedItem;
-
-                    // Получение идентификатора пользователя
-                    int userId = (int)selectedUser.GetType().GetProperty("UserID").GetValue(selectedUser, null);
-
-                    // Найти и удалить связанные записи в таблицах clients и employees
-                    var relatedClients = db.clients.Where(c => c.user_id == userId).ToList();
-                    db.clients.RemoveRange(relatedClients);
-
-                    var relatedEmployees = db.employees.Where(re => re.user_id == userId).ToList();
-                    db.employees.RemoveRange(relatedEmployees);
-
-                    // Найти и удалить пользователя
-                    var userToDelete = db.users.FirstOrDefault(u => u.user_id == userId);
-                    if (userToDelete != null)
+                    try
                     {
-                        db.users.Remove(userToDelete);
-                        db.SaveChanges();
+                        var selectedUser = DGridUsers.SelectedItem;
 
-                        // Обновление данных после удаления
-                        LoadUsersData();
-                        MessageBox.Show("Пользователь успешно удален.");
+                        // Получение идентификатора пользователя
+                        int userId = (int)selectedUser.GetType().GetProperty("UserID").GetValue(selectedUser, null);
+
+                        // Найти и удалить связанные записи в таблицах clients и employees
+                        var relatedClients = db.clients.Where(c => c.user_id == userId).ToList();
+                        db.clients.RemoveRange(relatedClients);
+
+                        var relatedEmployees = db.employees.Where(re => re.user_id == userId).ToList();
+                        db.employees.RemoveRange(relatedEmployees);
+
+                        // Найти и удалить пользователя
+                        var userToDelete = db.users.FirstOrDefault(u => u.user_id == userId);
+                        if (userToDelete != null)
+                        {
+                            db.users.Remove(userToDelete);
+                            db.SaveChanges();
+
+                            // Обновление данных после удаления
+                            LoadUsersData();
+                            MessageBox.Show("Пользователь успешно удален.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Пользователь не найден в базе данных.");
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Пользователь не найден в базе данных.");
+                        MessageBox.Show("Ошибка удаления пользователя: " + ex.Message);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Ошибка удаления пользователя: " + ex.Message);
+                    MessageBox.Show("Пожалуйста, выберите пользователя для удаления.");
                 }
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите пользователя для удаления.");
+                MessageBox.Show("Пользователь не был удалён");
             }
         }
     }

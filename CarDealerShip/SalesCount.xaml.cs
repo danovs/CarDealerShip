@@ -55,6 +55,7 @@ namespace CarDealerShip
 
             UpdateSalesCounts((DateTime)startDate, (DateTime)endDate);
             LoadSaleCountData();
+            MessageBox.Show("Список обновлён");
         }
 
         private void UpdateSalesCounts(DateTime startDate, DateTime endDate)
@@ -123,6 +124,10 @@ namespace CarDealerShip
                     {
                         MessageBox.Show("Ошибка при удалении записи о продажах: " + ex.Message);
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Запись не удалена");
                 }
             }
             else

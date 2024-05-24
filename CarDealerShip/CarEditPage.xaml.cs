@@ -16,7 +16,7 @@ namespace CarDealerShip
         private car currentCar;
 
         private string imagePath;
-        
+
         // Инициализацтя контекста БД, поиск текущего автомобиля в БД по его ID. Заполняем выпадающий список типов кузовов и заполянем формы данными о текущем автомобиле.
         public CarEditPage(car car)
         {
@@ -119,6 +119,15 @@ namespace CarDealerShip
                         return;
                     }
 
+                    // Проверка наличия изменений
+                    bool changesMade = CheckForChanges();
+
+                    if (!changesMade)
+                    {
+                        MessageBox.Show("Вы не внесли никаких изменений.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
                     // Если выбрано новое изображение, загружаем его и сохраняем в базе данных
                     if (!string.IsNullOrEmpty(imagePath))
                     {
@@ -155,6 +164,20 @@ namespace CarDealerShip
             {
                 MessageBox.Show("Изменения не были сохранены");
             }
+        }
+
+        // Метод для проверки наличия изменений
+        private bool CheckForChanges()
+        {
+            return currentCar.make != txtBrand.Text ||
+                   currentCar.model != txtModel.Text ||
+                   currentCar.year != Convert.ToInt32(txtYear.Text) ||
+                   currentCar.color != txtColor.Text ||
+                   currentCar.price != Convert.ToDecimal(txtPrice.Text) ||
+                   currentCar.modification != txtModification.Text ||
+                   currentCar.trim_level != txtConfiguration.Text ||
+                   (cmbBodyType.SelectedItem != null && currentCar.car_types.type_name != cmbBodyType.SelectedItem.ToString()) ||
+                   !string.IsNullOrEmpty(imagePath);
         }
     }
 }

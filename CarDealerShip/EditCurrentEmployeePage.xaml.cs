@@ -40,7 +40,7 @@ namespace CarDealerShip
             {
                 MessageBox.Show("Ошибка: Некорректный тип объекта передан в конструктор EditCurrentEmployeePage", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
+
         }
 
         // Кнопка "Сохранить".
@@ -64,6 +64,13 @@ namespace CarDealerShip
                         string.IsNullOrWhiteSpace(txtSalary.Text))
                     {
                         MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Проверка наличия изменений.
+                    if (!CheckForChanges())
+                    {
+                        MessageBox.Show("Нет изменений для сохранения.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
 
@@ -109,6 +116,18 @@ namespace CarDealerShip
             {
                 MessageBox.Show("Изменения не сохранены", "Отмена сохранения", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        // Метод для проверки наличия изменений.
+        private bool CheckForChanges()
+        {
+            return currentEmployee.surname != txtSurname.Text ||
+                   currentEmployee.name != txtName.Text ||
+                   currentEmployee.lastname != txtLastname.Text ||
+                   currentEmployee.phone != txtPhone.Text ||
+                   currentEmployee.email != txtEmail.Text ||
+                   currentEmployee.user.role.role_name != (string)cmbRole.SelectedItem ||
+                   currentEmployee.salary != Convert.ToDecimal(txtSalary.Text);
         }
     }
 }

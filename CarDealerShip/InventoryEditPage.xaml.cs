@@ -66,32 +66,44 @@ namespace CarDealerShip
                 try
                 {
                     // Получение выбранного инвентаря для редактирования.
-                    // В случае, если инентарь найден, получить ID выбранного автомобиля и местоположения.
-                    // Производим проверку наличия другого инвентаря с таким же автомобилей на выбранной локации.
-                    // Если автомобиля нет на выбранной локации, обновляем сойства редактируемого инвентаря.
-                    // Сохраняем изменения в базе данных.
                     var selectedInventory = db.inventories.FirstOrDefault(i => i.inventory_id == inventoryId);
 
                     if (selectedInventory != null)
                     {
-                        int carId = (int)cmbCar.SelectedValue;
-                        int locationId = (int)cmbLocation.SelectedValue;
-                        bool isDuplicateLocation = db.inventories.Any(inv => inv.car_id == carId && inv.location_id == locationId && inv.inventory_id != selectedInventory.inventory_id);
+                        // Проверка, были ли изменения в форме редактирования.
+                        bool dataChanged = IsDataChanged(selectedInventory);
 
-                        if (isDuplicateLocation)
+                        if (dataChanged)
                         {
-                            MessageBox.Show("Указанное расположение для выбранного автомобиля уже занято.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return; // Прерывание выполнения метода.
+                            // Производим проверку наличия другого инвентаря с таким же автомобилем на выбранной локации.
+                            int carId = (int)cmbCar.SelectedValue;
+                            int locationId = (int)cmbLocation.SelectedValue;
+                            bool isDuplicateLocation = db.inventories.Any(inv => inv.car_id == carId && inv.location_id == locationId && inv.inventory_id != selectedInventory.inventory_id);
+
+                            if (isDuplicateLocation)
+                            {
+                                MessageBox.Show("Указанное расположение для выбранного автомобиля уже занято.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return; // Прерывание выполнения метода.
+                            }
+
+                            // Обновляем свойства редактируемого инвентаря.
+                            selectedInventory.car_id = (int)cmbCar.SelectedValue;
+                            selectedInventory.location_id = (int)cmbLocation.SelectedValue;
+                            selectedInventory.count = int.Parse(txtCount.Text);
+                            selectedInventory.status_id = (int)cmbStatus.SelectedValue;
+
+                            db.SaveChanges();
+
+                            MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
-
-                        selectedInventory.car_id = (int)cmbCar.SelectedValue;
-                        selectedInventory.location_id = (int)cmbLocation.SelectedValue;
-                        selectedInventory.count = int.Parse(txtCount.Text);
-                        selectedInventory.status_id = (int)cmbStatus.SelectedValue;
-
-                        db.SaveChanges();
-
-                        MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                        else
+                        {
+                            MessageBox.Show("Нет изменений для сохранения.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Инвентарь не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 catch (Exception ex)
@@ -103,6 +115,20 @@ namespace CarDealerShip
             {
                 MessageBox.Show("Изменения не сохранены.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        // Метод для проверки, были ли изменения в форме редактирования.
+        private bool IsDataChanged(inventory selectedInventory)
+        {
+            int carId = (int)cmbCar.SelectedValue;
+            int locationId = (int)cmbLocation.SelectedValue;
+            int count = int.Parse(txtCount.Text);
+            int statusId = (int)cmbStatus.SelectedValue;
+
+            return selectedInventory.car_id != carId ||
+                   selectedInventory.location_id != locationId ||
+                   selectedInventory.count != count ||
+                   selectedInventory.status_id != statusId;
         }
 
         // Обработчик события изменения выбранного автомобиля в раскрывающиемся списке.

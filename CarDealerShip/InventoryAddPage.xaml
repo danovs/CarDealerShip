@@ -63,8 +63,8 @@
                     <TextBlock Text="Статус:" Grid.Row="10"/>
                     <ComboBox x:Name="cmbStatus" Grid.Row="10" Margin="120,0,0,0"/>
 
-                    <!-- Кнопка "Сохранить" -->
-                    <Button Content="Сохранить" Grid.Row="11" Margin="0,20,0,0" Click="Button_Click"/>
+                    <!-- Кнопка "Добавить" -->
+                    <Button Content="Добавить" Grid.Row="11" Margin="0,20,0,0" Click="Button_Click"/>
 
                 </Grid>
             </Border>
