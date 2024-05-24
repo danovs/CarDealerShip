@@ -117,8 +117,8 @@ namespace CarDealerShip.AuthReg
                 MessageBox.Show("Регистрация успешно завершена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // Закрываем текущее окно и открываем окно входа
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
+                Login loginWindow = new Login();
+                loginWindow.Show();
                 this.Close();
             }
             catch (DbEntityValidationException ex)

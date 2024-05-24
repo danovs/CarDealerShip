@@ -94,8 +94,6 @@ namespace CarDealerShip.AuthReg
                 return;
             }
 
-            MessageBox.Show("Авторизация успешна!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
             ((App)Application.Current).CurrentUserId = user.user_id;
 
             if (user.role_id == 1 | user.role_id == 2)
