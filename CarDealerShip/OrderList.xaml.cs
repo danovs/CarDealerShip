@@ -90,7 +90,8 @@ namespace CarDealerShip
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Произошла ошибка при удалении записи: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Произошла ошибка при удалении записи.\n" +
+                        $"Скорее всего, данная запись где-то используется.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else

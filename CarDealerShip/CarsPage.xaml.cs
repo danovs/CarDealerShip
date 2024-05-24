@@ -98,7 +98,8 @@ namespace CarDealerShip
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show("Ошибка при удалении автомобиля.\n" +
+                            "Скорее всего, данный автомобиль где-то используется.");
                     }
                 }
                 else

@@ -90,10 +90,44 @@ namespace CarDealerShip
                     var currentEmployee = db.employees.FirstOrDefault(em => em.user_id == ((App)Application.Current).CurrentUserId);
 
                     decimal salePrice;
-                    if (!decimal.TryParse(txtSalePrice.Text, out salePrice))
+                    if (!decimal.TryParse(txtPrice.Text, out salePrice))
                     {
                         MessageBox.Show("Введите корректную цену на продажу.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
+                    }
+
+                    var inventoryItem = db.inventories.FirstOrDefault(i => i.car_id == selectedAppointment.car_id);
+                    if (inventoryItem != null)
+                    {
+                        // Проверка, если количество 0, нельзя добавить запись о продаже
+                        if (inventoryItem.count == 0)
+                        {
+                            MessageBox.Show("Количество автомобилей равно нулю. Нельзя добавить запись о продаже.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        // Проверка, если автомобиль не находится в автосалоне
+                        if (inventoryItem.location_id != 1)
+                        {
+                            MessageBox.Show("Нельзя продать автомобиль, который находится не в автосалоне.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        inventoryItem.count -= 1;
+                        if (inventoryItem.count < 0)
+                        {
+                            inventoryItem.count = 0; // Предотвращаем отрицательное значение
+                        }
+
+                        // Обновляем статус автомобиля на "Нет в наличии" если количество 0
+                        if (inventoryItem.count == 0)
+                        {
+                            var outOfStockStatus = db.status.FirstOrDefault(s => s.status_name == "Нет в наличии");
+                            if (outOfStockStatus != null)
+                            {
+                                inventoryItem.status_id = outOfStockStatus.status_id;
+                            }
+                        }
                     }
 
                     var newSales = new sale

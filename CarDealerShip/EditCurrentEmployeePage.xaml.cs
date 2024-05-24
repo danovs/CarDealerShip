@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CarDealerShip
 {
@@ -9,7 +11,6 @@ namespace CarDealerShip
     {
         // Экземпляр контекста базы данных. Текущий сотрудник для редактирования.
         private CarDealershipEntities db;
-
         private employee currentEmployee;
 
         // Инициализация контекста базы данных. Поиск сотрудника по идентификатору. Установка источников данных для выпадающих списков cmbRole и cmbUsername.
@@ -21,7 +22,6 @@ namespace CarDealerShip
             if (employee is employee)
             {
                 currentEmployee = db.employees.Find(employee.employee_id);
-
 
                 cmbRole.ItemsSource = db.roles.Select(r => r.role_name).ToList();
                 cmbUsername.ItemsSource = db.users.Select(u => u.username).ToList();
@@ -40,7 +40,6 @@ namespace CarDealerShip
             {
                 MessageBox.Show("Ошибка: Некорректный тип объекта передан в конструктор EditCurrentEmployeePage", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         // Кнопка "Сохранить".
@@ -128,6 +127,18 @@ namespace CarDealerShip
                    currentEmployee.email != txtEmail.Text ||
                    currentEmployee.user.role.role_name != (string)cmbRole.SelectedItem ||
                    currentEmployee.salary != Convert.ToDecimal(txtSalary.Text);
+        }
+
+        // Обработчик для проверки ввода только букв
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-zA-Zа-яА-Я]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void SalaryTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+"); // Разрешаем только цифры
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

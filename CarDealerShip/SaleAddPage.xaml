@@ -27,7 +27,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!-- При изменении автомобиля, меняется информация о нем-->
@@ -64,13 +63,10 @@
                     <TextBlock Text="Цена автомобиля:" Grid.Row="10" />
                     <TextBlock x:Name="txtPrice" Grid.Row="10" Margin="120,0,0,0"/>
 
-                    <TextBlock Text="Цена на продажу:" Grid.Row="11" />
-                    <TextBox x:Name="txtSalePrice" Grid.Row="11" Margin="120,0,0,0"/>
-                    
-                    <TextBlock Text="Статус" Grid.Row="12"/>
-                    <ComboBox x:Name="cmbStatus" Grid.Row="12" Margin="120,0,0,0"/>
+                    <TextBlock Text="Статус" Grid.Row="11"/>
+                    <ComboBox x:Name="cmbStatus" Grid.Row="11" Margin="120,0,0,0"/>
                     <!-- Кнопка "Добавить" -->
-                    <Button Content="Добавить" Grid.Row="13" Margin="0,20,0,0" Click="Button_Click"/>
+                    <Button Content="Добавить" Grid.Row="12" Margin="0,20,0,0" Click="Button_Click"/>
 
                 </Grid>
             </Border>

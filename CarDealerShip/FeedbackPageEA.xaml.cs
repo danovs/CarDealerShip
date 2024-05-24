@@ -59,7 +59,8 @@ namespace CarDealerShip
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Ошибка при удалении отзыва: " + ex.Message);
+                        MessageBox.Show("Ошибка при удалении отзыва:\n" +
+                            "Скорее всего, данная запись где-то используется");
                     }
                 }
                 else

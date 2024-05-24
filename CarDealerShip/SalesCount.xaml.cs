@@ -122,7 +122,8 @@ namespace CarDealerShip
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Ошибка при удалении записи о продажах: " + ex.Message);
+                        MessageBox.Show("Ошибка при удалении записи о продажах: \n" +
+                            "Скорее всего, данная запись где-то используется.");
                     }
                 }
                 else

@@ -38,8 +38,6 @@
                     </StackPanel>
                     <Button Content="Удалить" Grid.Row="1" Click="Button_Click"  HorizontalAlignment="Right" Margin="10" Width="100"></Button>
 
-                    <!--<TextBox x:Name="SearchTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="Поиск" HorizontalAlignment="Center" Width="400" Height="20" TextChanged="SearchTextBox_TextChanged" LostFocus="SearchTextBox_LostFocus" GotFocus="SearchTextBox_GotFocus"/> -->
-
                 </Grid>
             </Border>
         </Grid>

@@ -94,7 +94,8 @@ namespace CarDealerShip
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("Ошибка при удалении сотрудника: " + ex.Message);
+                                MessageBox.Show("Ошибка при удалении сотрудника.\n" +
+                                    "Скорее всего, сотрудник где-то используется в других записях");
                                 if (ex.InnerException != null)
                                 {
                                     MessageBox.Show("Внутреннее исключение: " + ex.InnerException.Message);

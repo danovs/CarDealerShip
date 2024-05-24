@@ -111,7 +111,7 @@ namespace CarDealerShip
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Ошибка удаления пользователя: " + ex.Message);
+                        MessageBox.Show("Нельзя удалить пользователя.\nСкорее всего, данный пользователь где-то используется.");
                     }
                 }
                 else
