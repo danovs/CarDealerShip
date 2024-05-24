@@ -39,10 +39,10 @@
           <Property Name="year" Type="int" Nullable="false" />
           <Property Name="color" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="photo" Type="varbinary(max)" />
-          <Property Name="type_id" Type="int" />
-          <Property Name="trim_level" Type="varchar" MaxLength="100" />
-          <Property Name="modification" Type="varchar" MaxLength="100" />
+          <Property Name="photo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="type_id" Type="int" Nullable="false" />
+          <Property Name="trim_level" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="modification" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="catalog">
           <Key>
@@ -50,7 +50,7 @@
           </Key>
           <Property Name="catalog_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="car_id" Type="int" Nullable="false" />
-          <Property Name="inventory_id" Type="int" />
+          <Property Name="inventory_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="clients">
           <Key>
@@ -58,8 +58,8 @@
           </Key>
           <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
-          <Property Name="full_name" Type="varchar" MaxLength="100" />
-          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="full_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="employees">
           <Key>
@@ -72,7 +72,7 @@
           <Property Name="lastname" Type="nvarchar" MaxLength="75" />
           <Property Name="phone" Type="nvarchar" MaxLength="75" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="75" Nullable="false" />
-          <Property Name="hiredate" Type="date" />
+          <Property Name="hiredate" Type="date" Nullable="false" />
           <Property Name="salary" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="feedback">
@@ -92,7 +92,7 @@
           <Property Name="car_id" Type="int" Nullable="false" />
           <Property Name="status_id" Type="int" Nullable="false" />
           <Property Name="count" Type="int" Nullable="false" />
-          <Property Name="location_id" Type="int" />
+          <Property Name="location_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="locations">
           <Key>
@@ -125,8 +125,7 @@
           <Property Name="sale_date" Type="date" Nullable="false" />
           <Property Name="sale_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="sale_status_id" Type="int" Nullable="false" />
-          <Property Name="car_id" Type="int" />
-          <Property Name="inventory_id" Type="int" />
+          <Property Name="car_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sales_counts">
           <Key>
@@ -286,7 +285,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_cars_car_types">
-          <End Role="car_types" Type="Self.car_types" Multiplicity="0..1" />
+          <End Role="car_types" Type="Self.car_types" Multiplicity="1" />
           <End Role="cars" Type="Self.cars" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="car_types">
@@ -298,7 +297,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_catalog_inventory">
-          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
           <End Role="catalog" Type="Self.catalog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="inventory">
@@ -310,7 +309,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_inventory_locations">
-          <End Role="locations" Type="Self.locations" Multiplicity="0..1" />
+          <End Role="locations" Type="Self.locations" Multiplicity="1" />
           <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="locations">
@@ -342,18 +341,6 @@
             </Principal>
             <Dependent Role="sales_counts">
               <PropertyRef Name="employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_sales_inventory">
-          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
-          <End Role="sales" Type="Self.sales" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory">
-              <PropertyRef Name="inventory_id" />
-            </Principal>
-            <Dependent Role="sales">
-              <PropertyRef Name="inventory_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -450,10 +437,6 @@
             <End Role="employees" EntitySet="employees" />
             <End Role="sales_counts" EntitySet="sales_counts" />
           </AssociationSet>
-          <AssociationSet Name="FK_sales_inventory" Association="Self.FK_sales_inventory">
-            <End Role="inventory" EntitySet="inventory" />
-            <End Role="sales" EntitySet="sales" />
-          </AssociationSet>
           <AssociationSet Name="FK_sales_sale_statuses" Association="Self.FK_sales_sale_statuses">
             <End Role="sale_statuses" EntitySet="sale_statuses" />
             <End Role="sales" EntitySet="sales" />
@@ -503,10 +486,10 @@
           <Property Name="year" Type="Int32" Nullable="false" />
           <Property Name="color" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="type_id" Type="Int32" />
-          <Property Name="trim_level" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="modification" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="type_id" Type="Int32" Nullable="false" />
+          <Property Name="trim_level" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="modification" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="appointments" Relationship="Self.FK__appointme__car_i__5441852A" FromRole="cars" ToRole="appointments" />
           <NavigationProperty Name="car_types" Relationship="Self.FK_cars_car_types" FromRole="cars" ToRole="car_types" />
           <NavigationProperty Name="catalogs" Relationship="Self.FK__catalog__car_id__4F7CD00D" FromRole="cars" ToRole="catalog" />
@@ -518,7 +501,7 @@
           </Key>
           <Property Name="catalog_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="car_id" Type="Int32" Nullable="false" />
-          <Property Name="inventory_id" Type="Int32" />
+          <Property Name="inventory_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="car" Relationship="Self.FK__catalog__car_id__4F7CD00D" FromRole="catalog" ToRole="cars" />
           <NavigationProperty Name="inventory" Relationship="Self.FK_catalog_inventory" FromRole="catalog" ToRole="inventory" />
         </EntityType>
@@ -528,8 +511,8 @@
           </Key>
           <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="appointments" Relationship="Self.FK__appointme__clien__52593CB8" FromRole="clients" ToRole="appointments" />
           <NavigationProperty Name="user" Relationship="Self.FK__clients__user_id__403A8C7D" FromRole="clients" ToRole="users" />
           <NavigationProperty Name="feedbacks" Relationship="Self.FK__feedback__client__4CA06362" FromRole="clients" ToRole="feedback" />
@@ -546,7 +529,7 @@
           <Property Name="lastname" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
           <Property Name="phone" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="hiredate" Type="DateTime" Precision="0" />
+          <Property Name="hiredate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="salary" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="user" Relationship="Self.FK__employees__user___3C69FB99" FromRole="employees" ToRole="users" />
           <NavigationProperty Name="sales" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="employees" ToRole="sales" />
@@ -570,12 +553,11 @@
           <Property Name="car_id" Type="Int32" Nullable="false" />
           <Property Name="status_id" Type="Int32" Nullable="false" />
           <Property Name="count" Type="Int32" Nullable="false" />
-          <Property Name="location_id" Type="Int32" />
+          <Property Name="location_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="car" Relationship="Self.FK__inventory__car_i__44FF419A" FromRole="inventory" ToRole="cars" />
           <NavigationProperty Name="catalogs" Relationship="Self.FK_catalog_inventory" FromRole="inventory" ToRole="catalog" />
           <NavigationProperty Name="location" Relationship="Self.FK_inventory_locations" FromRole="inventory" ToRole="locations" />
           <NavigationProperty Name="status" Relationship="Self.FK_inventory_status" FromRole="inventory" ToRole="status" />
-          <NavigationProperty Name="sales" Relationship="Self.FK_sales_inventory" FromRole="inventory" ToRole="sales" />
         </EntityType>
         <EntityType Name="location">
           <Key>
@@ -611,11 +593,9 @@
           <Property Name="sale_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="sale_price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="sale_status_id" Type="Int32" Nullable="false" />
-          <Property Name="car_id" Type="Int32" />
-          <Property Name="inventory_id" Type="Int32" />
+          <Property Name="car_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="client" Relationship="Self.FK__sales__client_id__48CFD27E" FromRole="sales" ToRole="clients" />
           <NavigationProperty Name="employee" Relationship="Self.FK__sales__employee___49C3F6B7" FromRole="sales" ToRole="employees" />
-          <NavigationProperty Name="inventory" Relationship="Self.FK_sales_inventory" FromRole="sales" ToRole="inventory" />
           <NavigationProperty Name="sale_statuses" Relationship="Self.FK_sales_sale_statuses" FromRole="sales" ToRole="sale_statuses" />
         </EntityType>
         <EntityType Name="sales_counts">
@@ -685,7 +665,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_cars_car_types">
-          <End Role="car_types" Type="Self.car_types" Multiplicity="0..1" />
+          <End Role="car_types" Type="Self.car_types" Multiplicity="1" />
           <End Role="cars" Type="Self.car" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="car_types">
@@ -721,7 +701,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_catalog_inventory">
-          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
           <End Role="catalog" Type="Self.catalog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="inventory">
@@ -805,7 +785,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_inventory_locations">
-          <End Role="locations" Type="Self.location" Multiplicity="0..1" />
+          <End Role="locations" Type="Self.location" Multiplicity="1" />
           <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="locations">
@@ -825,18 +805,6 @@
             </Principal>
             <Dependent Role="inventory">
               <PropertyRef Name="status_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_sales_inventory">
-          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
-          <End Role="sales" Type="Self.sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory">
-              <PropertyRef Name="inventory_id" />
-            </Principal>
-            <Dependent Role="sales">
-              <PropertyRef Name="inventory_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -940,10 +908,6 @@
           <AssociationSet Name="FK_inventory_status" Association="Self.FK_inventory_status">
             <End Role="status" EntitySet="status" />
             <End Role="inventory" EntitySet="inventories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_sales_inventory" Association="Self.FK_sales_inventory">
-            <End Role="inventory" EntitySet="inventories" />
-            <End Role="sales" EntitySet="sales" />
           </AssociationSet>
           <AssociationSet Name="FK__users__role_id__656C112C" Association="Self.FK__users__role_id__656C112C">
             <End Role="roles" EntitySet="roles" />
@@ -1092,7 +1056,6 @@
                 <ScalarProperty Name="sale_price" ColumnName="sale_price" />
                 <ScalarProperty Name="sale_status_id" ColumnName="sale_status_id" />
                 <ScalarProperty Name="car_id" ColumnName="car_id" />
-                <ScalarProperty Name="inventory_id" ColumnName="inventory_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

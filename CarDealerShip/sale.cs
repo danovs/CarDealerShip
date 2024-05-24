@@ -20,12 +20,10 @@ namespace CarDealerShip
         public System.DateTime sale_date { get; set; }
         public decimal sale_price { get; set; }
         public int sale_status_id { get; set; }
-        public Nullable<int> car_id { get; set; }
-        public Nullable<int> inventory_id { get; set; }
+        public int car_id { get; set; }
     
         public virtual client client { get; set; }
         public virtual employee employee { get; set; }
-        public virtual inventory inventory { get; set; }
         public virtual sale_statuses sale_statuses { get; set; }
     }
 }

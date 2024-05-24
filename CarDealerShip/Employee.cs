@@ -28,7 +28,7 @@ namespace CarDealerShip
         public string lastname { get; set; }
         public string phone { get; set; }
         public string email { get; set; }
-        public Nullable<System.DateTime> hiredate { get; set; }
+        public System.DateTime hiredate { get; set; }
         public Nullable<decimal> salary { get; set; }
     
         public virtual user user { get; set; }

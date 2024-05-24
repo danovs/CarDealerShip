@@ -29,7 +29,7 @@ namespace CarDealerShip
         public string color { get; set; }
         public decimal price { get; set; }
         public byte[] photo { get; set; }
-        public Nullable<int> type_id { get; set; }
+        public int type_id { get; set; }
         public string trim_level { get; set; }
         public string modification { get; set; }
     

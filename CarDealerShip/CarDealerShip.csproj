@@ -442,6 +442,10 @@
     <Resource Include="MenuImages\salesList.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Logo.ico" />
+    <Resource Include="MenuImages\calendar-lines.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="CarDealershipModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
@@ -452,8 +456,6 @@
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
       <LastGenOutput>CarDealershipModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="Logo.ico" />
-    <Resource Include="MenuImages\calendar-lines.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

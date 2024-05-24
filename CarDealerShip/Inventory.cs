@@ -18,21 +18,18 @@ namespace CarDealerShip
         public inventory()
         {
             this.catalogs = new HashSet<catalog>();
-            this.sales = new HashSet<sale>();
         }
     
         public int inventory_id { get; set; }
         public int car_id { get; set; }
         public int status_id { get; set; }
         public int count { get; set; }
-        public Nullable<int> location_id { get; set; }
+        public int location_id { get; set; }
     
         public virtual car car { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<catalog> catalogs { get; set; }
         public virtual location location { get; set; }
         public virtual status status { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sale> sales { get; set; }
     }
 }
