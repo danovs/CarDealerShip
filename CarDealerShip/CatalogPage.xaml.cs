@@ -115,6 +115,13 @@ namespace CarDealerShip
             Button buyButton = new Button();
             buyButton.Content = "Купить";
             buyButton.Style = (Style)FindResource("BuyButton");
+
+            // Блокируем кнопку, если статус автомобиля - "Not Available"
+            if (catalogEntry.inventory.status.status_name == "Нет в наличии")
+            {
+                buyButton.IsEnabled = false;
+            }
+
             buyButton.Click += (sender, e) =>
             {
                 MessageBoxResult result = MessageBox.Show("Вы действительно хотите выбрать данный автомобиль?", "Выбор автомобиля", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -153,6 +160,7 @@ namespace CarDealerShip
 
             return cardContainer;
         }
+
 
         // Метод для загрузки изображения из массива байтов.
         private BitmapImage LoadImageFromBytes(byte[] imageData)

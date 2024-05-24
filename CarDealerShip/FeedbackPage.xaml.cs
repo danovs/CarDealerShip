@@ -41,46 +41,55 @@ namespace CarDealerShip
             // Получение идентификатора текущего пользователя.
             int userId = ((App)Application.Current).CurrentUserId;
 
-            try
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите добавить отзыв?", "Добавление отзыва", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
             {
-                // Проверка, заполнен ли профиль клиента перед оставлением отзыва.
-                if (!IsClientProfileComplete(userId))
+                try
                 {
-                    MessageBox.Show("Пожалуйста, заполните свой профиль перед добавлением отзыва.");
-                    FrameManger.MainFrame.Navigate(new SettingProfile());
-                    return;
-                }
+                    // Проверка, заполнен ли профиль клиента перед оставлением отзыва.
+                    if (!IsClientProfileComplete(userId))
+                    {
+                        MessageBox.Show("Пожалуйста, заполните свой профиль перед добавлением отзыва.");
+                        FrameManger.MainFrame.Navigate(new SettingProfile());
+                        return;
+                    }
 
-                // Получение текста отзыва из текстового поля.
-                string feedbackText = txtFeedback.Text;
+                    // Получение текста отзыва из текстового поля.
+                    string feedbackText = txtFeedback.Text;
 
-                // Проверка, не является ли текст отзыва пустым.
-                if (string.IsNullOrEmpty(feedbackText))
-                {
-                    MessageBox.Show("Введите текст отзыва.");
-                    return;
-                }
+                    // Проверка, не является ли текст отзыва пустым.
+                    if (string.IsNullOrEmpty(feedbackText))
+                    {
+                        MessageBox.Show("Введите текст отзыва.");
+                        return;
+                    }
 
-                // Проверка, оставлял ли пользователь уже отзыв ранее.
-                if (HasUserLeftFeedback(userId))
-                {
-                    MessageBox.Show("Вы уже оставили отзыв ранее. Новый отзыв добавить нельзя.");
-                    return;
-                }
+                    // Проверка, оставлял ли пользователь уже отзыв ранее.
+                    if (HasUserLeftFeedback(userId))
+                    {
+                        MessageBox.Show("Вы уже оставили отзыв ранее. Новый отзыв добавить нельзя.");
+                        return;
+                    }
 
-                // Добавление отзыва в базу данных.
-                if (AddFeedbackToDatabase(userId, feedbackText))
-                {
-                    MessageBox.Show("Отзыв успешно добавлен!");
+                    // Добавление отзыва в базу данных.
+                    if (AddFeedbackToDatabase(userId, feedbackText))
+                    {
+                        MessageBox.Show("Отзыв успешно добавлен!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ошибка при добавлении отзыва. Пожалуйста, попробуйте снова.");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Ошибка при добавлении отзыва. Пожалуйста, попробуйте снова.");
+                    MessageBox.Show($"Произошла ошибка: {ex.Message}\nСтек вызова: {ex.StackTrace}");
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Произошла ошибка: {ex.Message}\nСтек вызова: {ex.StackTrace}");
+                MessageBox.Show("Отзыв не был оставлен.");
             }
         }
 
