@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using CarDealerShip.AuthReg;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CarDealerShip
@@ -22,7 +23,9 @@ namespace CarDealerShip
 
             if (result == MessageBoxResult.Yes)
             {
-                Application.Current.Shutdown();
+                Login loginWindow = new Login();
+                loginWindow.Show();
+                this.Close();
             }
             else
             {

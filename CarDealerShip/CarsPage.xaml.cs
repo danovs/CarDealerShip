@@ -39,20 +39,22 @@ namespace CarDealerShip
             {
                 string searchText = SearchTextBox.Text.Trim().ToLower();
                 var searchTerms = searchText.Split(' ');
+
                 var searchResult = db.cars.Where(car =>
-            searchTerms.All(term =>
-                car.make.ToLower().Contains(term) ||
-                car.model.ToLower().Contains(term) ||
-                car.year.ToString().Contains(term) ||
-                car.color.ToLower().Contains(term) ||
-                car.price.ToString().Contains(term) ||
-                car.modification.ToLower().Contains(term) ||
-                car.trim_level.ToLower().Contains(term) ||
-                car.catalogs.Any(catalog =>
-                    catalog.inventory.status.status_name.ToLower().Contains(term)
-                )
-            )
-        ).ToList();
+                    searchTerms.All(term =>
+                        car.make.ToLower().Contains(term) ||
+                        car.model.ToLower().Contains(term) ||
+                        car.year.ToString().Contains(term) ||
+                        car.color.ToLower().Contains(term) ||
+                        car.price.ToString().Contains(term) ||
+                        car.modification.ToLower().Contains(term) ||
+                        car.trim_level.ToLower().Contains(term) ||
+                        car.car_types.type_name.ToLower().Contains(term) || // Search by car body type
+                        car.catalogs.Any(catalog =>
+                            catalog.inventory.status.status_name.ToLower().Contains(term)
+                        )
+                    )
+                ).ToList();
 
                 DGridCars.ItemsSource = searchResult;
             }

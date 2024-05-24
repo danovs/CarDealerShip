@@ -10,6 +10,7 @@ namespace CarDealerShip
         // Экземпляр контекста БД.
 
         private CarDealershipEntities db;
+        private bool isSearchPlaceholder = true;
 
         // Инициализация экземпляра контекста БД и загрузка данных о заказе.
 
@@ -18,6 +19,8 @@ namespace CarDealerShip
             InitializeComponent();
 
             db = new CarDealershipEntities();
+
+            SearchTextBox.TextChanged += SearchTextBox_TextChanged;
 
             LoadOrderItems();
         }
@@ -118,6 +121,69 @@ namespace CarDealerShip
                 {
                     MessageBox.Show("Пожалуйста, выберите заказ для редактирования.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+            }
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Поиск" && db != null)
+            {
+                string searchText = SearchTextBox.Text.Trim().ToLower();
+                var searchTerms = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                var searchResult = from appointment in db.appointments
+                                   join client in db.clients on appointment.client_id equals client.client_id
+                                   join car in db.cars on appointment.car_id equals car.car_id
+                                   join status in db.appointments_status on appointment.appointmentStatus_id equals status.appointmentStatus_id
+                                   where searchTerms.All(term =>
+                                       client.full_name.ToLower().Contains(term) ||
+                                       client.phone.ToLower().Contains(term) ||
+                                       car.make.ToLower().Contains(term) ||
+                                       car.model.ToLower().Contains(term) ||
+                                       car.year.ToString().Contains(term) ||
+                                       car.color.ToLower().Contains(term) ||
+                                       car.trim_level.ToLower().Contains(term) ||
+                                       car.modification.ToLower().Contains(term) ||
+                                       appointment.appointment_date.ToString().Contains(term) ||
+                                       status.appoinmentStatus_name.ToLower().Contains(term)
+                                   )
+                                   select new
+                                   {
+                                       ID = appointment.appointment_id,
+                                       Client = client.full_name,
+                                       Phone = client.phone,
+                                       Make = car.make,
+                                       Model = car.model,
+                                       Year = car.year,
+                                       Color = car.color,
+                                       TrimLevel = car.trim_level,
+                                       Modification = car.modification,
+                                       Date = appointment.appointment_date,
+                                       Status = status.appoinmentStatus_name
+                                   };
+
+                DGridOrders.ItemsSource = searchResult.ToList();
+            }
+            else if (db != null)
+            {
+                LoadOrderItems();
+            }
+        }
+
+        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (isSearchPlaceholder)
+            {
+                SearchTextBox.Text = "";
+                isSearchPlaceholder = false;
+            }
+        }
+        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
+            {
+                SearchTextBox.Text = "Поиск";
+                isSearchPlaceholder = true;
             }
         }
     }

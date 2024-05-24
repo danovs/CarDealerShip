@@ -449,6 +449,7 @@
       <DependentUpon>CarDealershipModel.edmx</DependentUpon>
       <LastGenOutput>CarDealershipModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="MenuImages\calendar-lines.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,22 +1,21 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using CarDealerShip.AuthReg;
+using System;
 
 namespace CarDealerShip
 {
     public partial class AdminWindow : Window
     {
-        // Устанавливаем главный фрейм администратора для навигации.
-
         private readonly int userRole;
+
         public AdminWindow(int role)
         {
             InitializeComponent();
             userRole = role;
             SetMenuUIVisibility();
             FrameManger.AdminFrame = AdminFrame;
-            
         }
 
         private void SetMenuUIVisibility()
@@ -29,6 +28,8 @@ namespace CarDealerShip
                 AddCatalog.Visibility = Visibility.Visible;
                 Feedback.Visibility = Visibility.Visible;
                 Sales.Visibility = Visibility.Visible;
+                OrderList.Visibility = Visibility.Visible;
+                
                 SalesAdd.Visibility = Visibility.Collapsed;
                 SalesCount.Visibility = Visibility.Visible;
                 UsersReport.Visibility = Visibility.Visible;
@@ -37,6 +38,7 @@ namespace CarDealerShip
             {
                 Employees.Visibility = Visibility.Collapsed;
                 Catalog.Visibility = Visibility.Visible;
+                OrderList.Visibility= Visibility.Visible;
                 Inventory.Visibility = Visibility.Visible;
                 AddCatalog.Visibility = Visibility.Visible;
                 Feedback.Visibility = Visibility.Visible;
@@ -54,7 +56,9 @@ namespace CarDealerShip
 
             if (result == MessageBoxResult.Yes)
             {
-                Application.Current.Shutdown();
+                Login loginWindow = new Login();
+                loginWindow.Show();
+                this.Close();
             }
             else
             {

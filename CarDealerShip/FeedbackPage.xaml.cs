@@ -47,6 +47,7 @@ namespace CarDealerShip
                 if (!IsClientProfileComplete(userId))
                 {
                     MessageBox.Show("Пожалуйста, заполните свой профиль перед добавлением отзыва.");
+                    FrameManger.MainFrame.Navigate(new SettingProfile());
                     return;
                 }
 

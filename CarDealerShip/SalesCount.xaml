@@ -31,6 +31,7 @@
 
                     <!-- Кнопки для добавления записи (переход на страницу добавления записи в инвентарь) и для удаления записи с базы данных -->
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                        <TextBlock Text="Количество продаж" FontSize="16" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBlock Text="Начало периода" VerticalAlignment="Center" Margin="5"/>
                         <DatePicker x:Name="StartDatePicker" Margin="5"/>
                         <TextBlock Text="Конец периода:" VerticalAlignment="Center" Margin="5"/>
@@ -38,7 +39,7 @@
                         <Button Content="Обновить данные" Click="UpdateSalesCounts_Click" Margin="5"/>
 
                     </StackPanel>
-                    <Button Content="Удалить" Grid.Row="1" Click="Button_Click"  Margin="10" HorizontalAlignment="Right"/>
+                    <Button Content="Удалить" Grid.Row="1" Click="Button_Click"  Margin="10" HorizontalAlignment="Right" Width="100"/>
                 </Grid>
             </Border>
         </Grid>

@@ -20,7 +20,7 @@
                     </Grid.RowDefinitions>
                     <DataGrid x:Name="DGridOrders" AutoGenerateColumns="False" IsReadOnly="True" Margin="15">
                         <DataGrid.Columns>
-                            
+
                             <!-- Разметка колонок в датагриде. Для колонки Client используется перенос текста.-->
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Клиент" Binding="{Binding Client}" Width="*">
@@ -39,7 +39,7 @@
                             <DataGridTextColumn Header="Модификация" Binding="{Binding Modification}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"></DataGridTextColumn>
                             <DataGridTemplateColumn Width="auto">
-                                
+
                                 <!-- Кнопка "Изменить", данная кнопка будет у каждой записи в датагриде -->
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -49,14 +49,16 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                        
+
                     <!-- Кнопка удаления-->
-                    <Button Content="Удалить" Grid.Row="2" Width="100" Margin="10" HorizontalAlignment="Center" Click="Button_Click"></Button>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Margin="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Записи клиентов" FontSize="16" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBox x:Name="SearchTextBox" Text="Поиск" Width="400" Height="20" TextChanged="SearchTextBox_TextChanged" LostFocus="SearchTextBox_LostFocus" GotFocus="SearchTextBox_GotFocus" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <Button Content="Удалить" Grid.Row="2" Width="100" Margin="10" HorizontalAlignment="Right" Click="Button_Click"></Button>
 
                 </Grid>
-
             </Border>
-
         </Grid>
     </Grid>
 </Page>

@@ -32,7 +32,11 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <Button Content="Удалить" Grid.Row="1" Click="Button_Click"  HorizontalAlignment="Right" Margin="10"></Button>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Продажи" FontSize="16" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBox x:Name="SearchTextBox" Text="Поиск" Width="400" Height="20" TextChanged="SearchTextBox_TextChanged" LostFocus="SearchTextBox_LostFocus" GotFocus="SearchTextBox_GotFocus" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <Button Content="Удалить" Grid.Row="1" Click="Button_Click"  HorizontalAlignment="Right" Margin="10" Width="100"></Button>
 
                     <!--<TextBox x:Name="SearchTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="Поиск" HorizontalAlignment="Center" Width="400" Height="20" TextChanged="SearchTextBox_TextChanged" LostFocus="SearchTextBox_LostFocus" GotFocus="SearchTextBox_GotFocus"/> -->
 

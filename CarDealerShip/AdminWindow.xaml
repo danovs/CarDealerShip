@@ -25,37 +25,45 @@
 
                 <!-- Кнопки навигационного меню -->
                 <StackPanel VerticalAlignment="Center">
+                    <!-- Зарегистрированные пользователи в системе -->
+                    <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="UsersReport_Click"  Name="UsersReport" Visibility="Collapsed">
+                        <Image Source="/MenuImages/usersofsystem.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                    <!-- Выплата сотрудникам -->
+                    <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click_9" Name="SalesCount" Visibility="Collapsed">
+                        <Image Source="/MenuImages/coins.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
+                    <!-- Продажи -->
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_7" Name="Sales" Visibility="Collapsed">
+                        <Image Source="/MenuImages/salesList.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Button>
                     <!-- Сотрудники -->
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_1" Name="Employees" Visibility="Collapsed">
                         <Image Source="/AuthReg/Images/userupd.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <!-- Автомобили -->
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_2" Name="Catalog" Visibility="Collapsed">
-                        <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <!-- Просмотр записей от клиентов на покупку автомобиля -->
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_6" Name="OrderList" Visibility="Collapsed">
+                        <Image Source="/MenuImages/calendar-lines.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <!-- Инвентарь -->
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_3" Name="Inventory" Visibility="Collapsed">
-                        <Image Source="/MenuImages/invPage.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                    </Button>
-                    <!-- Каталог -->
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_5" Name="AddCatalog" Visibility="Collapsed">
-                        <Image Source="/MenuImages/addCatalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <!-- Добавление записи о продаже автомобиля -->
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_8" Name="SalesAdd" Visibility="Collapsed">
+                        <Image Source="/MenuImages/SalesAddImg.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <!-- Отзывы -->
                     <Button Style="{StaticResource menuButton}" Click="Button_Click_4" Name="Feedback" Visibility="Collapsed">
                         <Image Source="/MenuImages/feedback.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_7" Name="Sales" Visibility="Collapsed">
-                        <Image Source="/MenuImages/salesList.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <!-- Каталог -->
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_5" Name="AddCatalog" Visibility="Collapsed">
+                        <Image Source="/MenuImages/addCatalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}" Click="Button_Click_8" Name="SalesAdd" Visibility="Collapsed">
-                        <Image Source="/MenuImages/SalesAddImg.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <!-- Инвентарь -->
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_3" Name="Inventory" Visibility="Collapsed">
+                        <Image Source="/MenuImages/invPage.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
-                    <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="Button_Click_9" Name="SalesCount" Visibility="Collapsed">
-                        <Image Source="/MenuImages/coins.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                    </Button>
-                    <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Margin="0 0 0 15" Click="UsersReport_Click"  Name="UsersReport" Visibility="Collapsed">
-                        <Image Source="/MenuImages/usersofsystem.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <!-- Автомобили -->
+                    <Button Style="{StaticResource menuButton}" Click="Button_Click_2" Name="Catalog" Visibility="Collapsed">
+                        <Image Source="/MenuImages/Catalog.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                 </StackPanel>
 

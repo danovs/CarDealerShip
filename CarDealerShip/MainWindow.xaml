@@ -21,7 +21,7 @@
                     <Button.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.1"/>
                     </Button.Effect>
-                    <TextBlock Text="You" FontSize="18" FontWeight="SemiBold" FontFamily="Montserrat" Margin="0 0 0 2" Foreground="#355858"/>
+                    <TextBlock Text="You" FontSize="13" FontWeight="SemiBold" FontFamily="Montserrat" Margin="0 0 0 2" Foreground="#355858"/>
                 </Button>
 
                 <!-- Кнопки в меню -->
