@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CarDealerShip
 {
@@ -9,7 +10,6 @@ namespace CarDealerShip
     {
         private CarDealershipEntities db; // Поле для хранения экземпляра контекста базы данных.
         private int inventoryId; // Поле для хранения ID инвентаря, который редактируется.
-
 
         // Инициализация экземпляра контекста базы данных.
         // Присваивание переданного ID инвентаря полю inventoryId.
@@ -33,6 +33,9 @@ namespace CarDealerShip
             cmbLocation.DisplayMemberPath = "location_name";
             cmbLocation.SelectedValuePath = "location_id";
 
+            // Подключение обработчика события для предотвращения ввода букв в txtCount
+            txtCount.PreviewTextInput += TxtCount_PreviewTextInput;
+
             FillFields();
         }
 
@@ -53,6 +56,12 @@ namespace CarDealerShip
             {
                 MessageBox.Show("Данные не загружены");
             }
+        }
+
+        // Обработчик события для предотвращения ввода букв в txtCount
+        private void TxtCount_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.Text, e.Text.Length - 1); // Проверка, является ли введенный символ цифрой
         }
 
         // Кнопка "Сохранить".
@@ -134,7 +143,7 @@ namespace CarDealerShip
         // Обработчик события изменения выбранного автомобиля в раскрывающиемся списке.
         private void cmbCar_SelectedChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Если атомобиль выбран, производим получение выбранного автомобиля, и если данный атвомобиль найден, то заполняем текстоые поля данными о его характеристиках.
+            // Если автомобиль выбран, производим получение выбранного автомобиля, и если данный автомобиль найден, то заполняем текстовые поля данными о его характеристиках.
             if (cmbCar.SelectedItem != null)
             {
                 car selectedCar = cmbCar.SelectedItem as car;
@@ -159,7 +168,7 @@ namespace CarDealerShip
                         }
                         else
                         {
-                            txtBodyType.Text = "Незивестно";
+                            txtBodyType.Text = "Неизвестно";
                         }
                     }
                     else // Если тип кузова не указан

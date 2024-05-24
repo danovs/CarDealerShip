@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Microsoft.Win32;
 
 namespace CarDealerShip
 {
@@ -23,6 +24,22 @@ namespace CarDealerShip
 
             // Заполнение выпадающего списка типов кузовов данными из базы данных.
             cmbBodyType.ItemsSource = db.car_types.Select(c => c.type_name).ToList();
+
+            // Подключение обработчиков событий для предотвращения ввода цифр в txtBrand и txtColor
+            txtBrand.PreviewTextInput += TxtBrand_PreviewTextInput;
+            txtColor.PreviewTextInput += TxtColor_PreviewTextInput;
+        }
+
+        // Обработчик события для предотвращения ввода цифр в txtBrand
+        private void TxtBrand_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = e.Text.Any(char.IsDigit); // Проверка, является ли введенный символ цифрой
+        }
+
+        // Обработчик события для предотвращения ввода цифр в txtColor
+        private void TxtColor_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = e.Text.Any(char.IsDigit); // Проверка, является ли введенный символ цифрой
         }
 
         // Кнопка выбора картинки для автомобиля.

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace CarDealerShip
@@ -37,6 +38,24 @@ namespace CarDealerShip
             txtConfiguration.Text = currentCar.trim_level;
 
             DisplayImage(); // Отображение текущего автомобиля (фотография).
+
+            // Подключение обработчика события для предотвращения ввода цифр в txtBrand
+            txtBrand.PreviewTextInput += TxtBrand_PreviewTextInput;
+
+            // Подключение обработчика события для предотвращения ввода цифр в txtColor
+            txtColor.PreviewTextInput += TxtColor_PreviewTextInput;
+        }
+
+        // Обработчик события для предотвращения ввода цифр в txtBrand
+        private void TxtBrand_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = e.Text.Any(char.IsDigit); // Проверка, является ли введенный символ цифрой
+        }
+
+        // Обработчик события для предотвращения ввода цифр в txtColor
+        private void TxtColor_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = e.Text.Any(char.IsDigit); // Проверка, является ли введенный символ цифрой
         }
 
         // Метод для отображения изображения текущего автомобиля.
