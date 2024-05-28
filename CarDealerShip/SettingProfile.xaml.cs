@@ -52,14 +52,21 @@ namespace CarDealerShip
         // Кнопка "Сохранить".
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Вы действительно сохранить новые изменения?", "Изменение данных", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Вы действительно хотите сохранить новые изменения?", "Изменение данных", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                // Проверка наличия корректного идентификатора пользователя. Если проверка пройдена - получаем ноое имя и номер телефона из текстовых полей.
+                // Проверка наличия корректного идентификатора пользователя. Если проверка пройдена - получаем новое имя и номер телефона из текстовых полей.
                 if (currentUserId != 0)
                 {
                     string newFullName = txtName.Text;
                     string phoneNumber = textPhoneNumber.Text;
+
+                    // Проверка на заполненность полей
+                    if (string.IsNullOrWhiteSpace(newFullName) || !IsPhoneNumberValid(phoneNumber))
+                    {
+                        MessageBox.Show("Все поля должны быть заполнены корректно.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
                     // Проверка длины имени
                     if (newFullName.Length < 10)
@@ -70,7 +77,7 @@ namespace CarDealerShip
 
                     try
                     {
-                        // Поиск клиента в базе данных по идентификатору пользователя. Если клиент есть, проеряем наличие изменений в данных клиента, после обновляем их.
+                        // Поиск клиента в базе данных по идентификатору пользователя. Если клиент есть, проверяем наличие изменений в данных клиента, после обновляем их.
                         var client = db.clients.FirstOrDefault(c => c.user_id == currentUserId);
 
                         if (client != null)
@@ -131,6 +138,13 @@ namespace CarDealerShip
             {
                 MessageBox.Show($"Произошла ошибка при загрузке данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private bool IsPhoneNumberValid(string phoneNumber)
+        {
+            // Убедимся, что все символы, кроме маски, введены
+            string unmaskedPhoneNumber = phoneNumber.Replace("+7 (", "").Replace(") ", "").Replace("-", "").Trim();
+            return !string.IsNullOrWhiteSpace(unmaskedPhoneNumber) && unmaskedPhoneNumber.All(char.IsDigit) && unmaskedPhoneNumber.Length == 10;
         }
     }
 }

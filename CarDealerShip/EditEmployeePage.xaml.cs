@@ -50,6 +50,19 @@ namespace CarDealerShip
                                 return;
                             }
 
+                            // Проверка на наличие уже существующей записи
+                            bool employeeExists = db.employees.Any(emp => emp.surname == txtSurname.Text &&
+                                                                          emp.name == txtName.Text &&
+                                                                          emp.lastname == txtLastname.Text &&
+                                                                          emp.phone == txtPhone.Text &&
+                                                                          emp.email == txtEmail.Text);
+
+                            if (employeeExists)
+                            {
+                                MessageBox.Show("Сотрудник с такими данными уже существует.");
+                                return;
+                            }
+
                             employee newEmployee = new employee
                             {
                                 user_id = selectedUser.user_id,
